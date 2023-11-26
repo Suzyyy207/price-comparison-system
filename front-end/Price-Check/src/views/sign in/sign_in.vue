@@ -4,56 +4,39 @@ import Login from '../../components/sign_in/login_wrapper.vue'
 </script>
 
 <template>
-    <header>
+  <div class="wrapper">
+    <div class="left">
       <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
   
-      <div class="wrapper">
+      <div class="hello">
         <HelloWorld msg="Sign In Now" />
       </div>
-    </header>
-    <div class="login_wrapper">
+
+    </div>
+    
+    <div class="right">
         <Login/>
     </div>
+  </div>
+      
   
   </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.wrapper {
+  display: flex;
+  margin: 200px 30px 0 30px;
+  width: 90%;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.left {
+  flex: 1;
+  margin-left: 100px;
 }
 
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.right {
+  flex: 1;
 }
+
 </style>
 
