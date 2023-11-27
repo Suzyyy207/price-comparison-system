@@ -24,7 +24,7 @@
 
 
 <script>
-import ProductList from '../../components/wrapper/user_w.vue';
+import ProductList from '../../components/wrapper/user_h.vue';
 
 export default {
   components: {

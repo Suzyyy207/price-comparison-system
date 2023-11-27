@@ -5,11 +5,16 @@
       <div v-if="loading">Loading...</div>
       <div v-else>
         <div v-for="product in products" :key="product.id" class="product-item">
-          <img :src="product.image" alt="Product Image" class="product-image">
+          <!--img :src="product.image" alt="Product Image" class="product-image"-->
           <div class="product-details">
             <h3>{{ product.name }}</h3>
-            <p>{{ product.description }}</p>
-            <p>Price: ${{ product.price }}</p>
+            <p>价格：${{ product.price }}</p>
+            <p>历史最低：${{ product.min_price }}</p>
+          </div>
+          <div class="product-details">
+            <p>商品属性：{{ product.goods }}</p>
+            <p>卖家：{{ product.seller }}</p>
+            <p>平台：{{ product.platform }}</p>
           </div>
         </div>
       </div>
@@ -29,8 +34,8 @@
       setTimeout(() => {
         // 假设这是后端返回的商品数据
         const backendData = [
-          { id: 1, name: 'Product 1', description: 'Description 1', price: 19.99, image: 'product1.jpg' },
-          { id: 2, name: 'Product 2', description: 'Description 2', price: 29.99, image: 'product2.jpg' },
+          { id:1, name: 'PanPan', min_price: 10, price: 19.99, goods:'Bread', seller:'P',platform:'TB'},
+          { id: 2, name: 'DingDing', min_price: 12.7, price: 29.99, goods:'Bread', seller:'X',platform:'JD'},
           // ... 更多商品数据
         ];
   
