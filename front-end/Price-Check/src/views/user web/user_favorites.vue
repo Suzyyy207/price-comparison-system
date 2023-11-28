@@ -1,14 +1,12 @@
+<script setup>
+import top_nav from '../../components/trivial/top_nav.vue'
+</script>
+
 <template>
     <div class="home-page">
       <!-- 顶部导航栏 -->
       <div class="top-nav">
-        <div class="user-info">用户信息</div>
-        <div class="nav-links">
-          <router-link to="/user_web">主页</router-link>
-          <router-link to="/favorites">收藏夹</router-link>
-          <router-link to="/messages">消息列表</router-link>
-          <router-link to="/profile">个人中心</router-link>
-        </div>
+        <top_nav></top_nav>
       </div>
       <div class="search-bar">
         <h2>我的收藏夹</h2>
@@ -22,6 +20,7 @@
   
   <script>
   import ProductList from '../../components/wrapper/user_f.vue';
+
   
   export default {
     components: {
@@ -65,16 +64,7 @@
     border-radius: 5px;
     margin-bottom: 16px;
   }
-  
-  .user-info {
-    font-weight: bold;
-  }
-  
-  .nav-links a {
-    margin-left: 16px;
-    text-decoration: none;
-    color: #fff;
-  }
+
   
   .search-bar {
     display: flex;

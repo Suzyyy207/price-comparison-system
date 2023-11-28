@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import sign_in from '../views/sign in/sign_in.vue'
 import user_home from '../views/user web/user_home.vue'
 import user_favorites from '../views/user web/user_favorites.vue'
+import user_profile from '../views/user web/user_profile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/favorites',
       name: 'favorites',
       component: user_favorites
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: user_profile
     }
     /*{
       path: '/about',

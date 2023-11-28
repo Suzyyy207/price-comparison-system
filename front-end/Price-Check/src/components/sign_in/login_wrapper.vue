@@ -35,6 +35,7 @@
                 const user = res.data.data;
                 if (res.data.state == window.SUCCESS) {
                     var localStorage = window.localStorage;
+                    localStorage.setItem("userid",this.userid);
                     localStorage.setItem("username",this.username);
                     localStorage.setItem("usertype",this.usertype);
 
