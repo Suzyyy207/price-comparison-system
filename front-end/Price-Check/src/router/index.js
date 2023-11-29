@@ -4,6 +4,7 @@ import sign_in from '../views/sign in/sign_in.vue'
 import user_home from '../views/user web/user_home.vue'
 import user_favorites from '../views/user web/user_favorites.vue'
 import user_profile from '../views/user web/user_profile.vue'
+import user_messages from '../views/user web/user_messages.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,11 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: user_profile
+    },
+    {
+      path: '/messages',
+      name: 'messages',
+      component: user_messages
     }
     /*{
       path: '/about',
