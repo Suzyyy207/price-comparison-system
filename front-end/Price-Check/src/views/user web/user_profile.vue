@@ -14,16 +14,16 @@ import top_nav from '../../components/trivial/top_nav.vue'
         <h2>个人中心</h2>
         <div v-if="loading">加载中...</div>
         <div v-else>
-          <div>
+          <div class="info">
             <label>姓名:</label> {{ user.name }}
           </div>
-          <div>
+          <div class="info">
             <label>性别:</label> {{ user.sex }}
           </div>
-          <div>
+          <div class="info">
             <label>年龄:</label> {{ user.age }}
           </div>
-          <div>
+          <div class="info">
             <label>电话:</label> {{ user.telephone }}
           </div>
           <button @click="goToEditProfile">编辑个人信息</button>
@@ -45,8 +45,8 @@ import top_nav from '../../components/trivial/top_nav.vue'
       // 模拟异步获取用户信息
       setTimeout(() => {
         // 模拟的用户信息数据
-        //const userId = localStorage.getItem('username'); // 从 Local Storage 获取用户 ID
-        //const userType = localStorage.getItem('userType'); // 从 Local Storage 获取用户类型
+        const userId = localStorage.getItem('username'); // 从 Local Storage 获取用户 ID
+        const userType = localStorage.getItem('userType'); // 从 Local Storage 获取用户类型
   
         // 向后端请求用户详细信息（假设后端有接口 /api/user/:id）
         // 注意：实际情况下，请根据你的后端 API 进行调整
@@ -81,39 +81,39 @@ import top_nav from '../../components/trivial/top_nav.vue'
   
   <style scoped>
   /* 在这里添加组件样式 */
-  .header {
-    background-color: #3498db;
-    color: #ffffff;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .header-left {
-    display: flex;
-    align-items: center;
-  }
-  
-  .header-right {
-    display: flex;
-  }
-  
-  .header-right router-link {
-    margin-left: 10px;
-    color: #ffffff;
-    text-decoration: none;
-  }
+  .home-page {
+  max-width: 800px;
+  margin: auto;
+  padding: 16px;
+  background-color: #f8f8f8; /* 背景色 */
+}
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff; /* 顶部导航栏背景色 */
+  color: #fff; /* 文字颜色 */
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 16px;
+}
+
   
   .profile-container {
     max-width: 600px;
     margin: auto;
+    text-align: center;
   }
   
   h2 {
     text-align: center;
     color: #333333;
     margin-top: 20px;
+  }
+
+  .info{
+    margin:15px;
   }
   
   label {
@@ -122,8 +122,9 @@ import top_nav from '../../components/trivial/top_nav.vue'
   }
   
   button {
-    margin-top: 10px;
+    margin-top: 5px;
     padding: 5px 10px;
+    font-size: 18pxß;
     background-color: #4caf50;
     color: #ffffff;
     border: none;

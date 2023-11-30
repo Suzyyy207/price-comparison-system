@@ -5,6 +5,7 @@ import user_home from '../views/user web/user_home.vue'
 import user_favorites from '../views/user web/user_favorites.vue'
 import user_profile from '../views/user web/user_profile.vue'
 import user_messages from '../views/user web/user_messages.vue'
+import edit_profile from '../views/change_info/person_info.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,7 +34,12 @@ const router = createRouter({
       path: '/messages',
       name: 'messages',
       component: user_messages
-    }
+    },
+    {
+      path: '/edit-profile',
+      name: 'edit-profile',
+      component: edit_profile
+    },
     /*{
       path: '/about',
       name: 'about',

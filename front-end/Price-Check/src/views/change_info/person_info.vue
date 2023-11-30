@@ -1,4 +1,7 @@
 <!-- EditProfile.vue -->
+<script setup>
+import top_nav from '../../components/trivial/top_nav.vue'
+</script>
 
 <template>
     <div class="home-page">
@@ -91,4 +94,55 @@
     }
   };
   </script>
+
+<style scoped>
+/* 在这里添加组件样式 */
+.home-page {
+  max-width: 800px;
+  margin: auto;
+  padding: 16px;
+  background-color: #f8f8f8; /* 背景色 */
+}
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff; /* 顶部导航栏背景色 */
+  color: #fff; /* 文字颜色 */
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 16px;
+}
+
+.edit-profile-container {
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+  }
+
+  h2 {
+    text-align: center;
+    color: #333333;
+    margin-top: 20px;
+  }
+
+  label {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+  input{
+    margin:15px;
+  }
+  
+  button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+  }
+</style>
   
