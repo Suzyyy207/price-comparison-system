@@ -8,7 +8,7 @@
           <!--img :src="product.image" alt="Product Image" class="product-image"-->
           <div class="product-details">
             <h3>{{ product.name }}</h3>
-            <p>价格：${{ product.price }}</p>
+            <p>目前价格：${{ product.price }}</p>
             <p>历史最低：${{ product.min_price }}</p>
           </div>
           <div class="product-details">
@@ -17,10 +17,10 @@
             <p>平台：{{ product.platform }}</p>
           </div>
           <div class="product-details">
-            <input v-model="searchQuery" placeholder="输入两位小数">
-            <button @click="search">设定期望价格</button>
+            <button @click="goToEditProduct">编辑商品信息</button>
           </div>
         </div>
+        
       </div>
     </div>
   </template>
@@ -46,6 +46,11 @@
         this.products = backendData;
         this.loading = false;
       }, 1000); // 模拟1秒后获取到数据
+    },
+    methods: {
+      goToEditProduct() {
+        this.$router.push('/edit_product');
+      }
     }
   };
   </script>
@@ -64,7 +69,6 @@
     padding: 16px;
   }
   
-  
   .product-details {
     flex-grow: 1;
   }
@@ -72,22 +76,5 @@
   h2 {
     text-align: center;
   }
-  
-  input {
-  padding: 4px;
-  width: 100px;
-  height: 30px;
- }
-
-button {
-  padding: 8px 12px;
-  margin:30px;
-  height: 30px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-  /* 可根据需要添加更多样式 */
   </style>
   
