@@ -12,9 +12,9 @@
             <p>历史最低：${{ product.min_price }}</p>
           </div>
           <div class="product-details">
-            <p>商品属性：{{ product.goods }}</p>
-            <p>卖家：{{ product.seller }}</p>
-            <p>平台：{{ product.platform }}</p>
+            <p>商品类别：{{ product.category }}</p>
+            <p>卖家：{{ product.seller_name }}</p>
+            <p>平台：{{ product.platform_name }}</p>
           </div>
           <div class="product-details">
             <p>我设定的期望价格 {{ product.platform }}</p>

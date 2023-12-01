@@ -18,15 +18,12 @@ import top_nav from '../../components/trivial/seller_nav.vue'
             <label>商家名:</label> {{ user.name }}
           </div>
           <div class="info">
-            <label>性别:</label> {{ user.sex }}
-          </div>
-          <div class="info">
-            <label>年龄:</label> {{ user.age }}
+            <label>地址:</label> {{ user.address }}
           </div>
           <div class="info">
             <label>电话:</label> {{ user.telephone }}
           </div>
-          <button @click="goToEditProfile">编辑商家信息</button>
+          <button @click="edit_profile">编辑商家信息</button>
         </div>
       </div>
     </div>
@@ -37,45 +34,32 @@ import top_nav from '../../components/trivial/seller_nav.vue'
     data() {
       return {
         loading: true,
-        user: {},
-        userInfo: '' // 从 Local Storage 或后端获取用户信息
+        name: "",
+        address: "",
+        telephone: "",
       };
     },
-    mounted() {
-      // 模拟异步获取用户信息
-      setTimeout(() => {
-        // 模拟的用户信息数据
-        const userId = localStorage.getItem('username'); // 从 Local Storage 获取用户 ID
-        const userType = localStorage.getItem('userType'); // 从 Local Storage 获取用户类型
-  
-        // 向后端请求用户详细信息（假设后端有接口 /api/user/:id）
-        // 注意：实际情况下，请根据你的后端 API 进行调整
-        // axios.get(`/api/user/${userId}?type=${userType}`)
-        //   .then(response => {
-        //     this.user = response.data;
-        //     this.loading = false;
-        //   })
-        //   .catch(error => {
-        //     console.error('Error fetching user information:', error);
-        //   });
-  
-        // 模拟的用户信息
-        this.user = {
-          name: '面包店',
-          sex: '男',
-          age: 25,
-          telephone: '12770921'
-        };
-  
-        this.userInfo = `${this.user.name}（${userType}）`; // 用户信息字符串
-        this.loading = false;
-      }, 1000); // 模拟1秒延迟获取数据
+    created() {
+        this.get_user_profile();
     },
     methods: {
-      goToEditProfile() {
-        this.$router.push('/edit-profile');
+      getUserInfo() {
+        var localStorage = window.localStorage;
+        this.$axios.post('/get_seller_profile', {
+            user_id: localStorage.getItem("user_id")
+        })
+        .then(res => {
+            const user = res.data.data;
+            this.name = user.username;
+            this.address = user.address;
+            this.telephone = user.telephone;
+        })
+      },
+      edit_profile() {
+        this.$router.push('/edit_profile');
       }
     }
+    
   };
   </script>
   

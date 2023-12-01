@@ -2,7 +2,7 @@
 
 <template>
     <div class="product-list">
-      <div v-if="loading">Loading...</div>
+      <div v-if="products_list.length === 0">目前你还没有发布任何商品^^</div>
       <div v-else>
         <div v-for="product in products" :key="product.id" class="product-item">
           <!--img :src="product.image" alt="Product Image" class="product-image"-->
@@ -12,12 +12,12 @@
             <p>历史最低：${{ product.min_price }}</p>
           </div>
           <div class="product-details">
-            <p>商品属性：{{ product.goods }}</p>
-            <p>卖家：{{ product.seller }}</p>
-            <p>平台：{{ product.platform }}</p>
+            <p>商品类别：{{ product.category }}</p>
+            <p>卖家：{{ product.seller_name }}</p>
+            <p>平台：{{ product.platform_name }}</p>
           </div>
           <div class="product-details">
-            <button @click="goToEditProduct">编辑商品信息</button>
+            <button @click="edit_product">编辑商品信息</button>
           </div>
         </div>
         
@@ -29,27 +29,24 @@
   export default {
     data() {
       return {
-        loading: true,
-        products: []
+        products_list: [],
       };
     },
-    mounted() {
-      // 模拟异步请求后端数据
-      setTimeout(() => {
-        // 假设这是后端返回的商品数据
-        const backendData = [
-          { id:1, name: 'PanPan', min_price: 10, price: 19.99, goods:'Bread', seller:'P',platform:'TB'},
-          { id: 2, name: 'DingDing', min_price: 12.7, price: 29.99, goods:'Bread', seller:'X',platform:'JD'},
-          // ... 更多商品数据
-        ];
-  
-        this.products = backendData;
-        this.loading = false;
-      }, 1000); // 模拟1秒后获取到数据
+    created (){
+        this.get_products()
     },
     methods: {
-      goToEditProduct() {
-        this.$router.push('/edit_product');
+        get_products() {
+            const seller_id = window.localStorage.getItem('user_id');
+            this.$axios.post('/get_seller_products',{
+              seller_id: seller_id
+            })
+            .then(res => {
+                this.products_list = this.products_list.concat(res.data.data);
+            })
+        },
+        edit_product() {
+          this.$router.push('/edit_product');
       }
     }
   };
