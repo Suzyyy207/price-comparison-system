@@ -26,7 +26,7 @@ import top_nav from '../../components/trivial/top_nav.vue'
           <div class="info">
             <label>电话:</label> {{ user.telephone }}
           </div>
-          <button @click="goToEditProfile">编辑个人信息</button>
+          <button @click="edit_profile">编辑个人信息</button>
         </div>
       </div>
     </div>
@@ -37,11 +37,34 @@ import top_nav from '../../components/trivial/top_nav.vue'
     data() {
       return {
         loading: true,
-        user: {},
-        userInfo: '' // 从 Local Storage 或后端获取用户信息
+        name: "",
+        sex: "",
+        age: 0,
+        telephone: "",
       };
     },
-    mounted() {
+    created() {
+        this.get_user_profile();
+    },
+    methods: {
+      getUserInfo() {
+        var localStorage = window.localStorage;
+        this.$axios.post('/get_user_profile', {
+            user_id: localStorage.getItem("user_id")
+        })
+        .then(res => {
+            const user = res.data.data;
+            this.name = user.username;
+            this.sex = user.sex;
+            this.age = user.age;
+            this.telephone = user.telephone;
+        })
+      },
+      edit_profile() {
+        this.$router.push('/edit_profile');
+      }
+    },
+    /*mounted() {
       // 模拟异步获取用户信息
       setTimeout(() => {
         // 模拟的用户信息数据
@@ -71,11 +94,7 @@ import top_nav from '../../components/trivial/top_nav.vue'
         this.loading = false;
       }, 1000); // 模拟1秒延迟获取数据
     },
-    methods: {
-      goToEditProfile() {
-        this.$router.push('/edit-profile');
-      }
-    }
+    }*/
   };
   </script>
   

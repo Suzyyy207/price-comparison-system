@@ -2,19 +2,19 @@
 
 <template>
     <div class="product-list">
-      <div v-if="loading">Loading...</div>
+      <div v-if="products_list.length === 0">目前还没有任何商品上架^^</div>
       <div v-else>
-        <div v-for="product in products" :key="product.id" class="product-item">
+        <div v-for="product in products" :key="product.shop_id" class="product-item">
           <!--img :src="product.image" alt="Product Image" class="product-image"-->
           <div class="product-details">
-            <h3>{{ product.name }}</h3>
+            <h3>{{ product.shop_name }}</h3>
             <p>价格：${{ product.price }}</p>
             <p>历史最低：${{ product.min_price }}</p>
           </div>
           <div class="product-details">
-            <p>商品属性：{{ product.goods }}</p>
-            <p>卖家：{{ product.seller }}</p>
-            <p>平台：{{ product.platform }}</p>
+            <p>商品类别：{{ product.category }}</p>
+            <p>卖家：{{ product.seller_name }}</p>
+            <p>平台：{{ product.platform_name }}</p>
           </div>
         </div>
       </div>
@@ -25,11 +25,25 @@
   export default {
     data() {
       return {
-        loading: true,
-        products: []
+        products_list: [],
       };
     },
-    mounted() {
+    created (){
+        this.get_products()
+    },
+    methods: {
+        get_products() {
+            const user_id = window.localStorage.getItem('user_id');
+            this.$axios.post('/get_user_products',{
+              get_type: 0,
+              user_id: user_id
+            })
+            .then(res => {
+                this.products_list = this.products_list.concat(res.data.data);
+            })
+        }
+    }
+    /*mounted() {
       // 模拟异步请求后端数据
       setTimeout(() => {
         // 假设这是后端返回的商品数据
@@ -42,7 +56,7 @@
         this.products = backendData;
         this.loading = false;
       }, 1000); // 模拟1秒后获取到数据
-    }
+    }*/
   };
   </script>
   

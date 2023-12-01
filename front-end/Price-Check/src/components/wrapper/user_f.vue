@@ -17,8 +17,11 @@
             <p>平台：{{ product.platform }}</p>
           </div>
           <div class="product-details">
-            <input v-model="searchQuery" placeholder="输入两位小数">
-            <button @click="search">设定期望价格</button>
+            <p>我设定的期望价格 {{ product.platform }}</p>
+            <div>
+              <input v-model="new_target_price" placeholder="输入两位小数">
+              <button @click="update_target_price">设定期望价格</button>
+            </div>
           </div>
         </div>
       </div>
@@ -29,11 +32,25 @@
   export default {
     data() {
       return {
-        loading: true,
-        products: []
+        products_list: [],
       };
     },
-    mounted() {
+    created (){
+        this.get_collects()
+    },
+    methods: {
+        get_collects() {
+            const user_id = window.localStorage.getItem('user_id');
+            this.$axios.post('/get_user_products',{
+              get_type: 1,
+              user_id: user_id
+            })
+            .then(res => {
+                this.products_list = this.products_list.concat(res.data.data);
+            })
+        }
+    },
+    /*mounted() {
       // 模拟异步请求后端数据
       setTimeout(() => {
         // 假设这是后端返回的商品数据
@@ -46,7 +63,7 @@
         this.products = backendData;
         this.loading = false;
       }, 1000); // 模拟1秒后获取到数据
-    }
+    }*/
   };
   </script>
   

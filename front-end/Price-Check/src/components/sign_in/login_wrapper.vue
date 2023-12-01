@@ -15,6 +15,7 @@
   
   <script>
   export default {
+    name: "login",
     data() {
       return {
         user_id: "",
@@ -26,8 +27,7 @@
     },
     methods: {
         login: function(){
-            //????
-            this.$axios.post('/userlogin', {
+            this.$axios.post('/login', {
                 user_id: this.user_id,
                 user_type: this.user_type
             })
@@ -35,9 +35,9 @@
                 const user = res.data.data;
                 if (res.data.state == window.SUCCESS) {
                     var localStorage = window.localStorage;
-                    localStorage.setItem("userid",this.userid);
-                    localStorage.setItem("username",this.username);
-                    localStorage.setItem("usertype",this.usertype);
+                    localStorage.setItem("user_id",this.user_id);
+                    localStorage.setItem("user_name",this.user_name);
+                    localStorage.setItem("user_type",this.user_type);
 
                     setTimeout(() => {
                     switch (user.usertype) {

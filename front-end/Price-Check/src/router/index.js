@@ -16,7 +16,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: seller_home
+      component: sign_in
     },
     {
       path: '/user_web',
