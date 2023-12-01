@@ -10,9 +10,9 @@ import top_nav from '../../components/trivial/seller_nav.vue'
         <top_nav></top_nav>
     </div>
   
-      <!-- 编辑个人信息内容 -->
+      <!-- 编辑商品信息内容 -->
       <div class="edit-profile-container">
-        <h2>编辑商品信息</h2>
+        <h2>填写商品信息</h2>
         <div v-if="loading">加载中...</div>
         <div v-else>
           <form @submit.prevent="saveProduct">
@@ -125,6 +125,7 @@ import top_nav from '../../components/trivial/seller_nav.vue'
     text-align: center;
     color: #333333;
     margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   label {

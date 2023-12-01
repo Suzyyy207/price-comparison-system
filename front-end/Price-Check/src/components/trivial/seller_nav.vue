@@ -2,7 +2,7 @@
     <div class="user-info">用户信息</div>
     <div class="nav-links">
         <router-link to="/seller_web">我的商品</router-link>
-        <router-link to="/upload_product">发布商品</router-link>
+        <router-link to="/edit_product">发布商品</router-link>
         <router-link to="/seller_profile">个人中心</router-link>
     </div>
 </template>
