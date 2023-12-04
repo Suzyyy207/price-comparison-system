@@ -1,7 +1,7 @@
 package org.example.service;
 
 import org.example.mapper.UserMapper;
-import org.example.model.entity.User;
+import org.example.model.entity.UserBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class UserService {
     public UserService(UserMapper userMapper){
         this.userMapper=userMapper;
     }
-    public User getUserById(int id) {
+    public UserBase getUserById(int id) {
         return userMapper.findById(id);
     }
 }

@@ -7,19 +7,23 @@ public class UserBase {
     public UserBase() {
     }
 
-    public UserBase(User user) {
-        this.id = user.getId();
-        this.name = user.getName();
-    }
-    public UserBase(Seller seller) {
-        this.id = seller.getId();
-        this.name = seller.getName();
-    }
-
-
     @TableId(type = IdType.AUTO)
     protected int id;
     protected String name;
+    protected int age;
+    protected int sex;
+    protected String phone;
+    protected String address;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    protected int type;//1为商家，2为用户，0为管理员
 
     public int getId() {
         return id;
@@ -37,6 +41,35 @@ public class UserBase {
         this.name = name;
     }
 
+    public int getAge() {
+        return age;
+    }
 
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
 }

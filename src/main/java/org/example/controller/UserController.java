@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.model.entity.User;
+import org.example.model.entity.UserBase;
 import org.example.util.Response;
 import org.example.service.UserService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,8 +17,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("user/info/getById")
-    public Response<User> getUserInfoById(@RequestParam("id") Integer id){
-        User user=userService.getUserById(id);
+    public Response<UserBase> getUserInfoById(@RequestParam("id") Integer id){
+        UserBase user=userService.getUserById(id);
         if(user==null){
             return new Response<>(Response.FAIL,"不存在该用户",null);
         }
