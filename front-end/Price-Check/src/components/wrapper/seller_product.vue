@@ -47,7 +47,8 @@
         },
         edit_product() {
           this.$router.push('/edit_product');
-      }
+      },
+      
     }
   };
   </script>

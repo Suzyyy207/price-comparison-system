@@ -4,7 +4,7 @@
     <div class="product-list">
       <div v-if="loading">Loading...</div>
       <div v-else>
-        <div v-for="product in products" :key="product.id" class="product-item">
+        <div v-for="product in products" :key="product.id" class="product-item" @click = "to_product(product)">
           <!--img :src="product.image" alt="Product Image" class="product-image"-->
           <div class="product-details">
             <h3>{{ product.name }}</h3>
@@ -48,6 +48,11 @@
             .then(res => {
                 this.products_list = this.products_list.concat(res.data.data);
             })
+        },
+        to_product(product){
+          var localStorage = window.localStorage;
+          localStorage.setItem("p_id",product.id);
+          this.$router.push({name:'product_detail'});
         }
     },
     /*mounted() {
