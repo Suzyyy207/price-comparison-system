@@ -9,6 +9,7 @@ import edit_profile from '../views/change_info/person_info.vue'
 import seller_home from '../views/seller_web/seller_home.vue'
 import seller_profile from '../views/seller_web/seller_profile.vue'
 import edit_product from '../views/change_info/product_info.vue'
+import product_detail from '../views/user_web/product_show.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,7 +17,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: sign_in
+      component: product_detail
     },
     {
       path: '/user_web',
@@ -58,6 +59,11 @@ const router = createRouter({
       path: '/edit_product',
       name: 'edit_product',
       component: edit_product
+    },
+    {
+      path: '/product_detail',
+      name: 'product_detail',
+      component: product_detail
     }
     /*{
       path: '/about',
