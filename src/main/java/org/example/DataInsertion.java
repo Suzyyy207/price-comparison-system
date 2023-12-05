@@ -24,49 +24,25 @@ public class DataInsertion {
     public static void main(String[] args) {
         try {
 
-            List<String[]> roomData = CSVReaderExample.readRoomCSV("C:/Users/24223/Desktop/学习资料/第七学期/数据库设计/lab/lab1/Lab1数据/room.csv");
-            String[] roomColumns = roomData.get(0);//这一行是属性
-            roomData.remove(0);
-
-            List<String[]> studentData = CSVReaderExample.readStudentCSV("C:/Users/24223/Desktop/学习资料/第七学期/数据库设计/lab/lab1/Lab1数据/student.csv");
-            String[] studentColumns = studentData.get(0);//这一行是属性
-            studentData.remove(0);
-
+            List<String[]> userData = CSVReaderExample.readUserCSV("C:/Users/24223/Desktop/user.csv");
+            String[] userColumns = userData.get(0);//这一行是属性
+            userData.remove(0);
             Connection connection = establishConnection();//建立连接
 
-            //创建room表
-            String createRoomTableSQL = SQLCreator.createRoomTable(connection);
-            if(createRoomTableSQL==null){System.out.println("创建room表失败！\n");}
+            //创建user表
+            String createUserTableSQL = SQLCreator.createUserTable(connection);
+            if(createUserTableSQL==null){System.out.println("创建user表失败！\n");}
             else{
-                System.out.println(createRoomTableSQL);
-                executeSQL(connection, createRoomTableSQL);
+                System.out.println(createUserTableSQL);
+                executeSQL(connection, createUserTableSQL);
 
-                //room表的插入
-                String insertRoomDataSQL = SQLCreator.generateInsertDataSQL("room", roomColumns, roomData);
-                System.out.println(insertRoomDataSQL);
-                String EncodedSQL1 = new String(insertRoomDataSQL.getBytes("UTF-8"), "UTF-8");
+                //user表的插入
+                String insertUserDataSQL = SQLCreator.generateInsertDataSQL("user", userColumns, userData);
+                System.out.println(insertUserDataSQL);
+                String EncodedSQL1 = new String(insertUserDataSQL.getBytes("UTF-8"), "UTF-8");
                 PreparedStatement preparedStatement1 = connection.prepareStatement(EncodedSQL1);
                 preparedStatement1.executeUpdate();
             }
-
-
-
-
-            // 创建student表
-            String createStudentTableSQL = SQLCreator.createStudentTable(connection);
-            if(createStudentTableSQL==null){System.out.println("创建student表失败！\n");}
-            else {
-                System.out.println(createStudentTableSQL);
-                executeSQL(connection, createStudentTableSQL);
-
-                // student表的插入
-                String insertStudentDataSQL = SQLCreator.generateInsertDataSQL("student", studentColumns, studentData);
-                System.out.println(insertStudentDataSQL);
-                String EncodedSQL2 = new String(insertStudentDataSQL.getBytes("UTF-8"), "UTF-8");
-                PreparedStatement preparedStatement2 = connection.prepareStatement(EncodedSQL2);
-                preparedStatement2.executeUpdate();
-            }
-
             connection.close();
         } catch (SQLException | UnsupportedEncodingException e) {
             e.printStackTrace();

@@ -14,30 +14,11 @@ import java.io.IOException;
 
 public class SQLCreator{
 
-    public static String createRoomTable(Connection connection) throws SQLException {
-        if(existSQL(connection,"t_user")){
-            return null;
-        }
-        String filePath = "user.txt"; // Replace with the actual path to your file
-        StringBuilder content = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Process each line as needed
-                content.append(line).append("\n");
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            System.err.println("Error reading the file: " + e.getMessage());
-        }
-        String fileContent = content.toString();
-        return fileContent;
-    }
-    public static String createStudentTable(Connection connection) throws SQLException {
-        if(existSQL(connection,"t_seller")){
-            return null;
-        }
-        String filePath = "seller.txt"; // Replace with the actual path to your file
+    public static String createUserTable(Connection connection) throws SQLException {
+//        if(existSQL(connection,"user")){
+//            return null;
+//        }
+        String filePath = "C:/Users/24223/Desktop/user.txt"; // Replace with the actual path to your file
         StringBuilder content = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;

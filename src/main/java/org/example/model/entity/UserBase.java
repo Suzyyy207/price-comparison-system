@@ -2,7 +2,9 @@ package org.example.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
+@TableName("user")
 public class UserBase {
     public UserBase() {
     }
@@ -14,7 +16,7 @@ public class UserBase {
     protected int sex;
     protected String phone;
     protected String address;
-
+    protected int type;//1为商家，2为用户，0为管理员
     public int getType() {
         return type;
     }
@@ -23,7 +25,7 @@ public class UserBase {
         this.type = type;
     }
 
-    protected int type;//1为商家，2为用户，0为管理员
+
 
     public int getId() {
         return id;

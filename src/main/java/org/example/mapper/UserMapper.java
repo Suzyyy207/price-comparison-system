@@ -10,15 +10,15 @@ import org.example.model.entity.UserBase;
 public interface UserMapper extends BaseMapper<UserBase> {
 
     //   查询用户，根据用户id查询信息   select * from user where id =
-    @Select("select * from t_user where id = #{id}")
+    @Select("select * from user where id = #{id}")
     UserBase findById(@Param("id")int id);
 
     //   查询用户，根据用户username查询信息   select * from user where username =
-    @Select("select * from t_user where username = #{username}")
+    @Select("select * from user where username = #{username}")
     UserBase findByUsername(@Param("username")String username);
 
     //   查询用户，根据用户phone查询信息   select * from user where phone =
-    @Select("select * from t_user where phone = #{phone}")
+    @Select("select * from user where phone = #{phone}")
     UserBase findByPhone(@Param("phone")String phone);
 
 //    @Update("update t_user set username=#{updateInformationVO.username},phone=#{updateInformationVO.phone},email=#{updateInformationVO.email} where idNumber=#{updateInformationVO.idNumber}")
