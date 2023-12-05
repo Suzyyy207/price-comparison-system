@@ -31,12 +31,20 @@ public class UserController {
             }
         }
     }
-    @GetMapping("user/info/getById")
+    @GetMapping("get_user_profile")
     public Response<UserBase> getUserInfoById(@RequestParam("id") Integer id){
         UserBase user=userService.getUserById(id);
         if(user==null){
             return new Response<>(Response.FAIL,"不存在该用户",null);
         }
         return new Response<>(Response.SUCCESS,"返回用户信息成功",user);
+    }
+    @GetMapping("get_seller_profile")
+    public Response<UserBase> getSellerInfoById(@RequestParam("id") Integer id){
+        UserBase user=userService.getUserById(id);
+        if(user==null){
+            return new Response<>(Response.FAIL,"不存在该商户",null);
+        }
+        return new Response<>(Response.SUCCESS,"返回商户信息成功",user);
     }
 }
