@@ -2,18 +2,18 @@
 
 <template>
     <div class="product-list">
-      <div v-if="user_list.length === 0">目前还没有任何用户^^</div>
+      <div v-if="platform_list.length === 0">目前还没有任何平台入驻^^</div>
       <div v-else>
-        <div v-for="user in user_list" :key="user.id" class="product-item" @click = "to_user(user)">
+        <div v-for="platform in platform_list" :key="platform.id" class="product-item">
           <!--img :src="product.image" alt="Product Image" class="product-image"-->
           <div class="product-details">
-            <h3>{{ user.name }}</h3>
-            <p>性别：{{ user.sex }}</p>
+            <h3>{{ platform.name }}</h3>
+            <p>运营时长：{{ platform.age }}</p>
           </div>
           <div class="product-details">
             <h3>Datail</h3>
-            <p>年龄：${{ user.age }}</p>
-            <p>电话：{{ user.telephone }}</p>
+            <p>地址：{{ platform.address }}</p>
+            <p>电话：{{ platform.telephone }}</p>
           </div>
           <div class="product-details">
             <button>修改信息</button>
@@ -27,7 +27,7 @@
   export default {
     data() {
       return {
-        user_list: [],
+        platform_list: [],
       };
     },
     mounted() {
@@ -35,12 +35,12 @@
             setTimeout(() => {
                 // 假设这是后端返回的商品数据
                 const backendData = [
-                { id:1, name: 'TY', age: 10, sex:'Male', 'telephone':'188888888'},
-                { id:2, name: 'JW', age: 12, sex:'Male','telephone':'188888887'},
+                { id:1, name: 'TY', age: 18, telephone:'188888888',address:'China'},
+                { id:2, name: 'JW', age: 18,telephone:'188888887', address:'HH'},
                 // ... 更多商品数据
                 ];
         
-                this.user_list = backendData;
+                this.platform_list = backendData;
                 this.loading = false;
             }, 1000); // 模拟1秒后获取到数据
         }

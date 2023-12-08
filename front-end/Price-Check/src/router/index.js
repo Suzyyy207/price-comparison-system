@@ -13,6 +13,8 @@ import product_detail from '../views/user_web/product_show.vue'
 import manager_home from '../views/manager_web/manager_home.vue'
 import all_users from '../views/manager_web/manager_user.vue'
 import all_products from '../views/manager_web/manager_products.vue'
+import all_sellers from '../views/manager_web/manager_seller.vue'
+import all_platforms from '../views/manager_web/manager_platform.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -90,13 +92,13 @@ const router = createRouter({
       //显示全部商家，管理员用
       path: '/all_sellers',
       name: 'all_sellers',
-      component: product_detail //改
+      component: all_sellers
     },
     {
       //显示全部平台，管理员用
       path: '/all_platforms',
       name: 'all_platforms',
-      component: product_detail //改
+      component: all_platforms
     }
 
     /*{
