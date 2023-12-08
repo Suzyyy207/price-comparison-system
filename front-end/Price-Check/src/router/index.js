@@ -11,6 +11,8 @@ import seller_profile from '../views/seller_web/seller_profile.vue'
 import edit_product from '../views/change_info/product_info.vue'
 import product_detail from '../views/user_web/product_show.vue'
 import manager_home from '../views/manager_web/manager_home.vue'
+import all_users from '../views/manager_web/manager_user.vue'
+import all_products from '../views/manager_web/manager_products.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -76,13 +78,13 @@ const router = createRouter({
       //显示全部商品，管理员用
       path: '/all_products',
       name: 'all_products',
-      component: product_detail //改
+      component: all_products
     },
     {
       //显示全部用户，管理员用
       path: '/all_users',
       name: 'all_users',
-      component: product_detail //改
+      component: all_users
     },
     {
       //显示全部商家，管理员用
