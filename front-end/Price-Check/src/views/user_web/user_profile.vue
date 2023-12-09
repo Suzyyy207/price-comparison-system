@@ -64,37 +64,6 @@ import top_nav from '../../components/trivial/top_nav.vue'
         this.$router.push('/edit_profile');
       }
     },
-    /*mounted() {
-      // 模拟异步获取用户信息
-      setTimeout(() => {
-        // 模拟的用户信息数据
-        const userId = localStorage.getItem('username'); // 从 Local Storage 获取用户 ID
-        const userType = localStorage.getItem('userType'); // 从 Local Storage 获取用户类型
-  
-        // 向后端请求用户详细信息（假设后端有接口 /api/user/:id）
-        // 注意：实际情况下，请根据你的后端 API 进行调整
-        // axios.get(`/api/user/${userId}?type=${userType}`)
-        //   .then(response => {
-        //     this.user = response.data;
-        //     this.loading = false;
-        //   })
-        //   .catch(error => {
-        //     console.error('Error fetching user information:', error);
-        //   });
-  
-        // 模拟的用户信息
-        this.user = {
-          name: '张三',
-          sex: '男',
-          age: 25,
-          telephone: '12770921'
-        };
-  
-        this.userInfo = `${this.user.name}（${userType}）`; // 用户信息字符串
-        this.loading = false;
-      }, 1000); // 模拟1秒延迟获取数据
-    },
-    }*/
   };
   </script>
   

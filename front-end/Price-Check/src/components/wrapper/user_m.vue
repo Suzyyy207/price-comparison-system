@@ -35,18 +35,6 @@ export default {
       const userId = localStorage.getItem('userId'); // 从 Local Storage 获取用户 ID
       const userType = localStorage.getItem('userType'); // 从 Local Storage 获取用户类型
 
-      // 向后端请求消息列表（假设后端有接口 /api/messages/:id）
-      // 注意：实际情况下，请根据你的后端 API 进行调整
-      // axios.get(`/api/messages/${userId}?type=${userType}`)
-      //   .then(response => {
-      //     this.messages = response.data;
-      //     this.loading = false;
-      //   })
-      //   .catch(error => {
-      //     console.error('Error fetching messages:', error);
-      //   });
-
-      // 模拟的消息数据
       this.messages = [
         {
           id: 1,

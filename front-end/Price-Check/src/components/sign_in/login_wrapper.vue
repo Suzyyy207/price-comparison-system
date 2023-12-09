@@ -32,11 +32,12 @@
                 user_type: this.user_type
             })
             .then(res => {
+               console.log(res.data.data)
                 const user = res.data.data;
-                if (res.code == 1) {
+                if (res.data.code == 1) {
                     var localStorage = window.localStorage;
                     localStorage.setItem("user_id",this.user_id);
-                    localStorage.setItem("user_name",this.user_name);
+                    localStorage.setItem("user_name",user.name);
                     localStorage.setItem("user_type",this.user_type);
 
                     setTimeout(() => {

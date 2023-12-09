@@ -11,8 +11,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginVO {
-    private Integer id;
-    private Integer type;
+    public Integer getId() {
+        return user_id;
+    }
+
+    public void setId(Integer user_id) {
+        this.user_id = user_id;
+    }
+
+    public Integer getType() {
+        return user_type;
+    }
+
+    public void setType(Integer user_type) {
+        this.user_type = user_type;
+    }
+
+    private Integer user_id;
+    private Integer user_type;
 //    private String phone;
 //    private String email;
 //    private String idNumber;
