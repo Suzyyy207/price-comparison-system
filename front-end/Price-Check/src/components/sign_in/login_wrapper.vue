@@ -27,13 +27,13 @@
     },
     methods: {
         login: function(){
-            this.$axios.post('/login', {
+          this.$axios.post('http://localhost:8000/login',{
                 user_id: this.user_id,
                 user_type: this.user_type
             })
             .then(res => {
                 const user = res.data.data;
-                if (res.data.state == window.SUCCESS) {
+                if (res.code == 1) {
                     var localStorage = window.localStorage;
                     localStorage.setItem("user_id",this.user_id);
                     localStorage.setItem("user_name",this.user_name);
