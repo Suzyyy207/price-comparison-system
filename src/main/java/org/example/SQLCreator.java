@@ -18,19 +18,22 @@ public class SQLCreator{
 //        if(existSQL(connection,"user")){
 //            return null;
 //        }
-        String filePath = "C:/Users/24223/Desktop/user.txt"; // Replace with the actual path to your file
-        StringBuilder content = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Process each line as needed
-                content.append(line).append("\n");
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            System.err.println("Error reading the file: " + e.getMessage());
-        }
-        String fileContent = content.toString();
+//        String filePath = "C:/Users/24223/Desktop/user.txt"; // Replace with the actual path to your file
+//        StringBuilder content = new StringBuilder();
+//        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                // Process each line as needed
+//                content.append(line).append("\n");
+//                System.out.println(line);
+//            }
+//        } catch (IOException e) {
+//            System.err.println("Error reading the file: " + e.getMessage());
+//        }
+//        String fileContent = content.toString();
+        String fileContent="CREATE TABLE user (id INT,name VARCHAR(255),age INT,sex INT,phone VARCHAR(20), PRIMARY KEY(id)\n" +
+                ");\n" +
+                "\n";
         return fileContent;
     }
 

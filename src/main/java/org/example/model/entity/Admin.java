@@ -3,15 +3,13 @@ package org.example.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-
-public class UserBase {
-    public UserBase() {
+@TableName("admin")
+public class Admin{
+    public Admin() {
     }
 
     @TableId(type = IdType.AUTO)
     protected int id;
-    protected String name;
 
     public int getId() {
         return id;
@@ -29,16 +27,8 @@ public class UserBase {
         this.name = name;
     }
 
-
-    public UserBase(User user) {
-        this.id = user.getId();
-        this.name= user.getName();
-    }
-    public UserBase(Seller seller){
-        this.id=seller.getId();
-        this.name=seller.getName();
-    }
-    public UserBase(Admin admin){
+    protected String name;
+    public Admin(Admin admin){
         this.id=admin.getId();
         this.name=admin.getName();
     }

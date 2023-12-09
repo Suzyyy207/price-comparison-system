@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CSVReaderExample {
 
-    public static List<String[]> readUserCSV(String filePath) {
+    public static List<String[]> readCSV(String filePath) {
         List<String[]> data = new ArrayList<>();//列表
 
         try (

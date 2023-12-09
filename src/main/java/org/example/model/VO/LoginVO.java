@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginVO {
-    private Integer id;
-    private Integer type;
+
+    private Integer user_id;
+    private Integer user_type;
 //    private String phone;
 //    private String email;
 //    private String idNumber;

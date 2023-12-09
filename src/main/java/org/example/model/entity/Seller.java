@@ -4,11 +4,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-
-public class UserBase {
-    public UserBase() {
+@TableName("seller")
+public class Seller {
+    protected String address;
+    public String getAddress() {
+        return address;
     }
-
+    public void setAddress(String address) {
+        this.address = address;
+    }
     @TableId(type = IdType.AUTO)
     protected int id;
     protected String name;
@@ -28,18 +32,16 @@ public class UserBase {
     public void setName(String name) {
         this.name = name;
     }
+    public void update(Seller newSeller) {
+        setId(newSeller.getId());
+        setName(newSeller.getName());
+        setAddress(newSeller.getAddress());
 
-
-    public UserBase(User user) {
-        this.id = user.getId();
-        this.name= user.getName();
     }
-    public UserBase(Seller seller){
+    public Seller(){}
+    public Seller(Seller seller){
         this.id=seller.getId();
         this.name=seller.getName();
-    }
-    public UserBase(Admin admin){
-        this.id=admin.getId();
-        this.name=admin.getName();
+        this.address=seller.getAddress();
     }
 }
