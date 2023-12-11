@@ -55,7 +55,7 @@ public class DataInsertion {
                     ");\n" +
                     "\n";
             String createGoodsTableSQL ="CREATE TABLE goods (id INT,name VARCHAR(255), location VARCHAR(255),price DOUBLE,"+
-                    "category VARCHAR(255),sellerId INT,platformId INT,productionDate Date,tag VARCHAR(255),PRIMARY KEY(id)\n" +
+                    "minPrice DOUBLE,category VARCHAR(255),sellerId INT,platformId INT,productionDate Date,tag INT,state INT,PRIMARY KEY(id)\n" +
                     ");\n" +
                     "\n";
             System.out.println(createUserTableSQL);

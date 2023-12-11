@@ -17,12 +17,31 @@ public class Goods {
 
     protected double price;
 
+    public double getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(double minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    protected double minPrice;
     protected String category;//商品种类
 
     protected Integer sellerId;
     protected Integer platformId;
-    protected Date producionDate;
-    protected String tag;//用来作为实际上是同一种商品的比较
+    protected Date productionDate;
+    protected Integer tag;//用来作为实际上是同一种商品的比较
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    protected Integer state;//0:下架，1：上架
     public Integer getId() {
         return id;
     }
@@ -79,21 +98,23 @@ public class Goods {
         this.platformId = platformId;
     }
 
-    public Date getProducionDate() {
-        return producionDate;
+    public Date getProductionDate() {
+        return productionDate;
     }
 
-    public void setProducionDate(Date producionDate) {
-        this.producionDate = producionDate;
+    public void setProductionDate(Date productionDate) {
+        this.productionDate = productionDate;
     }
 
-    public String getTag() {
+    public Integer getTag() {
         return tag;
     }
 
-    public void setTag(String tag) {
+    public void setTag(Integer tag) {
         this.tag = tag;
     }
 
-
+    public void update(){
+//!!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
 }
