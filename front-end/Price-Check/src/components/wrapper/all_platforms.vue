@@ -30,20 +30,20 @@
         platform_list: [],
       };
     },
-    mounted() {
-        // 模拟异步请求后端数据
-            setTimeout(() => {
-                // 假设这是后端返回的商品数据
-                const backendData = [
-                { id:1, name: 'TY', age: 18, telephone:'188888888',address:'China'},
-                { id:2, name: 'JW', age: 18,telephone:'188888887', address:'HH'},
-                // ... 更多商品数据
-                ];
-        
-                this.platform_list = backendData;
-                this.loading = false;
-            }, 1000); // 模拟1秒后获取到数据
-        }
+    created (){
+        this.get_all_platforms()
+    },
+    methods: {
+        get_all_platforms() {
+            const manager_id = window.localStorage.getItem('user_id');
+            this.$axios.post('http://localhost:8000/get_all_products',{
+              id: manager_id
+            })
+            .then(res => {
+                this.product_list = this.product_list.concat(res.data.data);
+            })
+        },
+    }
     
   };
 </script>

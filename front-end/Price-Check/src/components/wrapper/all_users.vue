@@ -30,20 +30,20 @@
         user_list: [],
       };
     },
-    mounted() {
-        // 模拟异步请求后端数据
-            setTimeout(() => {
-                // 假设这是后端返回的商品数据
-                const backendData = [
-                { id:1, name: 'TY', age: 10, sex:'Male', 'telephone':'188888888'},
-                { id:2, name: 'JW', age: 12, sex:'Male','telephone':'188888887'},
-                // ... 更多商品数据
-                ];
-        
-                this.user_list = backendData;
-                this.loading = false;
-            }, 1000); // 模拟1秒后获取到数据
-        }
+    created (){
+        this.get_all_users()
+    },
+    methods: {
+        get_all_users() {
+            const manager_id = window.localStorage.getItem('user_id');
+            this.$axios.post('http://localhost:8000/get_all_users',{
+              id: manager_id
+            })
+            .then(res => {
+                this.seller_list = this.user_list.concat(res.data.data);
+            })
+        },
+    }
     
   };
 </script>

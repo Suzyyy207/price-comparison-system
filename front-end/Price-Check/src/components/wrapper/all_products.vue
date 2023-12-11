@@ -2,7 +2,7 @@
 
 <template>
     <div class="product-list">
-      <div v-if="loading">Loading...</div>
+      <div v-if="product_list.length === 0">目前还没有任何商品^ ^</div>
       <div v-else>
         <div v-for="product in product_list" :key="product.id" class="product-item" @click = "to_product(product)">
           <!--img :src="product.image" alt="Product Image" class="product-image"-->
@@ -29,23 +29,22 @@
     data() {
       return {
         product_list: [],
-        loading: false
       };
     },
-    mounted() {
-        // 模拟异步请求后端数据
-            setTimeout(() => {
-                // 假设这是后端返回的商品数据
-                const backendData = [
-                { id:1, name: 'TY', price: 127, seller_name:'Male', category:'bread',min_price:1, platform_name:'hihi'},
-                { id:1, name: 'TY', price: 127, seller_name:'Male', category:'bread',min_price:1, platform_name:'hihi'},
-                // ... 更多商品数据
-                ];
-        
-                this.product_list = backendData;
-                this.loading = false;
-            }, 1000); // 模拟1秒后获取到数据
-        }
+    created (){
+        this.get_all_products()
+    },
+    methods: {
+        get_all_products() {
+            const manager_id = window.localStorage.getItem('user_id');
+            this.$axios.post('http://localhost:8000/get_all_products',{
+              id: manager_id
+            })
+            .then(res => {
+                this.product_list = this.product_list.concat(res.data.data);
+            })
+        },
+    }
   };
   </script>
   

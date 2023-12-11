@@ -30,20 +30,20 @@
         seller_list: [],
       };
     },
-    mounted() {
-        // 模拟异步请求后端数据
-            setTimeout(() => {
-                // 假设这是后端返回的商品数据
-                const backendData = [
-                { id:1, name: 'TY', address: 'SM', telephone:'188888888'},
-                { id:2, name: 'JW', address:'SM',telephone:'188888887'},
-                // ... 更多商品数据
-                ];
-        
-                this.seller_list = backendData;
-                this.loading = false;
-            }, 1000); // 模拟1秒后获取到数据
-        }
+    created (){
+        this.get_all_sellers()
+    },
+    methods: {
+        get_all_sellers() {
+            const manager_id = window.localStorage.getItem('user_id');
+            this.$axios.post('http://localhost:8000/get_all_sellers',{
+              id: manager_id
+            })
+            .then(res => {
+                this.seller_list = this.seller_list.concat(res.data.data);
+            })
+        },
+    }
     
   };
 </script>
