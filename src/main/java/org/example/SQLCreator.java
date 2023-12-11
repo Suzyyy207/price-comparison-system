@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class SQLCreator{
 
-    public static String createUserTable(Connection connection) throws SQLException {
+//    public static String createUserTable(Connection connection) throws SQLException {
 //        if(existSQL(connection,"user")){
 //            return null;
 //        }
@@ -31,11 +31,11 @@ public class SQLCreator{
 //            System.err.println("Error reading the file: " + e.getMessage());
 //        }
 //        String fileContent = content.toString();
-        String fileContent="CREATE TABLE user (id INT,name VARCHAR(255),age INT,sex INT,phone VARCHAR(20), PRIMARY KEY(id)\n" +
-                ");\n" +
-                "\n";
-        return fileContent;
-    }
+//        String fileContent="CREATE TABLE user (id INT,name VARCHAR(255),age INT,sex INT,phone VARCHAR(20), PRIMARY KEY(id)\n" +
+//                ");\n" +
+//                "\n";
+//        return fileContent;
+//    }
 
     public static String generateInsertDataSQL(String tableName, String[] columns, List<String[]> data) {
         StringBuilder sql = new StringBuilder("INSERT IGNORE INTO ").append(tableName).append(" (");

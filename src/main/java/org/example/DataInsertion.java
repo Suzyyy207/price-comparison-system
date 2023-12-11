@@ -33,6 +33,12 @@ public class DataInsertion {
             List<String[]> adminData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/admin.csv");
             String[] adminColumns = adminData.get(0);//这一行是属性
             adminData.remove(0);
+            List<String[]> platformData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/platform.csv");
+            String[] platformColumns = platformData.get(0);//这一行是属性
+            platformData.remove(0);
+            List<String[]> goodsData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/goods.csv");
+            String[] goodsColumns = goodsData.get(0);//这一行是属性
+            goodsData.remove(0);
             Connection connection = establishConnection();//建立连接
 
             //创建user表
@@ -45,17 +51,21 @@ public class DataInsertion {
             String createAdminTableSQL ="CREATE TABLE admin (id INT,name VARCHAR(255), PRIMARY KEY(id)\n" +
                     ");\n" +
                     "\n";
-            if(createUserTableSQL==null){System.out.println("创建user表失败！\n");}
-            else{
-                System.out.println(createUserTableSQL);
-                executeSQL(connection, createUserTableSQL);
-                //user表的插入
-                String insertUserDataSQL = SQLCreator.generateInsertDataSQL("user", userColumns, userData);
-                System.out.println(insertUserDataSQL);
-                String EncodedSQL1 = new String(insertUserDataSQL.getBytes("UTF-8"), "UTF-8");
-                PreparedStatement preparedStatement1 = connection.prepareStatement(EncodedSQL1);
-                preparedStatement1.executeUpdate();
-            }
+            String createPlatformTableSQL ="CREATE TABLE platform (id INT,name VARCHAR(255), PRIMARY KEY(id)\n" +
+                    ");\n" +
+                    "\n";
+            String createGoodsTableSQL ="CREATE TABLE goods (id INT,name VARCHAR(255), location VARCHAR(255),price DOUBLE,"+
+                    "category VARCHAR(255),sellerId INT,platformId INT,productionDate Date,tag VARCHAR(255),PRIMARY KEY(id)\n" +
+                    ");\n" +
+                    "\n";
+            System.out.println(createUserTableSQL);
+            executeSQL(connection, createUserTableSQL);
+            //user表的插入
+            String insertUserDataSQL = SQLCreator.generateInsertDataSQL("user", userColumns, userData);
+            System.out.println(insertUserDataSQL);
+            String EncodedSQL1 = new String(insertUserDataSQL.getBytes("UTF-8"), "UTF-8");
+            PreparedStatement preparedStatement1 = connection.prepareStatement(EncodedSQL1);
+            preparedStatement1.executeUpdate();
 
             System.out.println(createSellerTableSQL);
             executeSQL(connection, createSellerTableSQL);
@@ -74,6 +84,25 @@ public class DataInsertion {
             String EncodedSQL3 = new String(insertAdminDataSQL.getBytes("UTF-8"), "UTF-8");
             PreparedStatement preparedStatement3 = connection.prepareStatement(EncodedSQL3);
             preparedStatement3.executeUpdate();
+
+            System.out.println(createPlatformTableSQL);
+            executeSQL(connection, createPlatformTableSQL);
+            //platform表的插入
+            String insertPlatformDataSQL = SQLCreator.generateInsertDataSQL("platform", platformColumns, platformData);
+            System.out.println(insertPlatformDataSQL);
+            String EncodedSQL4 = new String(insertPlatformDataSQL.getBytes("UTF-8"), "UTF-8");
+            PreparedStatement preparedStatement4 = connection.prepareStatement(EncodedSQL4);
+            preparedStatement4.executeUpdate();
+
+            System.out.println(createGoodsTableSQL);
+            executeSQL(connection, createGoodsTableSQL);
+            //goods表的插入
+            String insertGoodsDataSQL = SQLCreator.generateInsertDataSQL("goods", goodsColumns, goodsData);
+            System.out.println(insertGoodsDataSQL);
+            String EncodedSQL5 = new String(insertGoodsDataSQL.getBytes("UTF-8"), "UTF-8");
+            PreparedStatement preparedStatement5 = connection.prepareStatement(EncodedSQL5);
+            preparedStatement5.executeUpdate();
+
             connection.close();
         } catch (SQLException | UnsupportedEncodingException e) {
             e.printStackTrace();
