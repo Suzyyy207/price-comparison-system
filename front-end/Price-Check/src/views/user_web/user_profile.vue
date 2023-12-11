@@ -47,10 +47,12 @@ import top_nav from '../../components/trivial/top_nav.vue'
         this.get_user_profile();
     },
     methods: {
-      getUserInfo() {
+      get_user_profile() {
         var localStorage = window.localStorage;
-        this.$axios.post('/get_user_profile', {
-            user_id: localStorage.getItem("user_id")
+        console.log(localStorage.getItem("user_id"));
+        this.$axios.post('http://localhost:8000/get_user_profile', {
+          id: localStorage.getItem("user_id"),
+          
         })
         .then(res => {
             const user = res.data.data;
@@ -58,6 +60,7 @@ import top_nav from '../../components/trivial/top_nav.vue'
             this.sex = user.sex;
             this.age = user.age;
             this.telephone = user.telephone;
+            this.loading =false;
         })
       },
       edit_profile() {

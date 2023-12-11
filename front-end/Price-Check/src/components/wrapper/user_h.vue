@@ -34,9 +34,9 @@
     methods: {
         get_products() {
             const user_id = window.localStorage.getItem('user_id');
-            this.$axios.post('/get_user_products',{
+            this.$axios.post('http://localhost:8000/get_user_products',{
               get_type: 0,
-              user_id: user_id
+              id: user_id
             })
             .then(res => {
                 this.products_list = this.products_list.concat(res.data.data);
@@ -48,20 +48,6 @@
           this.$router.push({name:'product_detail'});
         }
     }
-    /*mounted() {
-      // 模拟异步请求后端数据
-      setTimeout(() => {
-        // 假设这是后端返回的商品数据
-        const backendData = [
-          { id:1, name: 'PanPan', min_price: 10, price: 19.99, goods:'Bread', seller:'P',platform:'TB'},
-          { id: 2, name: 'DingDing', min_price: 12.7, price: 29.99, goods:'Bread', seller:'X',platform:'JD'},
-          // ... 更多商品数据
-        ];
-  
-        this.products = backendData;
-        this.loading = false;
-      }, 1000); // 模拟1秒后获取到数据
-    }*/
   };
   </script>
   

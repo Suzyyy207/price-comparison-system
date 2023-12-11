@@ -38,8 +38,8 @@
     methods: {
         get_products() {
             const seller_id = window.localStorage.getItem('user_id');
-            this.$axios.post('/get_seller_products',{
-              seller_id: seller_id
+            this.$axios.post('http://localhost:8000/get_seller_products',{
+              id: seller_id
             })
             .then(res => {
                 this.products_list = this.products_list.concat(res.data.data);

@@ -40,19 +40,20 @@ import top_nav from '../../components/trivial/seller_nav.vue'
       };
     },
     created() {
-        this.get_user_profile();
+        this.get_seller_profile();
     },
     methods: {
-      getUserInfo() {
+      get_seller_profile(){
         var localStorage = window.localStorage;
-        this.$axios.post('/get_seller_profile', {
-            user_id: localStorage.getItem("user_id")
+        this.$axios.post('http://localhost:8000/get_seller_profile', {
+            id: localStorage.getItem("user_id")
         })
         .then(res => {
             const user = res.data.data;
             this.name = user.username;
             this.address = user.address;
             this.telephone = user.telephone;
+            this.loading = false;
         })
       },
       edit_profile() {
