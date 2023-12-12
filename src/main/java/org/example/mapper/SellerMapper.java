@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Select;
 import org.example.model.entity.Seller;
 import org.example.model.entity.User;
 
+import java.util.List;
+
 @Mapper
 public interface SellerMapper extends BaseMapper<Seller> {
     @Select("select * from seller where id = #{id}")
@@ -19,4 +21,6 @@ public interface SellerMapper extends BaseMapper<Seller> {
     //   查询用户，根据用户address查询信息   select * from seller where address =
     @Select("select * from seller where address = #{address}")
     Seller findByAddress(@Param("address")String address);
+    @Select("select * from seller")
+    List<Seller> findAll();
 }

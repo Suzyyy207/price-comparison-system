@@ -23,19 +23,36 @@ public class GoodsService {
         this.sellerMapper=sellerMapper;
         this.platformMapper=platformMapper;
     }
-    public List<Goods> getAllGoods(){
-        return goodsMapper.findValidGoods();
+    public List<ProductRE> getAllGoods(){
+        List<Goods> allGoods=goodsMapper.findValidGoods();
+        List<ProductRE> allProducts=new ArrayList<>();
+        for(int i=0;i< allGoods.size();i++){
+            Goods a=allGoods.get(i);
+            ProductRE p=translateGoods(a);
+            allProducts.add(p);
+        }
+        return allProducts;
     }
     public List<ProductRE> getSellerGoods(Integer sellerId){
         List<Goods> sellerGoods = goodsMapper.findBySellerId(sellerId);
         List<ProductRE> sellerProducts=new ArrayList<>();
         for(int i=0;i<sellerGoods.size();i++){
             Goods a=sellerGoods.get(i);
-            String sellerName= sellerMapper.findById(sellerId).getName();
-            String platformName= platformMapper.findById(a.getPlatformId()).getName();
-            ProductRE p=new ProductRE(a,sellerName,platformName);
+            ProductRE p=translateGoods(a);
             sellerProducts.add(p);
         }
         return sellerProducts;
+    }
+    public ProductRE getGoodsById(Integer id){
+        Goods goods=goodsMapper.findById(id);
+        ProductRE p=translateGoods(goods);
+        return p;
+    }
+
+    public ProductRE translateGoods(Goods goods){
+        String sellerName= sellerMapper.findById(goods.getSellerId()).getName();
+        String platformName= platformMapper.findById(goods.getPlatformId()).getName();
+        ProductRE p=new ProductRE(goods,sellerName,platformName);
+        return p;
     }
 }

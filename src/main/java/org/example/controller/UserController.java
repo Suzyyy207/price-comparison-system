@@ -68,19 +68,11 @@ public class UserController {
         }
         return new Response<>(Response.SUCCESS,"返回用户信息成功",user);
     }
-    @PostMapping("get_seller_profile")
-    public Response<Seller> getSellerInfoById(@RequestBody IdVO idVO){
-        Seller seller=sellerService.getSellerById(idVO.getUser_id());
-        if(seller==null){
-            return new Response<>(Response.FAIL,"不存在该商户",null);
-        }
-        return new Response<>(Response.SUCCESS,"返回商户信息成功",seller);
-    }
     @PostMapping("get_user_products")
-    public Response<List<Goods>> getProductOrCollect(@RequestBody GetProductOrCollectVO getProductOrCollectVO){
+    public Response<List<ProductRE>> getProductOrCollect(@RequestBody GetProductOrCollectVO getProductOrCollectVO){
         Integer type= getProductOrCollectVO.getGet_type();
         if(type==0){
-            List<Goods> allGoods= goodsService.getAllGoods();
+            List<ProductRE> allGoods= goodsService.getAllGoods();
             if(allGoods!=null){
                 return new Response<>(Response.SUCCESS,"返回所有商品成功",allGoods);
             }
@@ -92,12 +84,5 @@ public class UserController {
             return new Response<>(Response.FAIL,"get_type错误",null);
         }
         return new Response<>(Response.FAIL,"返回失败",null);
-    }
-    @PostMapping("get_seller_products")
-    public Response<List<ProductRE>> getSellerProducts(@RequestBody IdVO idVO){
-        Integer sellerId= idVO.getUser_id();
-        List<ProductRE> sellerGoods=goodsService.getSellerGoods(sellerId);
-        return new Response<>(Response.SUCCESS,"返回该商家所有商品成功",sellerGoods);
-
     }
 }
