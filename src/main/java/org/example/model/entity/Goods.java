@@ -32,7 +32,7 @@ public class Goods {
     protected Integer platformId;
     protected Date productionDate;
     protected Integer tag;//用来作为实际上是同一种商品的比较
-
+    protected Integer state;//0:下架，1：上架
     public Integer getState() {
         return state;
     }
@@ -41,7 +41,7 @@ public class Goods {
         this.state = state;
     }
 
-    protected Integer state;//0:下架，1：上架
+
     public Integer getId() {
         return id;
     }

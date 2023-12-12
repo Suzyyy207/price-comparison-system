@@ -42,19 +42,19 @@ public class DataInsertion {
             Connection connection = establishConnection();//建立连接
 
             //创建user表
-            String createUserTableSQL ="CREATE TABLE user (id INT,name VARCHAR(255),age INT,sex INT,phone VARCHAR(20), PRIMARY KEY(id)\n" +
+            String createUserTableSQL ="CREATE TABLE user (id INT AUTO_INCREMENT,name VARCHAR(255),age INT,sex INT,phone VARCHAR(20), PRIMARY KEY(id)\n" +
                     ");\n" +
                     "\n";
-            String createSellerTableSQL ="CREATE TABLE seller (id INT,name VARCHAR(255),address VARCHAR(255), PRIMARY KEY(id)\n" +
+            String createSellerTableSQL ="CREATE TABLE seller (id INT AUTO_INCREMENT,name VARCHAR(255),address VARCHAR(255), PRIMARY KEY(id)\n" +
                     ");\n" +
                     "\n";
-            String createAdminTableSQL ="CREATE TABLE admin (id INT,name VARCHAR(255), PRIMARY KEY(id)\n" +
+            String createAdminTableSQL ="CREATE TABLE admin (id INT AUTO_INCREMENT,name VARCHAR(255), PRIMARY KEY(id)\n" +
                     ");\n" +
                     "\n";
-            String createPlatformTableSQL ="CREATE TABLE platform (id INT,name VARCHAR(255), PRIMARY KEY(id)\n" +
+            String createPlatformTableSQL ="CREATE TABLE platform (id INT AUTO_INCREMENT,name VARCHAR(255), PRIMARY KEY(id)\n" +
                     ");\n" +
                     "\n";
-            String createGoodsTableSQL ="CREATE TABLE goods (id INT,name VARCHAR(255), location VARCHAR(255),price DOUBLE,"+
+            String createGoodsTableSQL ="CREATE TABLE goods (id INT AUTO_INCREMENT,name VARCHAR(255), location VARCHAR(255),price DOUBLE,"+
                     "minPrice DOUBLE,category VARCHAR(255),sellerId INT,platformId INT,productionDate Date,tag INT,state INT,PRIMARY KEY(id)\n" +
                     ");\n" +
                     "\n";

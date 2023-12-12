@@ -1,9 +1,11 @@
 package org.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.example.model.VO.InsertVO;
 import org.example.model.entity.Seller;
 import org.example.model.entity.User;
 
@@ -23,4 +25,6 @@ public interface SellerMapper extends BaseMapper<Seller> {
     Seller findByAddress(@Param("address")String address);
     @Select("select * from seller")
     List<Seller> findAll();
+    @Insert("insert into seller (name,address) values (#{insertVO.name}, #{insertVO.address})")
+    int insert(@Param("insertVO") InsertVO insertVO);
 }

@@ -2,7 +2,9 @@ package org.example.controller;
 
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.IdVO;
+import org.example.model.VO.InsertVO;
 import org.example.model.entity.Seller;
+import org.example.model.entity.User;
 import org.example.service.AdminService;
 import org.example.service.GoodsService;
 import org.example.service.SellerService;
@@ -39,6 +41,6 @@ public class SellerController {
         Integer sellerId= idVO.getUser_id();
         List<ProductRE> sellerGoods=goodsService.getSellerGoods(sellerId);
         return new Response<>(Response.SUCCESS,"返回该商家所有商品成功",sellerGoods);
-
     }
+
 }
