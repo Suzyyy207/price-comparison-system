@@ -61,15 +61,6 @@ public class GoodsService {
         return goodsMapper.insert(insertGoodsVO)==1;
     }
     public Boolean updateGoods(UpdateGoodsVO updateGoodsVO){
-        Integer id=updateGoodsVO.getId();
-        Double minPrice;
-        if(updateGoodsVO.getPrice()<getGoodsById(id).getMinPrice()){
-            minPrice= updateGoodsVO.getPrice();
-        }
-        else{
-            minPrice=getGoodsById(id).getMinPrice();
-        }
-        //!!!!!!!!!!!!!!!!!插入价格变动记录
-        return goodsMapper.update(updateGoodsVO,minPrice)==1;
+        return goodsMapper.update(updateGoodsVO)==1;
     }
 }
