@@ -3,6 +3,7 @@ package org.example.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 import org.example.model.VO.InsertVO;
+import org.example.model.VO.UpdateVO;
 import org.example.model.entity.User;
 
 import java.util.List;
@@ -29,6 +30,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Insert("insert into user (name, age,sex,phone) values (#{insertVO.name}, #{insertVO.age},#{insertVO.sex}, #{insertVO.phone})")
     int insert(@Param("insertVO") InsertVO insertVO);
-//    @Update("update t_user set username=#{updateInformationVO.username},phone=#{updateInformationVO.phone},email=#{updateInformationVO.email} where idNumber=#{updateInformationVO.idNumber}")
-//    int update(@Param("updateInformationVO")UpdateInformationVO updateInformationVO);
+    @Update("update user set name=#{updateVO.name},phone=#{updateVO.phone},age=#{updateVO.age},sex=#{updateVO.sex} where id=#{updateVO.id}")
+    int update(@Param("updateVO") UpdateVO updateVO);
 }

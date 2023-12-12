@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.IdVO;
 import org.example.model.VO.InsertVO;
+import org.example.model.VO.UpdateVO;
 import org.example.model.entity.Seller;
 import org.example.model.entity.User;
 import org.example.service.AdminService;
@@ -61,7 +62,6 @@ public class AdminController {
     }
     @PostMapping("insert_user")
     public Response<Boolean> insertUser(@RequestBody InsertVO insertVO){
-        Integer type=insertVO.getType();
         Boolean succeed=userService.insertUser(insertVO);
         if(succeed==true){
             return new Response<>(Response.SUCCESS,"插入用户成功",true);
@@ -71,12 +71,37 @@ public class AdminController {
 
     @PostMapping("insert_seller")
     public Response<Boolean> insertSeller(@RequestBody InsertVO insertVO){
-        Integer type=insertVO.getType();
         Boolean succeed=sellerService.insertSeller(insertVO);
         if(succeed==true){
             return new Response<>(Response.SUCCESS,"插入商家成功",true);
         }
         return new Response<>(Response.FAIL,"插入商家失败",false);
     }
+    @PostMapping("update_user")
+    public Response<Boolean> updateUser(@RequestBody UpdateVO updateVO){
+        Integer id=updateVO.getId();
+        User user = userService.getUserById(id);
+        if(updateVO.getAge()==0){updateVO.setAge(user.getAge());}
+        if(updateVO.getName()==""){updateVO.setName(user.getName());}
+        if(updateVO.getSex()==0){updateVO.setSex(user.getSex());}
+        if(updateVO.getPhone()==""){updateVO.setPhone(user.getPhone());}
+        Boolean succeed=userService.updateUser(updateVO);
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"修改该用户信息成功",true);
+        }
+        return new Response<>(Response.FAIL,"修改该用户信息失败",false);
+    }
 
+    @PostMapping("update_seller")
+    public Response<Boolean> updateSeller(@RequestBody UpdateVO updateVO){
+        Integer id=updateVO.getId();
+        Seller seller = sellerService.getSellerById(id);
+        if(updateVO.getName()==""){updateVO.setName(seller.getName());}
+        if(updateVO.getAddress()==""){updateVO.setPhone(seller.getAddress());}
+        Boolean succeed=sellerService.updateSeller(updateVO);
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"修改该商家信息成功",true);
+        }
+        return new Response<>(Response.FAIL,"修改该商家信息失败",false);
+    }
 }

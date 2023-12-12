@@ -2,7 +2,9 @@ package org.example.controller;
 
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.IdVO;
+import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.InsertVO;
+import org.example.model.VO.UpdateGoodsVO;
 import org.example.model.entity.Seller;
 import org.example.model.entity.User;
 import org.example.service.AdminService;
@@ -42,5 +44,21 @@ public class SellerController {
         List<ProductRE> sellerGoods=goodsService.getSellerGoods(sellerId);
         return new Response<>(Response.SUCCESS,"返回该商家所有商品成功",sellerGoods);
     }
+    @PostMapping("insert_goods")
+    public Response<Boolean> insertGoods(@RequestBody InsertGoodsVO insertGoodsVO){
+        Boolean succeed=goodsService.insertGoods(insertGoodsVO);
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"插入商品成功",true);
+        }
+        return new Response<>(Response.FAIL,"插入商品失败",false);
 
+    }
+    @PostMapping("update_goods")
+    public Response<Boolean> updateGoods(@RequestBody UpdateGoodsVO updateGoodsVO){
+        Boolean succeed = goodsService.updateGoods(updateGoodsVO);
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"修改商品成功",true);
+        }
+        return new Response<>(Response.FAIL,"修改商品失败",false);
+    }
 }

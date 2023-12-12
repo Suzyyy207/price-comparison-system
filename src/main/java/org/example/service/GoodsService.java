@@ -4,6 +4,8 @@ import org.example.mapper.GoodsMapper;
 import org.example.mapper.PlatformMapper;
 import org.example.mapper.SellerMapper;
 import org.example.model.RE.ProductRE;
+import org.example.model.VO.InsertGoodsVO;
+import org.example.model.VO.UpdateGoodsVO;
 import org.example.model.entity.Goods;
 import org.example.model.entity.Platform;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +56,20 @@ public class GoodsService {
         String platformName= platformMapper.findById(goods.getPlatformId()).getName();
         ProductRE p=new ProductRE(goods,sellerName,platformName);
         return p;
+    }
+    public Boolean insertGoods(InsertGoodsVO insertGoodsVO){
+        return goodsMapper.insert(insertGoodsVO)==1;
+    }
+    public Boolean updateGoods(UpdateGoodsVO updateGoodsVO){
+        Integer id=updateGoodsVO.getId();
+        Double minPrice;
+        if(updateGoodsVO.getPrice()<getGoodsById(id).getMinPrice()){
+            minPrice= updateGoodsVO.getPrice();
+        }
+        else{
+            minPrice=getGoodsById(id).getMinPrice();
+        }
+        //!!!!!!!!!!!!!!!!!插入价格变动记录
+        return goodsMapper.update(updateGoodsVO,minPrice)==1;
     }
 }
