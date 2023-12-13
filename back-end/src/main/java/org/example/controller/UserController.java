@@ -33,7 +33,7 @@ public class UserController {
         }
     }
     @PostMapping("get_user_profile")
-    public Response<UserBase> getUserInfoById(@RequestParam("id") Integer id){
+    public Response<UserBase> getUserInfoById(@RequestBody Integer id){
         UserBase user=userService.getUserById(id);
         if(user==null){
             return new Response<>(Response.FAIL,"不存在该用户",null);
@@ -41,7 +41,7 @@ public class UserController {
         return new Response<>(Response.SUCCESS,"返回用户信息成功",user);
     }
     @PostMapping("get_seller_profile")
-    public Response<UserBase> getSellerInfoById(@RequestParam("id") Integer id){
+    public Response<UserBase> getSellerInfoById(@RequestBody Integer id){
         UserBase user=userService.getUserById(id);
         if(user==null){
             return new Response<>(Response.FAIL,"不存在该商户",null);
