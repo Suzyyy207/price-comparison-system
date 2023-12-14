@@ -1,10 +1,12 @@
 package org.example.service;
 
 import org.example.mapper.CollectMapper;
+import org.example.mapper.MessageMapper;
 import org.example.mapper.UserMapper;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.InsertVO;
 import org.example.model.VO.UpdateVO;
+import org.example.model.entity.Message;
 import org.example.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,12 @@ import java.util.List;
 public class UserService {
     private final UserMapper userMapper;
     private final CollectMapper collectMapper;
+    private final MessageMapper messageMapper;
     @Autowired
-    public UserService(UserMapper userMapper,CollectMapper collectMapper){
+    public UserService(UserMapper userMapper,CollectMapper collectMapper,MessageMapper messageMapper){
         this.userMapper=userMapper;
         this.collectMapper=collectMapper;
+        this.messageMapper=messageMapper;
     }
     public User getUserById(int id) {
         return userMapper.findById(id);
@@ -31,5 +35,8 @@ public class UserService {
     }
     public List<ProductRE> getGoodsByUserId(Integer userId){
         return collectMapper.findByUserId(userId);
+    }
+    public List<Message> getAllMessages(Integer userId){
+        return messageMapper.findByUserId(userId);
     }
 }

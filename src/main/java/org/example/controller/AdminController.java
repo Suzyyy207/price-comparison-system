@@ -4,6 +4,7 @@ import org.example.model.RE.ProductRE;
 import org.example.model.VO.IdVO;
 import org.example.model.VO.InsertVO;
 import org.example.model.VO.UpdateVO;
+import org.example.model.entity.Platform;
 import org.example.model.entity.Seller;
 import org.example.model.entity.User;
 import org.example.service.AdminService;
@@ -58,6 +59,16 @@ public class AdminController {
         }
         else{
             return new Response<>(Response.FAIL,"返回所有商家失败",null);
+        }
+    }
+    @PostMapping("get_all_platforms")
+    public Response<List<Platform>> getAllPlatforms(@RequestBody IdVO idVO){
+        List<Platform> platforms=adminService.getAllPlatforms();
+        if(platforms!=null){
+            return new Response<>(Response.SUCCESS,"返回所有平台成功",platforms);
+        }
+        else{
+            return new Response<>(Response.FAIL,"返回所有平台失败",null);
         }
     }
     @PostMapping("insert_user")

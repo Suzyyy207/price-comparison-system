@@ -3,10 +3,7 @@ package org.example.controller;
 import org.example.model.RE.InfoRE;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.*;
-import org.example.model.entity.Admin;
-import org.example.model.entity.Goods;
-import org.example.model.entity.Seller;
-import org.example.model.entity.User;
+import org.example.model.entity.*;
 import org.example.service.AdminService;
 import org.example.service.GoodsService;
 import org.example.service.SellerService;
@@ -87,5 +84,15 @@ public class UserController {
             return new Response<>(Response.FAIL,"get_type错误",null);
         }
         return new Response<>(Response.FAIL,"返回失败",null);
+    }
+    @PostMapping("get_all_messages")
+    public Response<List<Message>> getAllMessages(@RequestBody IdVO idVO){
+        List<Message> messages=userService.getAllMessages(idVO.getUser_id());
+        if(messages!=null){
+            return new Response<>(Response.SUCCESS,"返回消息列表成功",messages);
+        }
+        else{
+            return new Response<>(Response.FAIL,"返回消息列表失败",null);
+        }
     }
 }

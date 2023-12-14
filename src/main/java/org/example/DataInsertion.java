@@ -64,6 +64,9 @@ public class DataInsertion {
             String createCollectTableSQL = "CREATE TABLE collect (id INT AUTO_INCREMENT,userId INT,goodsId INT,expectPrice DOUBLE,state INT, PRIMARY KEY(id)\n" +
                     ");\n" +
                     "\n";
+            String createMessageTableSQL = "CREATE TABLE message (id INT AUTO_INCREMENT,goodsId INT,userId INT,name VARCHAR(255),currentPrice DOUBLE,targetPrice DOUBLE,date DATE,isRead INT, PRIMARY KEY(id)\n" +
+                    ");\n" +
+                    "\n";
             System.out.println(createUserTableSQL);
             executeSQL(connection, createUserTableSQL);
             //user表的插入
@@ -117,6 +120,11 @@ public class DataInsertion {
             String EncodedSQL6 = new String(insertCollectDataSQL.getBytes("UTF-8"), "UTF-8");
             PreparedStatement preparedStatement6 = connection.prepareStatement(EncodedSQL6);
             preparedStatement6.executeUpdate();
+
+
+            System.out.println(createMessageTableSQL);
+            executeSQL(connection, createMessageTableSQL);
+            //Message表的插入还没写
 
             connection.close();
         } catch (SQLException | UnsupportedEncodingException e) {
