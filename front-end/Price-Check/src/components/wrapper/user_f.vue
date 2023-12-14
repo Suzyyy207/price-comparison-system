@@ -4,20 +4,20 @@
     <div class="product-list">
       <div v-if="loading">Loading...</div>
       <div v-else>
-        <div v-for="product in products" :key="product.id" class="product-item" @click = "to_product(product)">
+        <div v-for="product in products_list" :key="product.id" class="product-item" @click = "to_product(product)">
           <!--img :src="product.image" alt="Product Image" class="product-image"-->
           <div class="product-details">
             <h3>{{ product.name }}</h3>
             <p>价格：${{ product.price }}</p>
-            <p>历史最低：${{ product.min_price }}</p>
+            <p>历史最低：${{ product.minPrice }}</p>
           </div>
           <div class="product-details">
             <p>商品类别：{{ product.category }}</p>
-            <p>卖家：{{ product.seller_name }}</p>
-            <p>平台：{{ product.platform_name }}</p>
+            <p>卖家：{{ product.sellerName }}</p>
+            <p>平台：{{ product.platformName }}</p>
           </div>
           <div class="product-details">
-            <p>我设定的期望价格 {{ product.platform }}</p>
+            <p>我设定的期望价格 {{ product.target }}</p>
             <div>
               <input v-model="new_target_price" placeholder="输入两位小数">
               <button @click="update_target_price">设定期望价格</button>
@@ -41,11 +41,12 @@
     methods: {
         get_collects() {
             const user_id = window.localStorage.getItem('user_id');
-            this.$axios.post('/get_user_products',{
+            this.$axios.post('http://localhost:8000/get_user_products',{
               get_type: 1,
               user_id: user_id
             })
             .then(res => {
+              console.log(res.data.data);
                 this.products_list = this.products_list.concat(res.data.data);
             })
         },

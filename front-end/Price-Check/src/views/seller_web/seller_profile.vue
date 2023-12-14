@@ -15,14 +15,14 @@ import top_nav from '../../components/trivial/seller_nav.vue'
         <div v-if="loading">加载中...</div>
         <div v-else>
           <div class="info">
-            <label>商家名:</label> {{ user.name }}
+            <label>商家名:</label> {{ name }}
           </div>
           <div class="info">
-            <label>地址:</label> {{ user.address }}
+            <label>地址:</label> {{ address }}
           </div>
-          <div class="info">
-            <label>电话:</label> {{ user.telephone }}
-          </div>
+          <!--div class="info">
+            <label>电话:</label> {{ telephone }}
+          </div-->
           <button @click="edit_profile">编辑商家信息</button>
         </div>
       </div>
@@ -46,13 +46,14 @@ import top_nav from '../../components/trivial/seller_nav.vue'
       get_seller_profile(){
         var localStorage = window.localStorage;
         this.$axios.post('http://localhost:8000/get_seller_profile', {
-            id: localStorage.getItem("user_id")
+            user_id: localStorage.getItem("user_id")
         })
         .then(res => {
             const user = res.data.data;
-            this.name = user.username;
+            console.log(res.data.data);
+            this.name = user.name;
             this.address = user.address;
-            this.telephone = user.telephone;
+            this.telephone = user.phone;
             this.loading = false;
         })
       },

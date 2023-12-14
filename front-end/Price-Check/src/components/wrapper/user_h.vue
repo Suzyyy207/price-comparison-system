@@ -4,17 +4,17 @@
     <div class="product-list">
       <div v-if="products_list.length === 0">目前还没有任何商品上架^^</div>
       <div v-else>
-        <div v-for="product in products" :key="product.id" class="product-item" @click = "to_product(product)">
+        <div v-for="product in products_list" :key="product.id" class="product-item" @click = "to_product(product)">
           <!--img :src="product.image" alt="Product Image" class="product-image"-->
           <div class="product-details">
-            <h3>{{ product.shop_name }}</h3>
+            <h3>{{ product.name }}</h3>
             <p>价格：${{ product.price }}</p>
-            <p>历史最低：${{ product.min_price }}</p>
+            <p>历史最低：${{ product.minPrice }}</p>
           </div>
           <div class="product-details">
             <p>商品类别：{{ product.category }}</p>
-            <p>卖家：{{ product.seller_name }}</p>
-            <p>平台：{{ product.platform_name }}</p>
+            <p>卖家：{{ product.sellerName }}</p>
+            <p>平台：{{ product.platformName }}</p>
           </div>
         </div>
       </div>

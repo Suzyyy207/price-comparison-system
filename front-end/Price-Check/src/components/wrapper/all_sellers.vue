@@ -8,12 +8,12 @@
           <!--img :src="product.image" alt="Product Image" class="product-image"-->
           <div class="product-details">
             <h3>{{ seller.name }}</h3>
-            <p>性别：{{ seller.sex }}</p>
+            <!--p>性别：{{ seller.sex }}</p-->
           </div>
           <div class="product-details">
             <h3>Datail</h3>
             <p>地址：{{ seller.address }}</p>
-            <p>电话：{{ seller.telephone }}</p>
+            <!--p>电话：{{ seller.telephone }}</p-->
           </div>
           <div class="product-details">
             <button>修改信息</button>
@@ -40,6 +40,7 @@
               id: manager_id
             })
             .then(res => {
+              console.log(res.data.data);
                 this.seller_list = this.seller_list.concat(res.data.data);
             })
         },

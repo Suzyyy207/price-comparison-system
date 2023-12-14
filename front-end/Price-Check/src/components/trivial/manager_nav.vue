@@ -1,5 +1,5 @@
 <template>
-    <div class="user-info">用户信息</div>
+    <div class="user-info">Hello!</div>
     <div class="nav-links">
         <router-link to="/all_products">全部商品</router-link>
         <router-link to="/all_sellers">全部商家</router-link>

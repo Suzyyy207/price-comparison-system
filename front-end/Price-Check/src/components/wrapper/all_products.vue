@@ -9,12 +9,12 @@
           <div class="product-details">
             <h3>{{ product.name }}</h3>
             <p>价格：${{ product.price }}</p>
-            <p>历史最低：${{ product.min_price }}</p>
+            <p>历史最低：${{ product.minPrice }}</p>
           </div>
           <div class="product-details">
             <p>商品类别：{{ product.category }}</p>
-            <p>卖家：{{ product.seller_name }}</p>
-            <p>平台：{{ product.platform_name }}</p>
+            <p>卖家：{{ product.sellerName }}</p>
+            <p>平台：{{ product.platformName }}</p>
           </div>
           <div class="product-details">
             <button>修改信息</button>
@@ -37,7 +37,7 @@
     methods: {
         get_all_products() {
             const manager_id = window.localStorage.getItem('user_id');
-            this.$axios.post('http://localhost:8000/get_all_products',{
+            this.$axios.post('http://localhost:8000/get_all_goods',{
               id: manager_id
             })
             .then(res => {

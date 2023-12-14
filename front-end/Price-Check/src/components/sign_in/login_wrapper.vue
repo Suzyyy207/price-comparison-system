@@ -32,29 +32,29 @@
                 user_type: this.user_type
             })
             .then(res => {
-                //console.log(res.data.data);
                 const user = res.data.data;
                 if (res.data.code == 0) {
                     var localStorage = window.localStorage;
                     localStorage.setItem("user_id",this.user_id);
                     localStorage.setItem("user_name",user.name);
                     localStorage.setItem("user_type",this.user_type);
+                    user_type = localStorage.getItem("user_type");
+                    console.log(user_type)
 
                     setTimeout(() => {
-                    switch (user.usertype) {
-                        case window.USER:
-                            this.$router.push({name:'user_web'});
-                            break;
-                        case window.SELLER:
-                            this.$router.push({name:'seller_web'});
-                            break;
-                        case window.MANAGER:
-                            this.$router.push({name:'manager_web'});
-                            break;
-                        default:
-                            this.$message.error("连接错误，请重新登录！");
-                            this.$router.push({name:'home'});
-                    }
+                      if(this.user_type == 0){
+                        this.$router.push({name:'manager_web'});
+                      }
+                      else if(this.user_type == 1){
+                        this.$router.push({name:'seller_web'});
+                      }
+                      else if(this.user_type == 2){
+                        this.$router.push({name:'user_web'});
+                      }
+                      else{
+                        this.$message.error("连接错误，请重新登录！");
+                        this.$router.push({name:'home'});
+                      }
                     }, 1000);
                 }
                 else {

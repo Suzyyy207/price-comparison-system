@@ -15,16 +15,16 @@ import top_nav from '../../components/trivial/top_nav.vue'
         <div v-if="loading">加载中...</div>
         <div v-else>
           <div class="info">
-            <label>姓名:</label> {{ user.name }}
+            <label>姓名:</label> {{ name }}
           </div>
           <div class="info">
-            <label>性别:</label> {{ user.sex }}
+            <label>性别:</label> {{ sex }}
           </div>
           <div class="info">
-            <label>年龄:</label> {{ user.age }}
+            <label>年龄:</label> {{ age }}
           </div>
           <div class="info">
-            <label>电话:</label> {{ user.telephone }}
+            <label>电话:</label> {{ telephone }}
           </div>
           <button @click="edit_profile">编辑个人信息</button>
         </div>
@@ -49,17 +49,18 @@ import top_nav from '../../components/trivial/top_nav.vue'
     methods: {
       get_user_profile() {
         var localStorage = window.localStorage;
-        console.log(localStorage.getItem("user_id"));
+        //console.log(localStorage.getItem("user_id"));
         this.$axios.post('http://localhost:8000/get_user_profile', {
-          id: localStorage.getItem("user_id"),
+          user_id: localStorage.getItem("user_id"),
           
         })
         .then(res => {
+          console.log(res.data.data)
             const user = res.data.data;
-            this.name = user.username;
+            this.name = user.name;
             this.sex = user.sex;
             this.age = user.age;
-            this.telephone = user.telephone;
+            this.telephone = user.phone;
             this.loading =false;
         })
       },

@@ -12,8 +12,8 @@
           </div>
           <div class="product-details">
             <h3>Datail</h3>
-            <p>年龄：${{ user.age }}</p>
-            <p>电话：{{ user.telephone }}</p>
+            <p>年龄：{{ user.age }}</p>
+            <p>电话：{{ user.phone }}</p>
           </div>
           <div class="product-details">
             <button>修改信息</button>
@@ -40,7 +40,7 @@
               id: manager_id
             })
             .then(res => {
-                this.seller_list = this.user_list.concat(res.data.data);
+                this.user_list = this.user_list.concat(res.data.data);
             })
         },
     }
