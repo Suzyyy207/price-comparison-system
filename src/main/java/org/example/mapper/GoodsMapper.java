@@ -1,16 +1,18 @@
 package org.example.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.UpdateGoodsVO;
 import org.example.model.entity.Goods;
+import org.example.model.entity.Seller;
 import org.example.model.entity.User;
 
 import java.util.List;
 
 @Mapper
-public interface GoodsMapper {
+public interface GoodsMapper extends BaseMapper<Goods> {
     @Select("select * from goods where id = #{id}")
     Goods findById(@Param("id")int id);
 

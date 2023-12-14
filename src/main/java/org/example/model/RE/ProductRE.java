@@ -12,6 +12,12 @@ public class ProductRE {
     protected String location;//商品地址
 
     protected double price;
+    protected double minPrice;
+    protected String category;//商品种类
+
+    protected String sellerName;
+    protected String platformName;
+    protected Date productionDate;
 
     public Integer getId() {
         return id;
@@ -85,12 +91,7 @@ public class ProductRE {
         this.productionDate = productionDate;
     }
 
-    protected double minPrice;
-    protected String category;//商品种类
 
-    protected String sellerName;
-    protected String platformName;
-    protected Date productionDate;
     public ProductRE(Goods goods,String sellerName,String platformName){
         setId(goods.getId());
         setName(goods.getName());
@@ -101,5 +102,16 @@ public class ProductRE {
         setProductionDate(goods.getProductionDate());
         setSellerName(sellerName);
         setPlatformName(platformName);
+    }
+    public ProductRE(Integer id, String name, String location, double price, double minPrice, String category, String sellerName, String platformName, Date productionDate) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.price = price;
+        this.minPrice = minPrice;
+        this.category = category;
+        this.sellerName = sellerName;
+        this.platformName = platformName;
+        this.productionDate = productionDate;
     }
 }

@@ -78,7 +78,10 @@ public class UserController {
             }
         }
         else if(type ==1){
-            return new Response<>(Response.SUCCESS,"",null);
+            List<ProductRE> allCollects = userService.getGoodsByUserId(getProductOrCollectVO.getUser_id());
+            if(allCollects!=null){
+                return new Response<>(Response.SUCCESS,"返回用户收藏成功",allCollects);
+            }
         }
         else{
             return new Response<>(Response.FAIL,"get_type错误",null);

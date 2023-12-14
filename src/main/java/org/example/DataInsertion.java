@@ -39,6 +39,9 @@ public class DataInsertion {
             List<String[]> goodsData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/goods.csv");
             String[] goodsColumns = goodsData.get(0);//这一行是属性
             goodsData.remove(0);
+            List<String[]> collectData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/collect.csv");
+            String[] collectColumns = collectData.get(0);//这一行是属性
+            collectData.remove(0);
             Connection connection = establishConnection();//建立连接
 
             //创建user表
@@ -56,6 +59,9 @@ public class DataInsertion {
                     "\n";
             String createGoodsTableSQL ="CREATE TABLE goods (id INT AUTO_INCREMENT,name VARCHAR(255), location VARCHAR(255),price DOUBLE,"+
                     "minPrice DOUBLE,category VARCHAR(255),sellerId INT,platformId INT,productionDate Date,tag INT,state INT,PRIMARY KEY(id)\n" +
+                    ");\n" +
+                    "\n";
+            String createCollectTableSQL = "CREATE TABLE collect (id INT AUTO_INCREMENT,userId INT,goodsId INT,expectPrice DOUBLE,state INT, PRIMARY KEY(id)\n" +
                     ");\n" +
                     "\n";
             System.out.println(createUserTableSQL);
@@ -102,6 +108,15 @@ public class DataInsertion {
             String EncodedSQL5 = new String(insertGoodsDataSQL.getBytes("UTF-8"), "UTF-8");
             PreparedStatement preparedStatement5 = connection.prepareStatement(EncodedSQL5);
             preparedStatement5.executeUpdate();
+
+            System.out.println(createCollectTableSQL);
+            executeSQL(connection, createCollectTableSQL);
+            //collect表的插入
+            String insertCollectDataSQL = SQLCreator.generateInsertDataSQL("collect", collectColumns, collectData);
+            System.out.println(insertCollectDataSQL);
+            String EncodedSQL6 = new String(insertCollectDataSQL.getBytes("UTF-8"), "UTF-8");
+            PreparedStatement preparedStatement6 = connection.prepareStatement(EncodedSQL6);
+            preparedStatement6.executeUpdate();
 
             connection.close();
         } catch (SQLException | UnsupportedEncodingException e) {
