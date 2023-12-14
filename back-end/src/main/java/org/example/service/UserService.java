@@ -1,7 +1,9 @@
 package org.example.service;
 
 import org.example.mapper.UserMapper;
-import org.example.model.entity.UserBase;
+import org.example.model.VO.InsertVO;
+import org.example.model.VO.UpdateVO;
+import org.example.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,13 @@ public class UserService {
     public UserService(UserMapper userMapper){
         this.userMapper=userMapper;
     }
-    public UserBase getUserById(int id) {
+    public User getUserById(int id) {
         return userMapper.findById(id);
+    }
+    public Boolean insertUser(InsertVO insertVO){
+        return userMapper.insert(insertVO)==1;
+    }
+    public Boolean updateUser(UpdateVO updateVO){
+        return userMapper.update(updateVO)==1;
     }
 }

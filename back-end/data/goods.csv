@@ -1,0 +1,4 @@
+id,name,price,minPrice,location,category,sellerId,platformId,productionDate,tag,state
+1,一号商品,20.5,20.5,一号地方,食品,1,1,2023-06-10 8:00,1,1
+2,二号商品,100,100,二号地方,衣服,2,2,2023-06-14 8:00,2,1
+3,三号商品,15.6,15.6,三号地方,食品,3,3,2023-06-19 8:00,1,1
