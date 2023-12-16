@@ -16,6 +16,15 @@ public class Goods {
     protected String location;//商品地址
 
     protected double price;
+    protected double minPrice;
+    protected String category;//商品种类
+
+    protected Integer sellerId;
+    protected Integer platformId;
+    protected Date productionDate;
+
+    protected Integer tag;//用来作为实际上是同一种商品的比较
+    protected Integer state;//0:下架，1：上架
 
     public double getMinPrice() {
         return minPrice;
@@ -25,14 +34,7 @@ public class Goods {
         this.minPrice = minPrice;
     }
 
-    protected double minPrice;
-    protected String category;//商品种类
 
-    protected Integer sellerId;
-    protected Integer platformId;
-    protected Date productionDate;
-    protected Integer tag;//用来作为实际上是同一种商品的比较
-    protected Integer state;//0:下架，1：上架
     public Integer getState() {
         return state;
     }

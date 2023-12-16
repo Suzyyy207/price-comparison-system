@@ -2,6 +2,7 @@ package org.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
+import org.example.model.RE.GetGoodsRE;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.UpdateGoodsVO;
@@ -24,6 +25,15 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     List<Goods> findValidGoods();
     @Select("select * from goods")
     List<Goods> findAll();
+    @Select("SELECT g.id, g.name, g.location, g.price, g.minPrice, g.category,g.productionDate, " +
+            "s.name AS sellerName, p.name AS platformName, " +
+            "CASE WHEN c.userId IS NOT NULL THEN 1 ELSE 0 END AS isCollect " +
+            "FROM goods g " +
+            "LEFT JOIN collect c ON g.id = c.goodsId AND c.userId = #{userId} " +
+            "LEFT JOIN seller s ON g.sellerId = s.id " +
+            "LEFT JOIN platform p ON g.platformId = p.id " +
+            "WHERE g.id = #{goodsId}")
+    GetGoodsRE findGoodsByIdAndUserId(@Param("id")int id,@Param("userId")int userId);
     @Insert("insert into goods (name,price,minPrice,location,category,sellerId,platformId,productionDate,tag,state) values (#{insertGoodsVO.name}, #{insertGoodsVO.price},#{insertGoodsVO.price}, #{insertGoodsVO.location},#{insertGoodsVO.category},#{insertGoodsVO.sellerId},#{insertGoodsVO.platformId},#{insertGoodsVO.productionDate},#{insertGoodsVO.tag},1)")
     int insert(@Param("insertGoodsVO") InsertGoodsVO insertGoodsVO);
 

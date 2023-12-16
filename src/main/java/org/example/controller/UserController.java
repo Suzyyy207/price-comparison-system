@@ -86,7 +86,7 @@ public class UserController {
         return new Response<>(Response.FAIL,"返回失败",null);
     }
     @PostMapping("get_all_messages")
-    public Response<List<Message>> getAllMessages(@RequestBody IdVO idVO){
+    public Response<List<Message>> getAllMessages(@RequestBody IdVO idVO){//这里返回之后把所有的信息都改为已读
         List<Message> messages=userService.getAllMessages(idVO.getUser_id());
         if(messages!=null){
             return new Response<>(Response.SUCCESS,"返回消息列表成功",messages);

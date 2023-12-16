@@ -1,8 +1,10 @@
 package org.example.service;
 
+import io.swagger.models.auth.In;
 import org.example.mapper.GoodsMapper;
 import org.example.mapper.PlatformMapper;
 import org.example.mapper.SellerMapper;
+import org.example.model.RE.GetGoodsRE;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.UpdateGoodsVO;
@@ -50,7 +52,17 @@ public class GoodsService {
         ProductRE p=translateGoods(goods);
         return p;
     }
-
+    public GetGoodsRE getGoodsByIdAndUserId(Integer id,Integer userId){
+        try {
+            GetGoodsRE goods = goodsMapper.findGoodsByIdAndUserId(id, userId);
+            return goods;
+            // 处理获得的商品信息
+        } catch (Exception e) {
+            // 处理异常情况，比如打印异常信息或者进行其他处理
+            e.printStackTrace(); // 仅作为示例，实际中可以根据具体情况处理异常
+            return null;
+        }
+    }
     public ProductRE translateGoods(Goods goods){
         String sellerName= sellerMapper.findById(goods.getSellerId()).getName();
         String platformName= platformMapper.findById(goods.getPlatformId()).getName();

@@ -58,13 +58,19 @@ public class DataInsertion {
                     ");\n" +
                     "\n";
             String createGoodsTableSQL ="CREATE TABLE goods (id INT AUTO_INCREMENT,name VARCHAR(255), location VARCHAR(255),price DOUBLE,"+
-                    "minPrice DOUBLE,category VARCHAR(255),sellerId INT,platformId INT,productionDate Date,tag INT,state INT,PRIMARY KEY(id)\n" +
+                    "minPrice DOUBLE,category VARCHAR(255),sellerId INT,platformId INT,productionDate Date,tag INT,state INT,PRIMARY KEY(id)," +
+                    "FOREIGN KEY (sellerId) REFERENCES seller(id), " +
+                    "FOREIGN KEY (platformId) REFERENCES platform(id) "+
                     ");\n" +
                     "\n";
-            String createCollectTableSQL = "CREATE TABLE collect (id INT AUTO_INCREMENT,userId INT,goodsId INT,expectPrice DOUBLE,state INT, PRIMARY KEY(id)\n" +
+            String createCollectTableSQL = "CREATE TABLE collect (id INT AUTO_INCREMENT,userId INT,goodsId INT,expectPrice DOUBLE,state INT, PRIMARY KEY(id)," +
+                    "FOREIGN KEY (goodsId) REFERENCES goods(id), " +
+                    "FOREIGN KEY (userId) REFERENCES user(id)" +
                     ");\n" +
                     "\n";
-            String createMessageTableSQL = "CREATE TABLE message (id INT AUTO_INCREMENT,goodsId INT,userId INT,name VARCHAR(255),currentPrice DOUBLE,targetPrice DOUBLE,date DATE,isRead INT, PRIMARY KEY(id)\n" +
+            String createMessageTableSQL = "CREATE TABLE message (id INT AUTO_INCREMENT,goodsId INT,userId INT,name VARCHAR(255),currentPrice DOUBLE,targetPrice DOUBLE,date DATE,isRead INT, PRIMARY KEY(id)," +
+                    "FOREIGN KEY (goodsId) REFERENCES goods(id), " +
+                    "FOREIGN KEY (userId) REFERENCES user(id)" +
                     ");\n" +
                     "\n";
             System.out.println(createUserTableSQL);

@@ -3,6 +3,7 @@ package org.example.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 import org.example.model.RE.ProductRE;
+import org.example.model.VO.CollectVO;
 import org.example.model.entity.Collect;
 import org.example.model.entity.Goods;
 import org.example.model.entity.Seller;
@@ -32,4 +33,9 @@ public interface CollectMapper extends BaseMapper<Collect> {
             @Result(property = "productionDate", column = "productionDate")
     })
     List<ProductRE> findByUserId(@Param("userId")int userId);
+
+    @Insert("insert into collect (userId,goodsId,expectPrice,state) values (#{collectVO.userId},#{collectVO.goodsId},#{collectVO.expectPrice},1)")
+    Integer insert(CollectVO collectVO);
+    @Update("")
+    Integer update();
 }

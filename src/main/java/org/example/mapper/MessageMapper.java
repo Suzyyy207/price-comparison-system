@@ -16,9 +16,9 @@ public interface MessageMapper extends BaseMapper<Message> {
     @Update("update message set isRead=0 where id = #{id}")
     Integer updateIsRead(@Param("id") int id);
     @Insert("INSERT INTO message (goodsId, userId, name, currentPrice, targetPrice, date, isRead) " +
-            "SELECT c.goodsId, c.userId, g.name, g.price AS currentPrice, c.expectPrice AS targetPrice, NOW(), 0 " +
+            "SELECT c.goodsId, c.userId, g.name, #{oneGoods.price} AS currentPrice, c.expectPrice AS targetPrice, NOW(), 0 " +
             "FROM collect c " +
             "JOIN goods g ON c.goodsId = g.id " +
-            "WHERE g.price < c.expectPrice")
-    Integer insert();
+            "WHERE g.price < c.expectPrice and g.id=#{oneGoods.id}")
+    Integer insert(@Param("oneGoods")Goods oneGoods);
 }

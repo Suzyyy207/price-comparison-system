@@ -1,7 +1,9 @@
 package org.example.controller;
 
+import org.example.model.RE.GetGoodsRE;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.IdVO;
+import org.example.model.VO.UserGoodsVO;
 import org.example.model.entity.Goods;
 import org.example.service.AdminService;
 import org.example.service.GoodsService;
@@ -27,9 +29,8 @@ public class GoodsController {
     @Resource
     private GoodsService goodsService;
     @PostMapping("get_good")
-    public Response<ProductRE> getGood(@RequestBody IdVO idVO){
-        int id = idVO.getUser_id();
-        ProductRE goods=goodsService.getGoodsById(id);
+    public Response<GetGoodsRE> getGood(@RequestBody UserGoodsVO userGoodsVO){
+        GetGoodsRE goods=goodsService.getGoodsByIdAndUserId(userGoodsVO.getGoodsId(), userGoodsVO.getUserId());
         if(goods==null)return new Response<>(Response.FAIL,"获取商品信息失败",null);
         else{
             return new Response<>(Response.SUCCESS,"获取商品信息成功",goods);
