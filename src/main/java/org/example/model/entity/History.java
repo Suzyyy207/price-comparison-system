@@ -18,6 +18,8 @@ public class History {
 
     protected Date pDate;  //设定日期
 
+    protected Integer userType;
+
     public Integer getId() {
         return id;
     }
@@ -48,6 +50,14 @@ public class History {
 
     public void setpDate(Date pDate) {
         this.pDate = pDate;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 
 }

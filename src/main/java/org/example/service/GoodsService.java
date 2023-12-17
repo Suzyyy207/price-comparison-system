@@ -79,7 +79,12 @@ public class GoodsService {
         return goodsMapper.update(updateGoodsVO)==1;
     }
 
-    public List<History> getHistoryPrice(Integer goodsId){
-        return historyMapper.findByGoodsId(goodsId);
+    public List<History> getHistoryPrice(Integer goodsId,Integer timeLen){
+        if (timeLen == -1){
+            return historyMapper.findByGoodsId(goodsId);
+        }
+        else {
+            return historyMapper.findByGoodsIdandTime(goodsId,timeLen);
+        }
     }
 }

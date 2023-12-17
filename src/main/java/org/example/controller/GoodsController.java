@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.model.RE.GetGoodsRE;
 import org.example.model.RE.ProductRE;
+import org.example.model.VO.HistoryVO;
 import org.example.model.VO.IdVO;
 import org.example.model.VO.UserGoodsVO;
 import org.example.model.entity.Goods;
@@ -42,8 +43,8 @@ public class GoodsController {
 
     // /get_history_price接口
     @PostMapping("get_history_price")
-    public Response<List<History>> getGood(@RequestBody IdVO idVO) {
-        List<History> histories = goodsService.getHistoryPrice(idVO.getUser_id());
+    public Response<List<History>> getGood(@RequestBody HistoryVO historyVO) {
+        List<History> histories = goodsService.getHistoryPrice(historyVO.getGoods_id(),historyVO.getTime_len());
         if (histories==null)
             return new Response<>(Response.FAIL,"没有历史记录",null);
         else{
