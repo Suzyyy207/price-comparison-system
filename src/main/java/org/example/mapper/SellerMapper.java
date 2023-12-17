@@ -27,4 +27,7 @@ public interface SellerMapper extends BaseMapper<Seller> {
     int insert(@Param("insertVO") InsertVO insertVO);
     @Update("update seller set name=#{updateVO.name},address=#{updateVO.address} where id=#{updateVO.id}")
     int update(@Param("updateVO") UpdateVO updateVO);
+
+    @Delete("delete from seller where id=#{sellerId}")
+    int deleteBySellerId(@Param("sellerId")int sellerId);
 }

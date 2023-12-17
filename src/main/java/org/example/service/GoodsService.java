@@ -8,6 +8,7 @@ import org.example.model.VO.UpdateGoodsVO;
 import org.example.model.entity.Goods;
 import org.example.model.entity.History;
 import org.example.model.entity.Message;
+import org.example.model.entity.Seller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -174,4 +175,17 @@ public class GoodsService {
 
     }
 
+    @Transactional
+    public Boolean deleteSeller(Integer sellerId){
+        //删除商品，删除商家
+        List<Goods> sellerGoods = goodsMapper.findBySellerId(sellerId);
+        for (Goods goods: sellerGoods){
+            boolean deleteGoods = this.deleteGoodsById(goods.getId());
+            if (deleteGoods == false){
+                return false;
+            }
+        }
+        boolean deleteSeller = sellerMapper.deleteBySellerId(sellerId)==1;
+        return deleteSeller;
+    }
 }
