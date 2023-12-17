@@ -1,7 +1,7 @@
 package org.example.service;
 
-import io.swagger.models.auth.In;
 import org.example.mapper.GoodsMapper;
+import org.example.mapper.HistoryMapper;
 import org.example.mapper.PlatformMapper;
 import org.example.mapper.SellerMapper;
 import org.example.model.RE.GetGoodsRE;
@@ -9,7 +9,7 @@ import org.example.model.RE.ProductRE;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.UpdateGoodsVO;
 import org.example.model.entity.Goods;
-import org.example.model.entity.Platform;
+import org.example.model.entity.History;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +21,14 @@ public class GoodsService {
     private final GoodsMapper goodsMapper;
     private final SellerMapper sellerMapper;
     private final PlatformMapper platformMapper;
+
+    private final HistoryMapper historyMapper;
     @Autowired
-    public GoodsService(GoodsMapper goodsMapper,SellerMapper sellerMapper,PlatformMapper platformMapper){
+    public GoodsService(GoodsMapper goodsMapper, SellerMapper sellerMapper, PlatformMapper platformMapper, HistoryMapper historyMapper){
         this.goodsMapper=goodsMapper;
         this.sellerMapper=sellerMapper;
         this.platformMapper=platformMapper;
+        this.historyMapper = historyMapper;
     }
     public List<ProductRE> getAllGoods(){
         List<Goods> allGoods=goodsMapper.findValidGoods();
@@ -74,5 +77,9 @@ public class GoodsService {
     }
     public Boolean updateGoods(UpdateGoodsVO updateGoodsVO){
         return goodsMapper.update(updateGoodsVO)==1;
+    }
+
+    public List<History> getHistoryPrice(Integer goodsId){
+        return historyMapper.findByGoodsId(goodsId);
     }
 }

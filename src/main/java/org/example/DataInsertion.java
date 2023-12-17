@@ -7,9 +7,9 @@ import java.util.List;
 
 public class DataInsertion {
 
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/database";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/test_db";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "layluhan520";
 
     public static Connection establishConnection() throws SQLException {
         return DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
