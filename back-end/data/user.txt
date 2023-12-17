@@ -1,3 +1,0 @@
-CREATE TABLE user (id INT,name VARCHAR(255),age INT,sex INT,phone VARCHAR(20),address VARCHAR(255), type INT, PRIMARY KEY(id)
-);
-

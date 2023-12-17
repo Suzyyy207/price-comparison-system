@@ -36,11 +36,12 @@
     methods: {
         get_all_platforms() {
             const manager_id = window.localStorage.getItem('user_id');
-            this.$axios.post('http://localhost:8000/get_all_products',{
+            this.$axios.post('http://localhost:8000/get_all_platforms',{
               id: manager_id
             })
             .then(res => {
-                this.product_list = this.product_list.concat(res.data.data);
+              console.log(res.data.data);
+                this.platform_list = this.platform_list.concat(res.data.data);
             })
         },
     }

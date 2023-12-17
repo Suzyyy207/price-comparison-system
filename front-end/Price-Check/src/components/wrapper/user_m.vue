@@ -33,11 +33,12 @@ export default {
   methods: {
     get_user_message(){
         var localStorage = window.localStorage;
-        this.$axios.post('http://localhost:8000/get_user_message', {
-            id: localStorage.getItem("user_id")
+        this.$axios.post('http://localhost:8000/get_all_messages', {
+            user_id: localStorage.getItem("user_id")
         })
         .then(res => {
-            this.message_list = this.products_list.concat(res.data.data);
+          console.log(res.data.data);
+            this.message_list = this.message_list.concat(res.data.data);
             this.loading = false;
         })
       },
