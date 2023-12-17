@@ -38,6 +38,8 @@ public interface CollectMapper extends BaseMapper<Collect> {
     int insert(@Param("collectVO") CollectVO collectVO);
     @Update("update collect set expectPrice=#{collectVO.expectPrice} where goodsId=#{collectVO.goodsId} and userId=#{collectVO.userId}")
     Integer update(@Param("collectVO") CollectVO collectVO);
+    @Update("update collect set state=0, goodsId=0, name=#{name}  where goodsId=#{goodsId}")
+    Integer setUnvalid(@Param("goodsId")int goodsId, @Param("name")String name);
 
     @Delete("delete from collect where userId = #{userId}")
     Integer deleteByUserId(@Param("userId")int userId);

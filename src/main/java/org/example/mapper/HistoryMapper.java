@@ -23,4 +23,7 @@ public interface HistoryMapper extends BaseMapper<History> {
 
     @Insert("insert into history (goodsId,price,pDate,userType) values (#{goods.id},#{goods.price},CURDATE(),#{userType})")
     Integer insertHistory(@Param("goods")Goods goods,@Param("userType")int userType);
+
+    @Delete("delete from history where goodsId = #{goodsId}")
+    Integer deleteByGoodsId(@Param("goodsId")int goodsId);
 }

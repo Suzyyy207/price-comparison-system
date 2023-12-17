@@ -7,14 +7,13 @@ import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.UpdateGoodsVO;
 import org.example.model.entity.Goods;
 import org.example.model.entity.History;
+import org.example.model.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.sql.Date;
 import java.util.List;
 
@@ -26,13 +25,15 @@ public class GoodsService {
 
     private final HistoryMapper historyMapper;
     private final MessageMapper messageMapper;
+    private final CollectMapper collectMapper;
     @Autowired
-    public GoodsService(GoodsMapper goodsMapper, SellerMapper sellerMapper, PlatformMapper platformMapper, HistoryMapper historyMapper,MessageMapper messageMapper){
+    public GoodsService(GoodsMapper goodsMapper, SellerMapper sellerMapper, PlatformMapper platformMapper, HistoryMapper historyMapper, MessageMapper messageMapper, CollectMapper collectMapper){
         this.goodsMapper=goodsMapper;
         this.sellerMapper=sellerMapper;
         this.platformMapper=platformMapper;
         this.historyMapper = historyMapper;
         this.messageMapper=messageMapper;
+        this.collectMapper = collectMapper;
     }
     public List<ProductRE> getAllGoods(){
         List<Goods> allGoods=goodsMapper.findValidGoods();
@@ -143,4 +144,34 @@ public class GoodsService {
             return historyMapper.findByGoodsIdandTime(goodsId,timeLen);
         }
     }
+
+    @Transactional
+    public Boolean deleteGoodsById(Integer goodsId){
+        //在消息列表中插入删除消息，删除收藏夹里的商品相关消息，历史价格表删除，删除商品
+        // 涉及修改1：获取收藏列表的时候，对于失效商品，要去message中查名字
+        // 涉及修改2: 获取消息列表的时候，注意显示信息
+        boolean finalSucceed = true;
+        Goods goods = goodsMapper.findById(goodsId);
+        List<Message> messages = messageMapper.findByGoodsId(goodsId);
+        boolean succeedMessageD = messageMapper.deleteByGoodsId(goodsId)==1;
+        finalSucceed = (finalSucceed && succeedMessageD);
+        boolean succeedInsertD = true;
+
+        for (Message message: messages){
+            boolean succeed = messageMapper.insertDeleteMessage(goods.getName(),message.getUserId())==1;
+            if(succeed==false){
+                succeedInsertD = false;
+                break;
+            }
+        }
+        finalSucceed = (finalSucceed && succeedInsertD);
+        boolean setUnvalid = collectMapper.setUnvalid(goodsId,goods.getName())==1;
+        boolean deleteHistory = historyMapper.deleteByGoodsId(goodsId)==1;
+        boolean deleteGoods = goodsMapper.deleteByGoodsId(goodsId)==1;
+        finalSucceed = (finalSucceed && (setUnvalid && deleteHistory));
+        finalSucceed = (finalSucceed && deleteGoods);
+        return finalSucceed;
+
+    }
+
 }

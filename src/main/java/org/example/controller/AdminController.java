@@ -123,9 +123,29 @@ public class AdminController {
         Integer userId = idVO.getUser_id();
         boolean succeed =  userService.deleteUserById(userId);
         if(succeed==true){
-            return new Response<>(Response.SUCCESS,"修改该商家信息成功",true);
+            return new Response<>(Response.SUCCESS,"删除该用户成功",true);
         }
-        return new Response<>(Response.FAIL,"修改该商家信息失败",false);
+        return new Response<>(Response.FAIL,"删除该用户失败",false);
+    }
+
+    @PostMapping("delete_goods")
+    public Response<Boolean> deleteGoods(@RequestBody IdVO idVO){
+        Integer goodsId = idVO.getUser_id();
+        boolean succeed =  goodsService.deleteGoodsById(goodsId);
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"删除该商品成功",true);
+        }
+        return new Response<>(Response.FAIL,"删除该商品失败",false);
+    }
+
+    @PostMapping("delete_seller")
+    public Response<Boolean> deleteSeller(@RequestBody IdVO idVO){
+        Integer sellerId = idVO.getUser_id();
+        boolean succeed =  true;
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"删除该商户成功",true);
+        }
+        return new Response<>(Response.FAIL,"删除该商户失败",false);
     }
 
 }

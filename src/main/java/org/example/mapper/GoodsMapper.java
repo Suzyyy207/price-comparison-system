@@ -38,6 +38,7 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "left join platform p ON g.platformId = p.id " +
             "where g.id = #{id}")
     GetGoodsRE findGoodsByIdAndUserId(@Param("id")int id,@Param("userId")int userId);
+
     @Insert("insert into goods (name,price,minPrice,location,category,sellerId,platformId,productionDate,tag,state) values (#{insertGoodsVO.name}, #{insertGoodsVO.price},#{insertGoodsVO.price}, #{insertGoodsVO.location},#{insertGoodsVO.category},"+
             "(select id from seller where name = #{insertGoodsVO.sellerName}), " +
             "(select id from platform where name = #{insertGoodsVO.platformName}), " +
@@ -52,4 +53,7 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     int update(@Param("updateGoodsVO") UpdateGoodsVO updateGoodsVO);
     @Update("update goods set minPrice = #{updateGoodsVO.price}where id=#{updateGoodsVO.goodsId}")
     int updateMinPrice(@Param("updateGoodsVO") UpdateGoodsVO updateGoodsVO);
+
+    @Delete("delete from goods where id = #{goodsId}")
+    Integer deleteByGoodsId(@Param("goodsId")int goodsId);
 }

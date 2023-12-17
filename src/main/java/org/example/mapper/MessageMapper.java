@@ -13,6 +13,8 @@ public interface MessageMapper extends BaseMapper<Message> {
     Message findById(@Param("id")int id);
     @Select("select * from message where userId = #{userId}")
     List<Message> findByUserId(@Param("userId")int userId);
+    @Select("select * from message where goodsId=#{goodsId}")
+    List<Message> findByGoodsId(@Param("goodsId")int goodsId);
     @Update("update message set isRead=0 where id = #{id}")
     Integer updateIsRead(@Param("id") int id);
     @Insert("INSERT INTO message (goodsId, userId, name, currentPrice, targetPrice, date, isRead) " +
@@ -21,7 +23,12 @@ public interface MessageMapper extends BaseMapper<Message> {
             "JOIN goods g ON c.goodsId = g.id " +
             "WHERE g.price <= c.expectPrice and g.id=#{oneGoods.id}")
     Integer insert(@Param("oneGoods")Goods oneGoods);
-
+    @Insert("insert into message (goodsId,userId,name,type) values(1,#{userId},#{name},0)")
+    Integer insertDeleteMessage(@Param("name")String name, @Param("userId")int userId);
     @Delete("delete from message where userId = #{userId}")
     Integer deleteByUserId(@Param("userId")int userId);
+    @Delete("delete from message where goodsId=#{goodsId}")
+    Integer deleteByGoodsId(@Param("goodsId")int goodsId);
+
+
 }
