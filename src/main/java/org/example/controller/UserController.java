@@ -106,6 +106,16 @@ public class UserController {
 
     }
 
+    @PostMapping("cancel_collect")
+    public Response<Boolean> cancelCollect(@RequestBody CollectVO collectVO){
+        Boolean succeed = userService.cancelCollect(collectVO);
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"收藏设置成功",true);
+        }
+        return new Response<>(Response.FAIL,"收藏设置失败",false);
+
+    }
+
     @PostMapping("set_target_price")
     public Response<Boolean> updateCollectPrice(@RequestBody CollectVO collectVO){
         Boolean succeed = userService.updateCollectPrice(collectVO);

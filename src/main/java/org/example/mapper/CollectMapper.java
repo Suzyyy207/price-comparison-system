@@ -44,4 +44,7 @@ public interface CollectMapper extends BaseMapper<Collect> {
     @Delete("delete from collect where userId = #{userId}")
     Integer deleteByUserId(@Param("userId")int userId);
 
+    @Delete("delete from collect where userId=#{collectVO.userId} and goodsId=#{collectVO.goodsId}")
+    Integer deleteCollect(@Param("collectVO")CollectVO collectVO);
+
 }

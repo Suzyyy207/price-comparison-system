@@ -51,6 +51,11 @@ public class UserService {
     }
 
     @Transactional
+    public Boolean cancelCollect(CollectVO collectVO){
+        return collectMapper.deleteCollect(collectVO)==1;
+    }
+
+    @Transactional
     public Boolean updateCollectPrice(CollectVO collectVO){
         boolean succeed = collectMapper.update(collectVO)==1;
         //检查设定价格之后商品是否符合新的目标价格，有的话在message中插入

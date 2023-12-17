@@ -42,7 +42,6 @@ public class GoodsController {
         }
     }
 
-    // /get_history_price接口
     @PostMapping("get_history_price")
     public Response<List<History>> getGood(@RequestBody HistoryVO historyVO) {
         List<History> histories = goodsService.getHistoryPrice(historyVO.getGoods_id(),historyVO.getTime_len());
