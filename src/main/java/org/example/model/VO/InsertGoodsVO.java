@@ -16,8 +16,8 @@ public class InsertGoodsVO {
     private double price;
     private String category;//商品种类
 
-    private Integer sellerId;
-    private Integer platformId;
+    private String sellerName;
+    private String platformName;
     private Date productionDate;
     private Integer tag;//用来作为实际上是同一种商品的比较
 }

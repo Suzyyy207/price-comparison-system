@@ -12,6 +12,7 @@ import org.example.model.entity.Goods;
 import org.example.model.entity.History;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +73,24 @@ public class GoodsService {
         ProductRE p=new ProductRE(goods,sellerName,platformName);
         return p;
     }
+    @Transactional
     public Boolean insertGoods(InsertGoodsVO insertGoodsVO){
-        return goodsMapper.insert(insertGoodsVO)==1;
+        try {
+            Goods goods = goodsMapper.findByTagPlatformSeller(insertGoodsVO.getSellerName(), insertGoodsVO.getTag(), insertGoodsVO.getPlatformName());
+            if (goods == null) {
+                Boolean insertGoods = goodsMapper.insert(insertGoodsVO) == 1;
+                Goods that = goodsMapper.findByTagPlatformSeller(insertGoodsVO.getSellerName(), insertGoodsVO.getTag(), insertGoodsVO.getPlatformName());
+                Boolean insertHistory = historyMapper.insertHistory(that) == 1;
+                return insertGoods && insertHistory;
+            } else {
+                return false;
+            }
+        }
+        catch (Exception e) {
+            // 处理异常情况，比如打印异常信息或者进行其他处理
+            e.printStackTrace();
+            return false;
+        }
     }
     public Boolean updateGoods(UpdateGoodsVO updateGoodsVO){
         return goodsMapper.update(updateGoodsVO)==1;

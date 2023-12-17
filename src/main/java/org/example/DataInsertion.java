@@ -7,9 +7,9 @@ import java.util.List;
 
 public class DataInsertion {
 
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/test_db";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/database";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "layluhan520";
+    private static final String PASSWORD = "123456";
 
     public static Connection establishConnection() throws SQLException {
         return DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
@@ -42,6 +42,9 @@ public class DataInsertion {
             List<String[]> collectData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/collect.csv");
             String[] collectColumns = collectData.get(0);//这一行是属性
             collectData.remove(0);
+            List<String[]> historyData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/history.csv");
+            String[] historyColumns = historyData.get(0);//这一行是属性
+            historyData.remove(0);
             Connection connection = establishConnection();//建立连接
 
             //创建user表
@@ -73,6 +76,7 @@ public class DataInsertion {
                     "FOREIGN KEY (userId) REFERENCES user(id)" +
                     ");\n" +
                     "\n";
+            String createHistoryTableSQL = "CREATE TABLE history (id INT AUTO_INCREMENT,goodsId INT, price Double, pDate Date, PRIMARY KEY(id), FOREIGN KEY (goodsId) REFERENCES goods(id));";
             System.out.println(createUserTableSQL);
             executeSQL(connection, createUserTableSQL);
             //user表的插入
@@ -131,6 +135,15 @@ public class DataInsertion {
             System.out.println(createMessageTableSQL);
             executeSQL(connection, createMessageTableSQL);
             //Message表的插入还没写
+
+            System.out.println(createHistoryTableSQL);
+            executeSQL(connection, createHistoryTableSQL);
+            //History表的插入
+            String insertHistoryDataSQL = SQLCreator.generateInsertDataSQL("History", historyColumns, historyData);
+            System.out.println(insertHistoryDataSQL);
+            String EncodedSQL8 = new String(insertHistoryDataSQL.getBytes("UTF-8"), "UTF-8");
+            PreparedStatement preparedStatement8 = connection.prepareStatement(EncodedSQL8);
+            preparedStatement8.executeUpdate();
 
             connection.close();
         } catch (SQLException | UnsupportedEncodingException e) {
