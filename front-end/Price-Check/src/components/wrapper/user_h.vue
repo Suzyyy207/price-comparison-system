@@ -4,7 +4,7 @@
     <div class="product-list">
       <div v-if="products_list.length === 0">目前还没有任何商品上架^^</div>
       <div v-else>
-        <div v-for="product in products_list" :key="product.id" class="product-item" @click = "to_product(product)">
+        <div v-for="product in products_list" :key="product.id" class="product-item">
           <!--img :src="product.image" alt="Product Image" class="product-image"-->
           <div class="product-details">
             <h3>{{ product.name }}</h3>
@@ -15,6 +15,9 @@
             <p>商品类别：{{ product.category }}</p>
             <p>卖家：{{ product.sellerName }}</p>
             <p>平台：{{ product.platformName }}</p>
+          </div>
+          <div class="product-details">
+            <button @click = "to_product(product)">点击查看详情</button>
           </div>
         </div>
       </div>
@@ -44,7 +47,7 @@
         },
         to_product(product){
           var localStorage = window.localStorage;
-          localStorage.setItem("p_id",product.id);
+          localStorage.setItem("goods_id",product.id);
           this.$router.push({name:'product_detail'});
         }
     }

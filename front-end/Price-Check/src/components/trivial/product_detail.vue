@@ -5,18 +5,21 @@
         <div class="collect">
           <h2>{{ product.name }}</h2>
           <button @click="toggleFavorite" class="favorite-button">
-            {{ isFavorite ? '取消收藏' : '收藏' }}
+            {{ product.is_collect ? '取消收藏' : '收藏' }}
          </button>
         </div>
         <div class="info">
-          <p>产地：{{ product.origin }}</p>
+          <p>产地：{{ product.location }}</p>
           <p>种类：{{ product.category }}</p>
-          <p>价格：{{ product.currentPrice }}</p>
+          <p>生产日期：{{ product.production_date }}</p>
+        </div>
+        <div class="info">
+          <p>价格：{{ product.cuurent_price }}</p>
+          <p>商家：{{ product.seller_name }}</p>
+          <p>平台：{{ product.platform_name }}</p>
         </div>
         
-        <p>简介：{{ product.description }}</p>
   
-        <!-- 收藏按钮 -->
         
       </div>
   
@@ -25,12 +28,13 @@
         <div class="price-info">
           <h3>历史价格对比</h3>
           <!-- 选择时间的下拉框 -->
-          <select v-model="selectedTimePeriod">
+          <select v-model="time_len">
+            <option value="-1">全部</option>
             <option value="7">最近7天</option>
             <option value="30">最近30天</option>
             <option value="90">最近90天</option>
           </select>
-          <button>
+          <button @click="get_history()">
               查询价格变化
           </button>
         </div>
@@ -45,9 +49,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="priceRecord in historicalPrices" :key="priceRecord.id">
-                <td>{{ priceRecord.time }}</td>
-                <td>{{ priceRecord.price }}</td>
+              <tr v-for="record in histories" :key="record.id">
+                <td>{{ record.pDate }}</td>
+                <td>{{ record.price }}</td>
               </tr>
             </tbody>
           </table>
@@ -58,38 +62,67 @@
   
   <script>
   export default {
-    props: {
-      product: {
-        type: Object,
-        
-        required: true
-      }
-    },
     data() {
       return {
-        isFavorite: false,
         product: {
-            name: "盼盼面包",
-            origin: "这里",
-            category: "面包",
-            currentPrice: 12,
-            description: "nct127",
+            name: "",
+            location: "",
+            category: "",
+            min_price: 0,
+            current_price: 0,
+            platform_name: "",
+            seller_name: "",
+            production_date: "",
+            is_collect: false,
         },
-        selectedTimePeriod: '7',// 默认选择最近7天
-        historicalPrices: [
-      { id: 1, time: '2023-01-01', price: 18.99 },
-      { id: 2, time: '2023-01-02', price: 17.99 },
-      { id: 3, time: '2023-01-03', price: 16.99 },
-      // ... 更多历史价格数据
-    ]
+        time_len: "-1",// 默认选择全部
+        histories: []
       };
     },
+    created (){
+      this.get_good();
+      this.get_history();
+    },
     methods: {
-      toggleFavorite() {
-        this.isFavorite = !this.isFavorite;
-        // 在这里可以将收藏状态发送给后端保存，或者进行其他逻辑处理
-        // 暂时只是在控制台输出
-        console.log(`商品 ${this.product.name} 已${this.isFavorite ? '收藏' : '取消收藏'}`);
+      get_good(){
+        console.log("hi");
+        const goods_id = window.localStorage.getItem('goods_id');
+        const user_id = window.localStorage.getItem('user_id');
+        this.$axios.post('http://localhost:8000/get_good',{
+            goodsId: goods_id,
+            userId: user_id
+        })
+        .then(res => {
+          console.log(res.data.data)
+            const product_info = res.data.data;
+            this.product.name = product_info.name;
+            this.product.location = product_info.location;
+            this.product.category = product_info.category;
+            this.product.current_price = product_info.currentPrice;
+            this.product.min_price = product_info.minPrice;
+            this.product.platform_name = product_info.platformName;
+            this.product.seller_name = product_info.sellerName;
+            this.product.production_date = product_info.productionDate;
+            if(product_info.isCollect == 0){
+              this.product.is_collect = false;
+            }
+            else{
+              this.product.is_collect = true;
+            }
+        })
+      },
+      get_history(){
+        const goods_id = window.localStorage.getItem('goods_id');
+        this.$axios.post('http://localhost:8000/get_history_price',{
+            goods_id: goods_id,
+            time_len: this.time_len
+        })
+        .then(res => {
+          console.log(res.data.data);
+            this.histories  = []
+            this.histories = this.histories.concat(res.data.data);
+            
+        })
       }
     }
   };
