@@ -32,4 +32,7 @@ public interface UserMapper extends BaseMapper<User> {
     int insert(@Param("insertVO") InsertVO insertVO);
     @Update("update user set name=#{updateVO.name},phone=#{updateVO.phone},age=#{updateVO.age},sex=#{updateVO.sex} where id=#{updateVO.id}")
     int update(@Param("updateVO") UpdateVO updateVO);
+
+    @Delete("delete from user where id = #{userId}")
+    Integer deleteByUserId(@Param("userId")int userId);
 }

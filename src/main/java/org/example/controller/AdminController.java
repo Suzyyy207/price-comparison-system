@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.mapper.MessageMapper;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.IdVO;
 import org.example.model.VO.InsertVO;
@@ -115,4 +116,16 @@ public class AdminController {
         }
         return new Response<>(Response.FAIL,"修改该商家信息失败",false);
     }
+
+    @PostMapping("delete_user")
+    public Response<Boolean> deleteUser(@RequestBody IdVO idVO){
+
+        Integer userId = idVO.getUser_id();
+        boolean succeed =  userService.deleteUserById(userId);
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"修改该商家信息成功",true);
+        }
+        return new Response<>(Response.FAIL,"修改该商家信息失败",false);
+    }
+
 }

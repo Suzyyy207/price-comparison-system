@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.mapper.CollectMapper;
+import org.example.mapper.GoodsMapper;
 import org.example.mapper.MessageMapper;
 import org.example.mapper.UserMapper;
 import org.example.model.RE.ProductRE;
@@ -20,11 +21,13 @@ public class UserService {
     private final UserMapper userMapper;
     private final CollectMapper collectMapper;
     private final MessageMapper messageMapper;
+    private final GoodsMapper goodsMapper;
     @Autowired
-    public UserService(UserMapper userMapper,CollectMapper collectMapper,MessageMapper messageMapper){
+    public UserService(UserMapper userMapper, CollectMapper collectMapper, MessageMapper messageMapper, GoodsMapper goodsMapper){
         this.userMapper=userMapper;
         this.collectMapper=collectMapper;
         this.messageMapper=messageMapper;
+        this.goodsMapper = goodsMapper;
     }
     public User getUserById(int id) {
         return userMapper.findById(id);
@@ -50,7 +53,22 @@ public class UserService {
     @Transactional
     public Boolean updateCollectPrice(CollectVO collectVO){
         boolean succeed = collectMapper.update(collectVO)==1;
-        //这里要查询商品价格，如果价格低于新的设定价格，那么调用消息插入
+        //检查设定价格之后商品是否符合新的目标价格，有的话在message中插入
+        messageMapper.insert(goodsMapper.findById(collectVO.getGoodsId()));
         return succeed;
+    }
+
+    @Transactional
+    public Boolean deleteUserById(Integer userId){
+        //删除消息列表相关，删除收藏夹相关信息，删除用户
+        boolean succeedMessage = messageMapper.deleteByUserId(userId)==1;
+        boolean succeedCollect = collectMapper.deleteByUserId(userId)==1;
+        boolean succeedUser = userMapper.deleteByUserId(userId)==1;
+        if ((succeedMessage && succeedCollect) && succeedUser){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

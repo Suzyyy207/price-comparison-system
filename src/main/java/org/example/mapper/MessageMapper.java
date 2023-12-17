@@ -21,4 +21,7 @@ public interface MessageMapper extends BaseMapper<Message> {
             "JOIN goods g ON c.goodsId = g.id " +
             "WHERE g.price <= c.expectPrice and g.id=#{oneGoods.id}")
     Integer insert(@Param("oneGoods")Goods oneGoods);
+
+    @Delete("delete from message where userId = #{userId}")
+    Integer deleteByUserId(@Param("userId")int userId);
 }
