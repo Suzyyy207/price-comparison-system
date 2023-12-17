@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.model.RE.GetGoodsRE;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.IdVO;
+import org.example.model.VO.UpdateGoodsVO;
 import org.example.model.VO.UserGoodsVO;
 import org.example.model.entity.Goods;
 import org.example.model.entity.History;
@@ -49,5 +50,13 @@ public class GoodsController {
         else{
             return new Response<>(Response.SUCCESS,"获取历史记录成功",histories);
         }
+    }
+    @PostMapping("update_goods")
+    public Response<Boolean> updateGoods(@RequestBody UpdateGoodsVO updateGoodsVO){
+        Boolean succeed = goodsService.updateGoods(updateGoodsVO);
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"修改商品成功",true);
+        }
+        return new Response<>(Response.FAIL,"修改商品失败",false);
     }
 }

@@ -52,12 +52,4 @@ public class SellerController {
         }
         return new Response<>(Response.FAIL,"插入商品失败",false);
     }
-    @PostMapping("update_goods")
-    public Response<Boolean> updateGoods(@RequestBody UpdateGoodsVO updateGoodsVO){
-        Boolean succeed = goodsService.updateGoods(updateGoodsVO);
-        if(succeed==true){
-            return new Response<>(Response.SUCCESS,"修改商品成功",true);
-        }
-        return new Response<>(Response.FAIL,"修改商品失败",false);
-    }
 }
