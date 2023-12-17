@@ -95,4 +95,24 @@ public class UserController {
             return new Response<>(Response.FAIL,"返回消息列表失败",null);
         }
     }
+
+    @PostMapping("set_collect")
+    public Response<Boolean> setCollect(@RequestBody CollectVO collectVO){
+        Boolean succeed = userService.setCollect(collectVO);
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"收藏设置成功",true);
+        }
+        return new Response<>(Response.FAIL,"收藏设置失败",false);
+
+    }
+
+    @PostMapping("set_target_price")
+    public Response<Boolean> updateCollectPrice(@RequestBody CollectVO collectVO){
+        Boolean succeed = userService.updateCollectPrice(collectVO);
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"修改目标价格成功",true);
+        }
+        return new Response<>(Response.FAIL,"修改目标价格失败",false);
+
+    }
 }

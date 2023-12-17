@@ -35,7 +35,8 @@ public interface CollectMapper extends BaseMapper<Collect> {
     List<ProductRE> findByUserId(@Param("userId")int userId);
 
     @Insert("insert into collect (userId,goodsId,expectPrice,state) values (#{collectVO.userId},#{collectVO.goodsId},#{collectVO.expectPrice},1)")
-    Integer insert(CollectVO collectVO);
-    @Update("")
-    Integer update();
+    int insert(@Param("collectVO") CollectVO collectVO);
+    @Update("update collect set expectPrice=#{collectVO.expectPrice} where goodsId=#{collectVO.goodsId} and userId=#{collectVO.userId}")
+    Integer update(@Param("collectVO") CollectVO collectVO);
+
 }
