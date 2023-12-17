@@ -1,9 +1,6 @@
 package org.example.service;
 
-import org.example.mapper.GoodsMapper;
-import org.example.mapper.HistoryMapper;
-import org.example.mapper.PlatformMapper;
-import org.example.mapper.SellerMapper;
+import org.example.mapper.*;
 import org.example.model.RE.GetGoodsRE;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.InsertGoodsVO;
@@ -14,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.sql.Date;
 import java.util.List;
 
 @Service("GoodsService")
@@ -24,12 +25,14 @@ public class GoodsService {
     private final PlatformMapper platformMapper;
 
     private final HistoryMapper historyMapper;
+    private final MessageMapper messageMapper;
     @Autowired
-    public GoodsService(GoodsMapper goodsMapper, SellerMapper sellerMapper, PlatformMapper platformMapper, HistoryMapper historyMapper){
+    public GoodsService(GoodsMapper goodsMapper, SellerMapper sellerMapper, PlatformMapper platformMapper, HistoryMapper historyMapper,MessageMapper messageMapper){
         this.goodsMapper=goodsMapper;
         this.sellerMapper=sellerMapper;
         this.platformMapper=platformMapper;
         this.historyMapper = historyMapper;
+        this.messageMapper=messageMapper;
     }
     public List<ProductRE> getAllGoods(){
         List<Goods> allGoods=goodsMapper.findValidGoods();
@@ -80,7 +83,7 @@ public class GoodsService {
             if (goods == null) {
                 Boolean insertGoods = goodsMapper.insert(insertGoodsVO) == 1;
                 Goods that = goodsMapper.findByTagPlatformSeller(insertGoodsVO.getSellerName(), insertGoodsVO.getTag(), insertGoodsVO.getPlatformName());
-                Boolean insertHistory = historyMapper.insertHistory(that) == 1;
+                Boolean insertHistory = historyMapper.insertHistory(that,1) == 1;
                 return insertGoods && insertHistory;
             } else {
                 return false;
@@ -92,8 +95,44 @@ public class GoodsService {
             return false;
         }
     }
-    public Boolean updateGoods(UpdateGoodsVO updateGoodsVO){
-        return goodsMapper.update(updateGoodsVO)==1;
+    @Transactional
+    public Boolean updateGoods(UpdateGoodsVO updateGoodsVO) {
+        try {
+            Goods goods = goodsMapper.findById(updateGoodsVO.getGoodsId());
+            Goods another=goodsMapper.findByTagPlatformSeller(updateGoodsVO.getSellerName(), updateGoodsVO.getTag(), updateGoodsVO.getPlatformName());
+            if(goods!=null&& (another==null ||another.getId()== updateGoodsVO.getGoodsId())){
+                if(updateGoodsVO.getUserType()==1){//商家
+                    Instant currentInstant = Instant.now();
+                    // 创建 java.sql.Date 对象，只保留日期部分
+                    Date currentDate = new Date(currentInstant.toEpochMilli());
+                    List<History> histories=historyMapper.findByGoodsIdAndDate(updateGoodsVO.getGoodsId(),currentDate,updateGoodsVO.getUserType());
+                    if(histories.size()!=0){
+                        return false;
+                    }
+                }
+                else if(updateGoodsVO.getUserType()==0){//管理员
+                }
+                else{
+                    return false;
+                }
+                Boolean a=goodsMapper.update(updateGoodsVO)==1;
+                Boolean b=true;
+                if(goods.getPrice()!=updateGoodsVO.getPrice()){
+                    //插入历史
+                    b= historyMapper.insertHistory(goodsMapper.findById(updateGoodsVO.getGoodsId()),updateGoodsVO.getUserType())==1;
+                    messageMapper.insert(goodsMapper.findById(updateGoodsVO.getGoodsId()));
+                }
+                return a&&b;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (Exception e) {
+            // 处理异常情况，比如打印异常信息或者进行其他处理
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public List<History> getHistoryPrice(Integer goodsId,Integer timeLen){

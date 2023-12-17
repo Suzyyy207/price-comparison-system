@@ -9,14 +9,17 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateGoodsVO {
-    private Integer id;
+    private Integer userId;
+    private Integer userType;
+    private Integer goodsId;
     private String name;//商品名
 
     private String location;//商品地址
+    private double price;
     private String category;//商品种类
 
-    private Integer sellerId;
-    private Integer platformId;
+    private String sellerName;
+    private String platformName;
     private Date productionDate;
     private Integer tag;//用来作为实际上是同一种商品的比较
 }

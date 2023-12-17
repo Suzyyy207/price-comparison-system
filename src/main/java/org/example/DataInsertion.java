@@ -76,7 +76,7 @@ public class DataInsertion {
                     "FOREIGN KEY (userId) REFERENCES user(id)" +
                     ");\n" +
                     "\n";
-            String createHistoryTableSQL = "CREATE TABLE history (id INT AUTO_INCREMENT,goodsId INT, price Double, pDate Date, PRIMARY KEY(id), FOREIGN KEY (goodsId) REFERENCES goods(id));";
+            String createHistoryTableSQL = "CREATE TABLE history (id INT AUTO_INCREMENT,goodsId INT, price Double, pDate Date,userType INT, PRIMARY KEY(id), FOREIGN KEY (goodsId) REFERENCES goods(id));";
             System.out.println(createUserTableSQL);
             executeSQL(connection, createUserTableSQL);
             //user表的插入

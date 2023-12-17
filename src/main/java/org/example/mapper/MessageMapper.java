@@ -19,6 +19,6 @@ public interface MessageMapper extends BaseMapper<Message> {
             "SELECT c.goodsId, c.userId, g.name, #{oneGoods.price} AS currentPrice, c.expectPrice AS targetPrice, NOW(), 0 " +
             "FROM collect c " +
             "JOIN goods g ON c.goodsId = g.id " +
-            "WHERE g.price < c.expectPrice and g.id=#{oneGoods.id}")
+            "WHERE g.price <= c.expectPrice and g.id=#{oneGoods.id}")
     Integer insert(@Param("oneGoods")Goods oneGoods);
 }

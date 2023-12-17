@@ -44,6 +44,12 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "#{insertGoodsVO.productionDate},#{insertGoodsVO.tag},1)")
     int insert(@Param("insertGoodsVO") InsertGoodsVO insertGoodsVO);
 
-    @Update("update goods set name=#{updateGoodsVO.name},location=#{updateGoodsVO.location},category=#{updateGoodsVO.category},sellerId=#{updateGoodsVO.sellerId},platformId=#{updateGoodsVO.platformId},productionDate=#{updateGoodsVO.productionDate},tag=#{updateGoodsVO.tag} where id=#{updateGoodsVO.id}")
+    @Update("update goods set name=#{updateGoodsVO.name},location=#{updateGoodsVO.location},price=#{updateGoodsVO.price},category=#{updateGoodsVO.category},"+
+            "sellerId=(SELECT id FROM seller WHERE name = #{updateGoodsVO.sellerName})," +
+            "platformId=(SELECT id FROM platform WHERE name = #{updateGoodsVO.platformName}),"+
+            "minPrice=CASE WHEN #{updateGoodsVO.price} < minPrice THEN #{updateGoodsVO.price} ELSE minPrice END,"+
+            "productionDate=#{updateGoodsVO.productionDate},tag=#{updateGoodsVO.tag} where id=#{updateGoodsVO.goodsId}")
     int update(@Param("updateGoodsVO") UpdateGoodsVO updateGoodsVO);
+    @Update("update goods set minPrice = #{updateGoodsVO.price}where id=#{updateGoodsVO.goodsId}")
+    int updateMinPrice(@Param("updateGoodsVO") UpdateGoodsVO updateGoodsVO);
 }

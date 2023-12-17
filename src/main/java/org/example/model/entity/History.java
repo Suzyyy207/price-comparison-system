@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import java.util.Date;
+import java.sql.Date;
 
 @TableName("history")
 public class History {
@@ -16,7 +16,14 @@ public class History {
 
     protected double price; //设定价格
 
+    protected Integer userType;//用户类型  商家1  管理员0
     protected Date pDate;  //设定日期
+    public Integer getUserType() {
+        return userType;
+    }
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
 
     protected Integer userType;
 
