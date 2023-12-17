@@ -4,7 +4,7 @@
       <div class="product-info">
         <div class="collect">
           <h2>{{ product.name }}</h2>
-          <button @click="toggleFavorite" class="favorite-button">
+          <button @click="collect_change(product)" class="favorite-button">
             {{ product.is_collect ? '取消收藏' : '收藏' }}
          </button>
         </div>
@@ -14,7 +14,7 @@
           <p>生产日期：{{ product.production_date }}</p>
         </div>
         <div class="info">
-          <p>价格：{{ product.cuurent_price }}</p>
+          <p>价格：{{ product.current_price }}</p>
           <p>商家：{{ product.seller_name }}</p>
           <p>平台：{{ product.platform_name }}</p>
         </div>
@@ -123,6 +123,30 @@
             this.histories = this.histories.concat(res.data.data);
             
         })
+      },
+      collect_change(product){
+        if (product.is_collect) {
+          this.$axios.post('http://localhost:8000/cancel_collect',{
+            goodsId: window.localStorage.getItem("goods_id"),
+            userId: window.localStorage.getItem("user_id"),
+            expectPrice: -1,
+          })
+          .then(res => {
+              console.log(res.data.data);
+              product.is_collect = false;
+          })
+        }
+        else{
+            this.$axios.post('http://localhost:8000/set_collect',{
+            goodsId: window.localStorage.getItem("goods_id"),
+            userId: window.localStorage.getItem("user_id"),
+            expectPrice: -1,
+          })
+          .then(res => {
+              console.log(res.data.data);
+              product.is_collect = true;
+          })
+        }
       }
     }
   };
