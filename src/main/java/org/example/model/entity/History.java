@@ -18,14 +18,6 @@ public class History {
 
     protected Integer userType;//用户类型  商家1  管理员0
     protected Date pDate;  //设定日期
-    public Integer getUserType() {
-        return userType;
-    }
-    public void setUserType(Integer userType) {
-        this.userType = userType;
-    }
-
-    protected Integer userType;
 
     public Integer getId() {
         return id;
