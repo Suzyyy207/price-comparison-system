@@ -4,6 +4,7 @@ import org.example.mapper.MessageMapper;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.IdVO;
 import org.example.model.VO.InsertVO;
+import org.example.model.VO.PlatformVO;
 import org.example.model.VO.UpdateVO;
 import org.example.model.entity.Platform;
 import org.example.model.entity.Seller;
@@ -116,7 +117,14 @@ public class AdminController {
         }
         return new Response<>(Response.FAIL,"修改该商家信息失败",false);
     }
-
+    @PostMapping("update_platform")
+    public Response<Boolean> updatePlatform(@RequestBody PlatformVO platformVO){
+        Boolean succeed=adminService.updatePlatform(platformVO);
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"修改平台信息成功",true);
+        }
+        return new Response<>(Response.FAIL,"修改平台信息失败",false);
+    }
     @PostMapping("delete_user")
     public Response<Boolean> deleteUser(@RequestBody IdVO idVO){
 

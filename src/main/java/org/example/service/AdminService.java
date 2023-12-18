@@ -4,6 +4,7 @@ import org.example.mapper.AdminMapper;
 import org.example.mapper.PlatformMapper;
 import org.example.mapper.SellerMapper;
 import org.example.mapper.UserMapper;
+import org.example.model.VO.PlatformVO;
 import org.example.model.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,4 +34,13 @@ public class AdminService {
         return sellerMapper.findAll();
     }
     public List<Platform> getAllPlatforms(){return platformMapper.findAll();}
+    public Boolean updatePlatform(PlatformVO platformVO){
+        Platform a=platformMapper.findByName(platformVO.getName());
+        if(a==null){
+            return platformMapper.update(platformVO)==1;
+        }
+        else{
+            return false;
+        }
+    }
 }
