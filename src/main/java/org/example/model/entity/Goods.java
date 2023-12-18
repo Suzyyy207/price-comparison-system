@@ -23,7 +23,7 @@ public class Goods {
     protected Integer platformId;
     protected Date productionDate;
 
-    protected Integer tag;//用来作为实际上是同一种商品的比较
+    protected String tag;//用来作为实际上是同一种商品的比较
     protected Integer state;//0:下架，1：上架
 
     public double getMinPrice() {
@@ -108,11 +108,11 @@ public class Goods {
         this.productionDate = productionDate;
     }
 
-    public Integer getTag() {
+    public String getTag() {
         return tag;
     }
 
-    public void setTag(Integer tag) {
+    public void setTag(String tag) {
         this.tag = tag;
     }
 

@@ -15,7 +15,7 @@ public interface CollectMapper extends BaseMapper<Collect> {
     @Select("select * from collect where id = #{id}")
     Collect findById(@Param("id")int id);
 
-    @Select("SELECT g.id, g.name, g.location, g.price, g.minPrice, g.category, s.name AS sellerName, p.name AS platformName, g.productionDate " +
+    @Select("SELECT g.id, g.name, g.location, g.price, g.minPrice, g.category, s.name AS sellerName, p.name AS platformName, g.productionDate, g.tag " +
             "FROM collect c " +
             "JOIN goods g ON c.goodsId = g.id " +
             "JOIN seller s ON g.sellerId = s.id " +
@@ -30,7 +30,8 @@ public interface CollectMapper extends BaseMapper<Collect> {
             @Result(property = "category", column = "category"),
             @Result(property = "sellerName", column = "sellerName"),
             @Result(property = "platformName", column = "platformName"),
-            @Result(property = "productionDate", column = "productionDate")
+            @Result(property = "productionDate", column = "productionDate"),
+            @Result(property = "tag", column = "tag")
     })
     List<ProductRE> findByUserId(@Param("userId")int userId);
 

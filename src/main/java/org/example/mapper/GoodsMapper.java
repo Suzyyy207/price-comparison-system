@@ -18,7 +18,7 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     Goods findById(@Param("id")int id);
 
     @Select("select * from goods where tag = #{tag}")
-    List<Goods> findByTag(@Param("tag")int tag);
+    List<Goods> findByTag(@Param("tag")String tag);
     @Select("select * from goods where sellerId = #{sellerId} and state=1")
     List<Goods> findBySellerId(@Param("sellerId")int sellerId);
     @Select("select * from goods where state = 1")
@@ -28,7 +28,7 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     @Select("select * from goods where tag=#{tag} "+
             "and sellerId = (select id from seller where name = #{sellerName}) " +
             "and platformId = (select id from platform where name = #{platformName})")
-    Goods findByTagPlatformSeller(@Param("sellerName")String sellerName,@Param("tag")int tag,@Param("platformName")String platformName);
+    Goods findByTagPlatformSeller(@Param("sellerName")String sellerName,@Param("tag")String tag,@Param("platformName")String platformName);
     @Select("select g.id, g.name, g.location, g.price, g.minPrice, g.category,g.productionDate, " +
             "s.name AS sellerName, p.name AS platformName, " +
             "CASE WHEN c.userId IS NOT NULL THEN 1 ELSE 0 END AS isCollect " +

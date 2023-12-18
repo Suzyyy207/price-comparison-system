@@ -36,6 +36,7 @@ public class GoodsService {
         this.messageMapper=messageMapper;
         this.collectMapper = collectMapper;
     }
+    @Transactional
     public List<ProductRE> getAllGoods(){
         List<Goods> allGoods=goodsMapper.findValidGoods();
         List<ProductRE> allProducts=new ArrayList<>();
@@ -46,6 +47,7 @@ public class GoodsService {
         }
         return allProducts;
     }
+    @Transactional
     public List<ProductRE> getSellerGoods(Integer sellerId){
         List<Goods> sellerGoods = goodsMapper.findBySellerId(sellerId);
         List<ProductRE> sellerProducts=new ArrayList<>();
@@ -61,6 +63,7 @@ public class GoodsService {
         ProductRE p=translateGoods(goods);
         return p;
     }
+    @Transactional
     public GetGoodsRE getGoodsByIdAndUserId(Integer id,Integer userId){
         try {
             GetGoodsRE goods = goodsMapper.findGoodsByIdAndUserId(id, userId);

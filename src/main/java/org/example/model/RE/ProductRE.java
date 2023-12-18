@@ -18,6 +18,16 @@ public class ProductRE {
     protected String sellerName;
     protected String platformName;
     protected Date productionDate;
+    protected String tag;
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+
 
     public Integer getId() {
         return id;
@@ -102,8 +112,9 @@ public class ProductRE {
         setProductionDate(goods.getProductionDate());
         setSellerName(sellerName);
         setPlatformName(platformName);
+        setTag(goods.getTag());
     }
-    public ProductRE(Integer id, String name, String location, double price, double minPrice, String category, String sellerName, String platformName, Date productionDate) {
+    public ProductRE(Integer id, String name, String location, double price, double minPrice, String category, String sellerName, String platformName, Date productionDate,String tag) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -113,5 +124,6 @@ public class ProductRE {
         this.sellerName = sellerName;
         this.platformName = platformName;
         this.productionDate = productionDate;
+        this.tag = tag;
     }
 }

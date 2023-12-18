@@ -21,5 +21,5 @@ public class UpdateGoodsVO {
     private String sellerName;
     private String platformName;
     private Date productionDate;
-    private Integer tag;//用来作为实际上是同一种商品的比较
+    private String tag;//用来作为实际上是同一种商品的比较
 }

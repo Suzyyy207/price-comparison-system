@@ -61,7 +61,7 @@ public class DataInsertion {
                     ");\n" +
                     "\n";
             String createGoodsTableSQL ="CREATE TABLE goods (id INT AUTO_INCREMENT,name VARCHAR(255), location VARCHAR(255),price DOUBLE,"+
-                    "minPrice DOUBLE,category VARCHAR(255),sellerId INT,platformId INT,productionDate Date,tag INT,state INT,PRIMARY KEY(id)," +
+                    "minPrice DOUBLE,category VARCHAR(255),sellerId INT,platformId INT,productionDate Date,tag VARCHAR(255),state INT,PRIMARY KEY(id)," +
                     "FOREIGN KEY (sellerId) REFERENCES seller(id), " +
                     "FOREIGN KEY (platformId) REFERENCES platform(id) "+
                     ");\n" +
