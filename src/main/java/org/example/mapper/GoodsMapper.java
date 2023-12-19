@@ -3,8 +3,10 @@ package org.example.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 import org.example.model.RE.GetGoodsRE;
+import org.example.model.RE.ProductRE;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.InsertGoodsVO;
+import org.example.model.VO.SearchGoodsVO;
 import org.example.model.VO.UpdateGoodsVO;
 import org.example.model.entity.Goods;
 import org.example.model.entity.Seller;
@@ -38,6 +40,20 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "left join platform p ON g.platformId = p.id " +
             "where g.id = #{id}")
     GetGoodsRE findGoodsByIdAndUserId(@Param("id")int id,@Param("userId")int userId);
+
+    @Select("SELECT g.id, g.name, g.location, g.price, g.minPrice, g.category, g.productionDate, " +
+            "s.name AS sellerName, p.name AS platformName, g.tag " +
+            "FROM goods g " +
+            "LEFT JOIN seller s ON g.sellerId = s.id " +
+            "LEFT JOIN platform p ON g.platformId = p.id " +
+            "WHERE " +
+            "#{searchGoodsVO.type} = 1 AND g.name LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%') " +
+            "OR " +
+            "#{searchGoodsVO.type} = 2 AND g.tag LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%') " +
+            "OR " +
+            "#{searchGoodsVO.type} = 3 AND g.category LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%')")
+    List<ProductRE> findGoodsByTypeAndKeyword(@Param("searchGoodsVO") SearchGoodsVO searchGoodsVO);
+
 
     @Insert("insert into goods (name,price,minPrice,location,category,sellerId,platformId,productionDate,tag,state) values (#{insertGoodsVO.name}, #{insertGoodsVO.price},#{insertGoodsVO.price}, #{insertGoodsVO.location},#{insertGoodsVO.category},"+
             "(select id from seller where name = #{insertGoodsVO.sellerName}), " +

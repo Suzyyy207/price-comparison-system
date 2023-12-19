@@ -2,6 +2,7 @@ package org.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
+import org.example.model.VO.SearchMessageVO;
 import org.example.model.entity.Goods;
 import org.example.model.entity.Message;
 
@@ -15,6 +16,10 @@ public interface MessageMapper extends BaseMapper<Message> {
     List<Message> findByUserId(@Param("userId")int userId);
     @Select("select * from message where goodsId=#{goodsId}")
     List<Message> findByGoodsId(@Param("goodsId")int goodsId);
+
+    @Select("SELECT * FROM message WHERE userId = #{searchMessageVO.userId} AND name LIKE CONCAT('%', #{searchMessageVO.keyword}, '%')")
+    List<Message> findMessagesBySearchMessageVO(@Param("searchMessageVO")SearchMessageVO searchMessageVO);
+
     @Update("update message set isRead=0 where id = #{id}")
     Integer updateIsRead(@Param("id") int id);
     @Insert("INSERT INTO message (goodsId, userId, name, currentPrice, targetPrice, date, isRead) " +

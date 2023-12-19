@@ -5,9 +5,7 @@ import org.example.mapper.GoodsMapper;
 import org.example.mapper.MessageMapper;
 import org.example.mapper.UserMapper;
 import org.example.model.RE.ProductRE;
-import org.example.model.VO.CollectVO;
-import org.example.model.VO.InsertVO;
-import org.example.model.VO.UpdateVO;
+import org.example.model.VO.*;
 import org.example.model.entity.Message;
 import org.example.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +72,31 @@ public class UserService {
         }
         else{
             return false;
+        }
+    }
+    @Transactional
+    public List<ProductRE> searchGoods(SearchGoodsVO searchGoodsVO){
+        try {
+            List<ProductRE> goods = goodsMapper.findGoodsByTypeAndKeyword(searchGoodsVO);
+            return goods;
+        }
+        catch (Exception e) {
+            // 处理异常情况，比如打印异常信息或者进行其他处理
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Transactional
+    public List<Message> searchMessage(SearchMessageVO searchMessageVO){
+        try {
+            List<Message> messages=messageMapper.findMessagesBySearchMessageVO(searchMessageVO);
+            return messages;
+        }
+        catch (Exception e) {
+            // 处理异常情况，比如打印异常信息或者进行其他处理
+            e.printStackTrace();
+            return null;
         }
     }
 }

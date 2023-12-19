@@ -125,4 +125,24 @@ public class UserController {
         return new Response<>(Response.FAIL,"修改目标价格失败",false);
 
     }
+    @PostMapping("search_goods")
+    public Response<List<ProductRE>> searchGoods(@RequestBody SearchGoodsVO searchGoodsVO){
+        List<ProductRE> goods=userService.searchGoods(searchGoodsVO);
+        if(goods!=null){
+            return new Response<>(Response.SUCCESS,"查找商品成功",goods);
+        }
+        else{
+            return new Response<>(Response.FAIL,"查找商品失败",null);
+        }
+    }
+    @PostMapping("get_target_message")
+    public Response<List<Message>> getTargetMessage(@RequestBody SearchMessageVO searchMessageVO){
+        List<Message> messages=userService.searchMessage(searchMessageVO);
+        if(messages!=null){
+            return new Response<>(Response.SUCCESS,"查找消息列表成功",messages);
+        }
+        else{
+            return new Response<>(Response.FAIL,"查找消息列表失败",null);
+        }
+    }
 }
