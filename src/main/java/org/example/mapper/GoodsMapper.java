@@ -41,8 +41,8 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "where g.id = #{id}")
     GetGoodsRE findGoodsByIdAndUserId(@Param("id")int id,@Param("userId")int userId);
 
-    @Select("SELECT g.id, g.name, g.location, g.price, g.minPrice, g.category, g.productionDate, " +
-            "s.name AS sellerName, p.name AS platformName, g.tag " +
+    @Select("SELECT g.id, g.name, g.location, g.price, g.minPrice, g.category, " +
+            "s.name AS sellerName, p.name AS platformName, g.productionDate,g.tag " +
             "FROM goods g " +
             "LEFT JOIN seller s ON g.sellerId = s.id " +
             "LEFT JOIN platform p ON g.platformId = p.id " +

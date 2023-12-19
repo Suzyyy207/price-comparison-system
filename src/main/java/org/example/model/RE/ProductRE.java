@@ -18,6 +18,7 @@ public class ProductRE {
     protected String sellerName;
     protected String platformName;
     protected Date productionDate;
+
     protected String tag;
     public String getTag() {
         return tag;

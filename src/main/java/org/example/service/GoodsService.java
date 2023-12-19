@@ -4,6 +4,7 @@ import org.example.mapper.*;
 import org.example.model.RE.GetGoodsRE;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.InsertGoodsVO;
+import org.example.model.VO.SearchGoodsVO;
 import org.example.model.VO.UpdateGoodsVO;
 import org.example.model.entity.Goods;
 import org.example.model.entity.History;
@@ -137,6 +138,18 @@ public class GoodsService {
             // 处理异常情况，比如打印异常信息或者进行其他处理
             e.printStackTrace();
             return false;
+        }
+    }
+    @Transactional
+    public List<ProductRE> searchGoods(SearchGoodsVO searchGoodsVO){
+        try {
+            List<ProductRE> goods = goodsMapper.findGoodsByTypeAndKeyword(searchGoodsVO);
+            return goods;
+        }
+        catch (Exception e) {
+            // 处理异常情况，比如打印异常信息或者进行其他处理
+            e.printStackTrace();
+            return null;
         }
     }
 

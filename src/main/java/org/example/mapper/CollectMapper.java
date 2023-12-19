@@ -1,7 +1,10 @@
 package org.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import javafx.util.Pair;
 import org.apache.ibatis.annotations.*;
+import org.example.model.RE.CollectTagRE;
+import org.example.model.RE.ProbabilityRE;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.CollectVO;
 import org.example.model.entity.Collect;
@@ -15,12 +18,12 @@ public interface CollectMapper extends BaseMapper<Collect> {
     @Select("select * from collect where id = #{id}")
     Collect findById(@Param("id")int id);
 
-    @Select("SELECT g.id, g.name, g.location, g.price, g.minPrice, g.category, s.name AS sellerName, p.name AS platformName, g.productionDate, g.tag " +
-            "FROM collect c " +
+    @Select("select g.id, g.name, g.location, g.price, g.minPrice, g.category, s.name as sellerName, p.name as platformName, g.productionDate, g.tag " +
+            "from collect c " +
             "JOIN goods g ON c.goodsId = g.id " +
             "JOIN seller s ON g.sellerId = s.id " +
             "JOIN platform p ON g.platformId = p.id " +
-            "WHERE c.userId = #{userId}")
+            "where c.userId = #{userId}")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
@@ -35,6 +38,24 @@ public interface CollectMapper extends BaseMapper<Collect> {
     })
     List<ProductRE> findByUserId(@Param("userId")int userId);
 
+    @Select("select AVG(expectPrice) as AvgExpectPrice" +
+            "from collect" +
+            "where goodsId =#{goodsId}  and expectPrice is not null;")
+    Double findAverageExpectPriceByGoodsId(Integer goodsId);
+    
+    @Select("select tag, COUNT(*) as count from collect where userId = #{userId} group by tag;")
+    List<CollectTagRE> findCollectTagByUserId(@Param("userId")Integer userId);
+
+    @Select("SELECT c.goodsId, g.name, g.category, s.name as sellerName, p.name as platformName, COUNT(m.messageId) / COUNT(h.price) as probability" +
+            "FROM collect c" +
+            "LEFT JOIN history h ON c.goodsId = h.goodsId" +
+            "LEFT JOIN message m ON c.goodsId = m.goodsId"+
+            "LEFT JOIN goods g ON c.goodsId = g.id " +
+            "LEFT JOIN seller s ON g.sellerId = s.id " +
+            "LEFT JOIN platform p ON g.platformId = p.id " +
+            "WHERE c.userId = #{userId}" +
+            "GROUP BY c.goodsId;")
+    List<ProbabilityRE> findCollectProbability(@Param("userId")Integer userId);
     @Insert("insert into collect (userId,goodsId,expectPrice,state) values (#{collectVO.userId},#{collectVO.goodsId},#{collectVO.expectPrice},1)")
     int insert(@Param("collectVO") CollectVO collectVO);
     @Update("update collect set expectPrice=#{collectVO.expectPrice} where goodsId=#{collectVO.goodsId} and userId=#{collectVO.userId}")

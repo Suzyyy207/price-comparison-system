@@ -1,6 +1,8 @@
 package org.example.controller;
 
+import org.example.model.RE.CollectTagRE;
 import org.example.model.RE.InfoRE;
+import org.example.model.RE.ProbabilityRE;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.*;
 import org.example.model.entity.*;
@@ -127,7 +129,7 @@ public class UserController {
     }
     @PostMapping("search_goods")
     public Response<List<ProductRE>> searchGoods(@RequestBody SearchGoodsVO searchGoodsVO){
-        List<ProductRE> goods=userService.searchGoods(searchGoodsVO);
+        List<ProductRE> goods=goodsService.searchGoods(searchGoodsVO);
         if(goods!=null){
             return new Response<>(Response.SUCCESS,"查找商品成功",goods);
         }
@@ -143,6 +145,26 @@ public class UserController {
         }
         else{
             return new Response<>(Response.FAIL,"查找消息列表失败",null);
+        }
+    }
+    @PostMapping("get_collect_tag")
+    public Response<List<CollectTagRE>> getCollectTag(@RequestBody IdVO idVO){
+        List<CollectTagRE> collectTagREs = userService.getCollectTag(idVO.getUser_id());
+        if(collectTagREs!=null){
+            return new Response<>(Response.SUCCESS,"查找收藏tag排序成功",collectTagREs);
+        }
+        else{
+            return new Response<>(Response.FAIL,"查找收藏tag排序失败",null);
+        }
+    }
+    @PostMapping("get_collect_probability")
+    public Response<List<ProbabilityRE>> getCollectProbability(@RequestBody IdVO idVO){
+        List<ProbabilityRE> probabilityREs = userService.getCollectProbability(idVO.getUser_id());
+        if(probabilityREs!=null){
+            return new Response<>(Response.SUCCESS,"查找用户收藏的价格下限实现率成功",probabilityREs);
+        }
+        else{
+            return new Response<>(Response.FAIL,"查找用户收藏的价格下限实现率失败",null);
         }
     }
 }

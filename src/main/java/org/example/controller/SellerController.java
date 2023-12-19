@@ -52,4 +52,12 @@ public class SellerController {
         }
         return new Response<>(Response.FAIL,"插入商品失败",false);
     }
+    @PostMapping("get_avg_targetprice")
+    public Response<Double> getAvgExpectPrice(@RequestBody IdVO idVO){
+        Double avg= sellerService.getAvgExpectPrice(idVO.getUser_id());
+        if(avg!=-1){
+            return new Response<>(Response.SUCCESS,"收藏该商品的平均期望价格返回成功",avg);
+        }
+        return new Response<>(Response.FAIL,"收藏该商品的平均期望价格返回失败",-1.0);
+    }
 }

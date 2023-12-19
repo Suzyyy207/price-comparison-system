@@ -4,6 +4,8 @@ import org.example.mapper.CollectMapper;
 import org.example.mapper.GoodsMapper;
 import org.example.mapper.MessageMapper;
 import org.example.mapper.UserMapper;
+import org.example.model.RE.CollectTagRE;
+import org.example.model.RE.ProbabilityRE;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.*;
 import org.example.model.entity.Message;
@@ -74,11 +76,13 @@ public class UserService {
             return false;
         }
     }
+
+
     @Transactional
-    public List<ProductRE> searchGoods(SearchGoodsVO searchGoodsVO){
+    public List<Message> searchMessage(SearchMessageVO searchMessageVO){
         try {
-            List<ProductRE> goods = goodsMapper.findGoodsByTypeAndKeyword(searchGoodsVO);
-            return goods;
+            List<Message> messages=messageMapper.findMessagesBySearchMessageVO(searchMessageVO);
+            return messages;
         }
         catch (Exception e) {
             // 处理异常情况，比如打印异常信息或者进行其他处理
@@ -86,12 +90,23 @@ public class UserService {
             return null;
         }
     }
-
     @Transactional
-    public List<Message> searchMessage(SearchMessageVO searchMessageVO){
+    public List<CollectTagRE> getCollectTag(Integer userId){
         try {
-            List<Message> messages=messageMapper.findMessagesBySearchMessageVO(searchMessageVO);
-            return messages;
+            List<CollectTagRE> collectTagREs = collectMapper.findCollectTagByUserId(userId);
+            return collectTagREs;
+        }
+        catch (Exception e) {
+            // 处理异常情况，比如打印异常信息或者进行其他处理
+            e.printStackTrace();
+            return null;
+        }
+    }
+    @Transactional
+    public List<ProbabilityRE> getCollectProbability(Integer userId){
+        try {
+            List<ProbabilityRE> probabilityREs = collectMapper.findCollectProbability(userId);
+            return probabilityREs;
         }
         catch (Exception e) {
             // 处理异常情况，比如打印异常信息或者进行其他处理

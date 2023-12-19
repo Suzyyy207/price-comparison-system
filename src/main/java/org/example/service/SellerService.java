@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.apache.ibatis.annotations.Update;
+import org.example.mapper.CollectMapper;
 import org.example.mapper.SellerMapper;
 import org.example.model.VO.InsertVO;
 import org.example.model.VO.UpdateVO;
@@ -11,9 +12,11 @@ import org.springframework.stereotype.Service;
 @Service("SellerService")
 public class SellerService {
     private final SellerMapper sellerMapper;
+    private final CollectMapper collectMapper;
     @Autowired
-    public SellerService(SellerMapper sellerMapper){
+    public SellerService(SellerMapper sellerMapper,CollectMapper collectMapper){
         this.sellerMapper=sellerMapper;
+        this.collectMapper=collectMapper;
     }
     public Seller getSellerById(int id) {
         return sellerMapper.findById(id);
@@ -23,5 +26,15 @@ public class SellerService {
     }
     public Boolean updateSeller(UpdateVO updateVO){
         return sellerMapper.update(updateVO)==1;
+    }
+    public Double getAvgExpectPrice(Integer goodsId){
+        try{
+            return collectMapper.findAverageExpectPriceByGoodsId(goodsId);
+        }
+        catch (Exception e) {
+            // 处理异常情况，比如打印异常信息或者进行其他处理
+            e.printStackTrace();
+            return -1.0;
+        }
     }
 }
