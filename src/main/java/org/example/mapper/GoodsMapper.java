@@ -1,6 +1,7 @@
 package org.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.*;
 import org.example.model.RE.*;
 import org.example.model.VO.InsertGoodsVO;
@@ -81,6 +82,20 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "SELECT sex,tag,count,rnk " +
             "From MaxSexTag where rnk <=3;")
     List<TopTag4SexRE> getTop4Sex();
+
+    @Select("SELECT DISTINCT(tag) FROM goods WHERE tag LIKE concat('%',#{keyword},'%') and state=1;")
+    List<String> getTags(@Param("keyword") String keyword);
+
+    //TODO：写到这了！！！
+    @Select("SELECT g.id, g.tag, g.name AS goodsName, p.name AS platformName, s.name AS sellerName, g.price, g.minPrice " +
+            "FROM (goods g LEFT JOIN platform p ON g.platformId = p.id) LEFT JOIN seller s on s.id = g.sellerId " +
+            "WHERE tag LIKE concat('%',#{keyword},'%');")
+    List<PriceCompareRE> getTagPriceAll(@Param("keyword") String keyword);
+
+    @Select("SELECT g.id, g.tag, g.name AS goodsName, p.name AS platformName, s.name AS sellerName, g.price, g.minPrice " +
+            "FROM (goods g LEFT JOIN platform p ON g.platformId = p.id) LEFT JOIN seller s on s.id = g.sellerId " +
+            "WHERE tag LIKE concat('%',#{keyword},'%') and p.id = #{platformId};")
+    List<PriceCompareRE> getTagPrice(@Param("keyword") String keyword, @Param("platformId") Integer platformId);
 
 
     @Insert("insert into goods (name,price,minPrice,location,category,sellerId,platformId,productionDate,tag,state) values (#{insertGoodsVO.name}, #{insertGoodsVO.price},#{insertGoodsVO.price}, #{insertGoodsVO.location},#{insertGoodsVO.category},"+

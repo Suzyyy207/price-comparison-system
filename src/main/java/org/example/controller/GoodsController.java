@@ -1,10 +1,7 @@
 package org.example.controller;
 
 import org.example.model.RE.*;
-import org.example.model.VO.HistoryVO;
-import org.example.model.VO.IdVO;
-import org.example.model.VO.UpdateGoodsVO;
-import org.example.model.VO.UserGoodsVO;
+import org.example.model.VO.*;
 import org.example.model.entity.Goods;
 import org.example.model.entity.History;
 import org.example.service.AdminService;
@@ -67,19 +64,40 @@ public class GoodsController {
             return new Response<>(Response.FAIL,"获取年度热点失败",null);
         }
         else {
-            return new Response<>(Response.SUCCESS,"获取历史记录成功", topCollect);
+            return new Response<>(Response.SUCCESS,"获取年度热点成功", topCollect);
         }
     }
 
     @PostMapping("top_tag_for_sex")
     public Response<List<TopTag4SexRE>> getTop4Sex(@RequestBody IdVO idVO){
-        //年度热点商品：按照tag分类，查询每一类下收藏量最高的
         List<TopTag4SexRE> topTag4SexRES = goodsService.getTop4Sex();
         if(topTag4SexRES==null){
-            return new Response<>(Response.FAIL,"获取年度热点失败",null);
+            return new Response<>(Response.FAIL,"获取性别热点失败",null);
         }
         else {
-            return new Response<>(Response.SUCCESS,"获取历史记录成功", topTag4SexRES);
+            return new Response<>(Response.SUCCESS,"获取性别热点成功", topTag4SexRES);
+        }
+    }
+
+    @PostMapping("search_for_tag")
+    public Response<List<String>> getTop4Sex(@RequestBody SearchMessageVO searchMessageVO){
+        List<String> tags = goodsService.getTags(searchMessageVO.getKeyword());
+        if(tags==null){
+            return new Response<>(Response.FAIL,"搜索tag失败",null);
+        }
+        else {
+            return new Response<>(Response.SUCCESS,"搜索tag成功", tags);
+        }
+    }
+
+    @PostMapping("get_price_for_tag")
+    public Response<List<PriceCompareRE>> getTagPrice(@RequestBody SearchMessageVO searchMessageVO){
+        List<PriceCompareRE> priceCompareRES = goodsService.getTagPrice(searchMessageVO);
+        if(priceCompareRES==null){
+            return new Response<>(Response.FAIL,"tag比价失败",null);
+        }
+        else {
+            return new Response<>(Response.SUCCESS,"tag比价成功", priceCompareRES);
         }
     }
 

@@ -4,6 +4,7 @@ import org.example.mapper.*;
 import org.example.model.RE.*;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.SearchGoodsVO;
+import org.example.model.VO.SearchMessageVO;
 import org.example.model.VO.UpdateGoodsVO;
 import org.example.model.entity.Goods;
 import org.example.model.entity.History;
@@ -213,4 +214,23 @@ public class GoodsService {
         List<TopTag4SexRE> topTag= goodsMapper.getTop4Sex();
         return topTag;
     }
+
+    public List<String> getTags(String keyword){
+        List<String> tags = goodsMapper.getTags(keyword);
+        return tags;
+    }
+
+    public List<PriceCompareRE> getTagPrice(SearchMessageVO searchMessageVO){
+        // user_id 当platform_id用,0表示全部
+        List<PriceCompareRE> tagPrice;
+        if(searchMessageVO.getUserId() == 0){
+            tagPrice = goodsMapper.getTagPriceAll(searchMessageVO.getKeyword());
+        }
+        else{
+            tagPrice = goodsMapper.getTagPrice(searchMessageVO.getKeyword(), searchMessageVO.getUserId());
+        }
+
+        return tagPrice;
+    }
+
 }
