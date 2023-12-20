@@ -2,10 +2,7 @@ package org.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
-import org.example.model.RE.CollectTagRE;
-import org.example.model.RE.GetGoodsRE;
-import org.example.model.RE.ProductRE;
-import org.example.model.RE.TopTagCollectRE;
+import org.example.model.RE.*;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.SearchGoodsVO;
@@ -68,6 +65,22 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "SELECT mc.tag, mc.goodsId, mc.name, mc.collectCount " +
             "FROM MaxCollectPerTag mc WHERE mc.rnk = 1 and mc.collectCount > 0;")
     List<TopTagCollectRE> getTop4Year();
+
+    @Select("WITH GoodsCollect AS (" +
+            "SELECT g.id AS goodsId, g.tag, c.userId " +
+            "FROM goods g INNER JOIN collect c ON g.id = c.goodsId WHERE c.state = 1), " +
+            "CollectWithSex AS (" +
+            "SELECT COUNT(gc.goodsId) AS goodsCCount, gc.tag, gc.userId, u.sex " +
+            "FROM GoodsCollect gc LEFT JOIN user u ON gc.userId = u.id GROUP BY gc.tag, gc.userId), "+
+            "SexTagCollect AS (" +
+            "SELECT SUM(cws.goodsCCount) as count, cws.tag, cws.sex "+
+            "FROM CollectWithSex cws GROUP BY cws.tag, cws.sex), "+
+            "MaxSexTag AS(" +
+            "SELECT sex, tag, count, RANK() OVER (PARTITION BY sex ORDER BY count DESC) AS rnk "+
+            "From SexTagCollect) " +
+            "SELECT sex,tag,count,rnk " +
+            "From MaxSexTag where rnk <=3;")
+    List<TopTag4SexRE> getTop4Sex();
 
 
     @Insert("insert into goods (name,price,minPrice,location,category,sellerId,platformId,productionDate,tag,state) values (#{insertGoodsVO.name}, #{insertGoodsVO.price},#{insertGoodsVO.price}, #{insertGoodsVO.location},#{insertGoodsVO.category},"+

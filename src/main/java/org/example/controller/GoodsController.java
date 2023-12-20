@@ -1,9 +1,6 @@
 package org.example.controller;
 
-import org.example.model.RE.CollectTagRE;
-import org.example.model.RE.GetGoodsRE;
-import org.example.model.RE.ProductRE;
-import org.example.model.RE.TopTagCollectRE;
+import org.example.model.RE.*;
 import org.example.model.VO.HistoryVO;
 import org.example.model.VO.IdVO;
 import org.example.model.VO.UpdateGoodsVO;
@@ -71,6 +68,18 @@ public class GoodsController {
         }
         else {
             return new Response<>(Response.SUCCESS,"获取历史记录成功", topCollect);
+        }
+    }
+
+    @PostMapping("top_tag_for_sex")
+    public Response<List<TopTag4SexRE>> getTop4Sex(@RequestBody IdVO idVO){
+        //年度热点商品：按照tag分类，查询每一类下收藏量最高的
+        List<TopTag4SexRE> topTag4SexRES = goodsService.getTop4Sex();
+        if(topTag4SexRES==null){
+            return new Response<>(Response.FAIL,"获取年度热点失败",null);
+        }
+        else {
+            return new Response<>(Response.SUCCESS,"获取历史记录成功", topTag4SexRES);
         }
     }
 

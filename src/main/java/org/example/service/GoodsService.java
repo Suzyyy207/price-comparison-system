@@ -1,10 +1,7 @@
 package org.example.service;
 
 import org.example.mapper.*;
-import org.example.model.RE.CollectTagRE;
-import org.example.model.RE.GetGoodsRE;
-import org.example.model.RE.ProductRE;
-import org.example.model.RE.TopTagCollectRE;
+import org.example.model.RE.*;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.SearchGoodsVO;
 import org.example.model.VO.UpdateGoodsVO;
@@ -210,5 +207,10 @@ public class GoodsService {
     public List<TopTagCollectRE> getTop4Year(){
         List<TopTagCollectRE> topCollect= goodsMapper.getTop4Year();
         return topCollect;
+    }
+
+    public List<TopTag4SexRE> getTop4Sex(){
+        List<TopTag4SexRE> topTag= goodsMapper.getTop4Sex();
+        return topTag;
     }
 }
