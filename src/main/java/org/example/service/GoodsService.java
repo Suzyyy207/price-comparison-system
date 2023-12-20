@@ -1,8 +1,10 @@
 package org.example.service;
 
 import org.example.mapper.*;
+import org.example.model.RE.CollectTagRE;
 import org.example.model.RE.GetGoodsRE;
 import org.example.model.RE.ProductRE;
+import org.example.model.RE.TopTagCollectRE;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.SearchGoodsVO;
 import org.example.model.VO.UpdateGoodsVO;
@@ -203,5 +205,10 @@ public class GoodsService {
         }
         boolean deleteSeller = sellerMapper.deleteBySellerId(sellerId)==1;
         return deleteSeller;
+    }
+
+    public List<TopTagCollectRE> getTop4Year(){
+        List<TopTagCollectRE> topCollect= goodsMapper.getTop4Year();
+        return topCollect;
     }
 }

@@ -2,8 +2,10 @@ package org.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
+import org.example.model.RE.CollectTagRE;
 import org.example.model.RE.GetGoodsRE;
 import org.example.model.RE.ProductRE;
+import org.example.model.RE.TopTagCollectRE;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.InsertGoodsVO;
 import org.example.model.VO.SearchGoodsVO;
@@ -53,6 +55,19 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "OR " +
             "#{searchGoodsVO.type} = 3 AND g.category LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%')")
     List<ProductRE> findGoodsByTypeAndKeyword(@Param("searchGoodsVO") SearchGoodsVO searchGoodsVO);
+
+    @Select("WITH GoodsCollected AS (" +
+            "SELECT g.id AS goodsId, g.tag, g.name, c.userId " +
+            "FROM goods g LEFT JOIN collect c ON g.id = c.goodsId), " +
+            "CollectCounts AS (" +
+            "SELECT gc.tag, gc.goodsId, gc.name, COUNT(gc.userId) AS collectCount " +
+            "FROM GoodsCollected gc GROUP BY gc.tag, gc.goodsId), " +
+            "MaxCollectPerTag AS (" +
+            "SELECT tag, goodsId, name, collectCount, RANK() OVER (PARTITION BY tag ORDER BY collectCount DESC) AS rnk " +
+            "FROM CollectCounts) "+
+            "SELECT mc.tag, mc.goodsId, mc.name, mc.collectCount " +
+            "FROM MaxCollectPerTag mc WHERE mc.rnk = 1 and mc.collectCount > 0;")
+    List<TopTagCollectRE> getTop4Year();
 
 
     @Insert("insert into goods (name,price,minPrice,location,category,sellerId,platformId,productionDate,tag,state) values (#{insertGoodsVO.name}, #{insertGoodsVO.price},#{insertGoodsVO.price}, #{insertGoodsVO.location},#{insertGoodsVO.category},"+
