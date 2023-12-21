@@ -13,6 +13,12 @@ public class History {
 
     protected Integer goodsId;//商品名
 
+    public History(Integer goodsId, double price, Integer userType, Date pDate) {
+        this.goodsId = goodsId;
+        this.price = price;
+        this.userType = userType;
+        this.pDate = pDate;
+    }
 
     protected double price; //设定价格
 

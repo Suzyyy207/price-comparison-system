@@ -1,10 +1,9 @@
 package org.example.controller;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import org.example.model.RE.ProductRE;
-import org.example.model.VO.IdVO;
-import org.example.model.VO.InsertGoodsVO;
-import org.example.model.VO.InsertVO;
-import org.example.model.VO.UpdateGoodsVO;
+import org.example.model.VO.*;
 import org.example.model.entity.Seller;
 import org.example.model.entity.User;
 import org.example.service.AdminService;
@@ -18,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 @RestController
 @CrossOrigin
@@ -59,5 +62,13 @@ public class SellerController {
             return new Response<>(Response.SUCCESS,"收藏该商品的平均期望价格返回成功",avg);
         }
         return new Response<>(Response.FAIL,"收藏该商品的平均期望价格返回失败",-1.0);
+    }
+    @PostMapping("insert_goods_file")
+    public Response<Boolean> insertGoodsFile(@RequestBody FilePathVO filePathVO){
+        Boolean succeed=goodsService.insertGoodsFile(filePathVO.getFilepath());
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"批量导入商品列表成功",true);
+        }
+        return new Response<>(Response.FAIL,"批量导入商品列表失败",false);
     }
 }

@@ -89,7 +89,7 @@ public class DataInsertion {
             System.out.println(createSellerTableSQL);
             executeSQL(connection, createSellerTableSQL);
             //Seller表的插入
-            String insertSellerDataSQL = SQLCreator.generateInsertDataSQL("Seller", sellerColumns, sellerData);
+            String insertSellerDataSQL = SQLCreator.generateInsertDataSQL("seller", sellerColumns, sellerData);
             System.out.println(insertSellerDataSQL);
             String EncodedSQL2= new String(insertSellerDataSQL.getBytes("UTF-8"), "UTF-8");
             PreparedStatement preparedStatement2 = connection.prepareStatement(EncodedSQL2);
@@ -139,12 +139,12 @@ public class DataInsertion {
             System.out.println(createHistoryTableSQL);
             executeSQL(connection, createHistoryTableSQL);
             //History表的插入
-            String insertHistoryDataSQL = SQLCreator.generateInsertDataSQL("History", historyColumns, historyData);
+            String insertHistoryDataSQL = SQLCreator.generateInsertDataSQL("history", historyColumns, historyData);
             System.out.println(insertHistoryDataSQL);
             String EncodedSQL8 = new String(insertHistoryDataSQL.getBytes("UTF-8"), "UTF-8");
             PreparedStatement preparedStatement8 = connection.prepareStatement(EncodedSQL8);
             preparedStatement8.executeUpdate();
-
+            System.out.println("!");
             connection.close();
         } catch (SQLException | UnsupportedEncodingException e) {
             e.printStackTrace();

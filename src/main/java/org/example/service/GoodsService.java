@@ -1,5 +1,7 @@
 package org.example.service;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import org.example.mapper.*;
 import org.example.model.RE.*;
 import org.example.model.VO.InsertGoodsVO;
@@ -14,6 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.sql.Date;
@@ -232,5 +238,71 @@ public class GoodsService {
 
         return tagPrice;
     }
-
+    @Transactional
+    public Boolean insertGoodsFile(String filepath){
+        List<String[]> data = new ArrayList<>();//列表
+        try (
+                // 以GBK编码读取CSV文件
+                CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(filepath),"GBK"))
+        ) {
+            String[] line;//一行String
+            while ((line = reader.readNext()) != null) {
+                data.add(line);
+            }
+            data.remove(0);
+            Boolean succeed=true;
+            for (String[] l : data) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                java.util.Date utilDate = dateFormat.parse(l[8]);
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                Goods goods = new Goods(
+                        Integer.parseInt(l[0]),
+                        l[1],
+                        l[5],
+                        Double.parseDouble(l[2]),
+                        Double.parseDouble(l[3]),
+                        l[4],
+                        Integer.parseInt(l[6]),
+                        Integer.parseInt(l[7]),
+                        sqlDate,
+                        l[9],
+                        Integer.parseInt(l[10]));
+                succeed=succeed&&goodsMapper.insertFile(goods)==1;
+            }
+            return succeed;
+        }
+        catch (Exception e) {
+            // 处理异常情况，比如打印异常信息或者进行其他处理
+            e.printStackTrace();
+            return false;
+        }
+    }
+    @Transactional
+    public Boolean insertPriceHistoryFile(String filepath){
+        List<String[]> data = new ArrayList<>();//列表
+        try (
+                // 以GBK编码读取CSV文件
+                CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(filepath),"GBK"))
+        ) {
+            String[] line;//一行String
+            while ((line = reader.readNext()) != null) {
+                data.add(line);
+            }
+            data.remove(0);
+            Boolean succeed=true;
+            for (String[] l : data) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                java.util.Date utilDate = dateFormat.parse(l[2]);
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                History history=new History(Integer.parseInt(l[0]),Double.parseDouble(l[1]),Integer.parseInt(l[3]),sqlDate);
+                succeed=succeed&&historyMapper.insertHistoryFile(history)==1;
+            }
+            return succeed;
+        }
+        catch (Exception e) {
+            // 处理异常情况，比如打印异常信息或者进行其他处理
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -119,4 +119,18 @@ public class Goods {
     public void update(){
 //!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
+
+    public Goods(Integer id, String name, String location, double price, double minPrice, String category, Integer sellerId, Integer platformId, Date productionDate, String tag, Integer state) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.price = price;
+        this.minPrice = minPrice;
+        this.category = category;
+        this.sellerId = sellerId;
+        this.platformId = platformId;
+        this.productionDate = productionDate;
+        this.tag = tag;
+        this.state = state;
+    }
 }

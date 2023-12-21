@@ -104,6 +104,10 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "#{insertGoodsVO.productionDate},#{insertGoodsVO.tag},1)")
     int insert(@Param("insertGoodsVO") InsertGoodsVO insertGoodsVO);
 
+    @Insert("insert into goods (name,price,minPrice,location,category,sellerId,platformId,productionDate,tag,state) values"+
+            " (#{goods.name}, #{goods.price},#{goods.minPrice}, #{goods.location},#{goods.category},"+
+            " #{goods.sellerId},  #{goods.platformId}, #{goods.productionDate},#{goods.tag},#{goods.state})")
+    int insertFile(@Param("goods")Goods goods);
     @Update("update goods set name=#{updateGoodsVO.name},location=#{updateGoodsVO.location},price=#{updateGoodsVO.price},category=#{updateGoodsVO.category},"+
             "sellerId=(SELECT id FROM seller WHERE name = #{updateGoodsVO.sellerName})," +
             "platformId=(SELECT id FROM platform WHERE name = #{updateGoodsVO.platformName}),"+

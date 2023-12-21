@@ -2,10 +2,7 @@ package org.example.controller;
 
 import org.example.mapper.MessageMapper;
 import org.example.model.RE.ProductRE;
-import org.example.model.VO.IdVO;
-import org.example.model.VO.InsertVO;
-import org.example.model.VO.PlatformVO;
-import org.example.model.VO.UpdateVO;
+import org.example.model.VO.*;
 import org.example.model.entity.Platform;
 import org.example.model.entity.Seller;
 import org.example.model.entity.User;
@@ -155,5 +152,12 @@ public class AdminController {
         }
         return new Response<>(Response.FAIL,"删除该商户失败",false);
     }
-
+    @PostMapping("insert_price_history_file")
+    public Response<Boolean> insertPriceHistory(@RequestBody FilePathVO filePathVO){
+        Boolean succeed=goodsService.insertPriceHistoryFile(filePathVO.getFilepath());
+        if(succeed==true){
+            return new Response<>(Response.SUCCESS,"批量导入商品价格历史成功",true);
+        }
+        return new Response<>(Response.FAIL,"批量导入商品价格历史失败",false);
+    }
 }
