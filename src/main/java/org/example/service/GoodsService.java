@@ -4,10 +4,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import org.example.mapper.*;
 import org.example.model.RE.*;
-import org.example.model.VO.InsertGoodsVO;
-import org.example.model.VO.SearchGoodsVO;
-import org.example.model.VO.SearchMessageVO;
-import org.example.model.VO.UpdateGoodsVO;
+import org.example.model.VO.*;
 import org.example.model.entity.Goods;
 import org.example.model.entity.History;
 import org.example.model.entity.Message;
@@ -237,6 +234,19 @@ public class GoodsService {
         }
 
         return tagPrice;
+    }
+
+    public List<PriceDiffRE> getPriceDiff(PriceDiffVO priceDiffVO){
+        // user_id 当platform_id用,0表示全部
+        List<PriceDiffRE> priceDiff;
+        if(priceDiffVO.getPlatform_id() == 0){
+            priceDiff = goodsMapper.getPriceDiffAll(priceDiffVO);
+        }
+        else{
+            priceDiff = goodsMapper.getPriceDiff(priceDiffVO);
+        }
+
+        return priceDiff;
     }
     @Transactional
     public Boolean insertGoodsFile(String filepath){

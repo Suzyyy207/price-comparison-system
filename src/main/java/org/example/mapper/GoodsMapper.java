@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.*;
 import org.example.model.RE.*;
+import org.example.model.VO.*;
 import org.example.model.VO.InsertGoodsVO;
-import org.example.model.VO.InsertGoodsVO;
-import org.example.model.VO.SearchGoodsVO;
-import org.example.model.VO.UpdateGoodsVO;
 import org.example.model.entity.Goods;
 import org.example.model.entity.Seller;
 import org.example.model.entity.User;
@@ -86,7 +84,6 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     @Select("SELECT DISTINCT(tag) FROM goods WHERE tag LIKE concat('%',#{keyword},'%') and state=1;")
     List<String> getTags(@Param("keyword") String keyword);
 
-    //TODO：写到这了！！！
     @Select("SELECT g.id, g.tag, g.name AS goodsName, p.name AS platformName, s.name AS sellerName, g.price, g.minPrice " +
             "FROM (goods g LEFT JOIN platform p ON g.platformId = p.id) LEFT JOIN seller s on s.id = g.sellerId " +
             "WHERE tag LIKE concat('%',#{keyword},'%');")
@@ -97,6 +94,37 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "WHERE tag LIKE concat('%',#{keyword},'%') and p.id = #{platformId};")
     List<PriceCompareRE> getTagPrice(@Param("keyword") String keyword, @Param("platformId") Integer platformId);
 
+    @Select("WITH GoodsInfo AS(" +
+            "SELECT g.id, g.tag, g.name AS goodsName, p.name AS platformName, s.name AS sellerName " +
+            "FROM (goods g LEFT JOIN platform p ON g.platformId = p.id) LEFT JOIN seller s on s.id = g.sellerId " +
+            "WHERE tag LIKE concat('%',#{priceDiff.tag},'%')), " +
+            "GoodsPrice AS(" +
+            "SELECT h.goodsId, h.price " +
+            "FROM History h " +
+            "WHERE h.goodsId in (SELECT id FROM GoodsInfo) and DATEDIFF(NOW(), h.pDate) < #{priceDiff.time_len}), " +
+            "PriceDiff AS(" +
+            "SELECT gp.goodsId, MAX(gp.price) AS maxPrice, MIN(gp.price) AS minPrice, MAX(gp.price)-MIN(gp.price) AS priceDiffNum" +
+            "FROM GoodsPrice gp GROUP BY gp.goodsID) " +
+            "SELECT gi.id AS id, gi.tag, gi.goodsName, gi.platformName, gi.sellerName, pd.maxPrice, pd.minPrice, pd.priceDiffNum" +
+            "FROM GoodsInfo AS gi LEFT JOIN PriceDiff pd ON gi.id = pd.goodsId;"
+    )
+    List<PriceDiffRE> getPriceDiffAll(@Param("priceDiff")PriceDiffVO priceDiff);
+
+    @Select("WITH GoodsInfo AS(" +
+            "SELECT g.id, g.tag, g.name AS goodsName, p.name AS platformName, s.name AS sellerName " +
+            "FROM (goods g LEFT JOIN platform p ON g.platformId = p.id) LEFT JOIN seller s on s.id = g.sellerId " +
+            "WHERE tag LIKE concat('%',#{priceDiff.tag},'%') AND g.platformId = #{priceDiff.platform_id}), " +
+            "GoodsPrice AS(" +
+            "SELECT h.goodsId, h.price " +
+            "FROM History h " +
+            "WHERE h.goodsId in (SELECT id FROM GoodsInfo) and DATEDIFF(NOW(), h.pDate) < #{priceDiff.time_len}), " +
+            "PriceDiff AS(" +
+            "SELECT gp.goodsId, MAX(gp.price) AS maxPrice, MIN(gp.price) AS minPrice, MAX(gp.price)-MIN(gp.price) AS priceDiffNum" +
+            "FROM GoodsPrice gp GROUP BY gp.goodsID) " +
+            "SELECT gi.id AS id, gi.tag, gi.goodsName, gi.platformName, gi.sellerName, pd.maxPrice, pd.minPrice, pd.priceDiffNum" +
+            "FROM GoodsInfo AS gi LEFT JOIN PriceDiff pd ON gi.id = pd.goodsId;"
+    )
+    List<PriceDiffRE> getPriceDiff(@Param("priceDiff")PriceDiffVO priceDiff);
 
     @Insert("insert into goods (name,price,minPrice,location,category,sellerId,platformId,productionDate,tag,state) values (#{insertGoodsVO.name}, #{insertGoodsVO.price},#{insertGoodsVO.price}, #{insertGoodsVO.location},#{insertGoodsVO.category},"+
             "(select id from seller where name = #{insertGoodsVO.sellerName}), " +

@@ -91,6 +91,7 @@ public class GoodsController {
     }
 
     @PostMapping("get_price_for_tag")
+    //给定指定平台与tag，返回所有商家当下的所有价格以及历史最小价格
     public Response<List<PriceCompareRE>> getTagPrice(@RequestBody SearchMessageVO searchMessageVO){
         List<PriceCompareRE> priceCompareRES = goodsService.getTagPrice(searchMessageVO);
         if(priceCompareRES==null){
@@ -101,4 +102,15 @@ public class GoodsController {
         }
     }
 
+    @PostMapping("get_price_difference_for_tag")
+    //指定的时间范围内，给定tag，查找所有商家
+    public Response<List<PriceDiffRE>> getPriceDiff(@RequestBody PriceDiffVO priceDiffVO){
+        List<PriceDiffRE> priceDiffRES = goodsService.getPriceDiff(priceDiffVO);
+        if(priceDiffRES==null){
+            return new Response<>(Response.FAIL,"tag比价失败",null);
+        }
+        else {
+            return new Response<>(Response.SUCCESS,"tag比价成功", priceDiffRES);
+        }
+    }
 }
