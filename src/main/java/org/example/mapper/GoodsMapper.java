@@ -103,9 +103,9 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "FROM History h " +
             "WHERE h.goodsId in (SELECT id FROM GoodsInfo) and DATEDIFF(NOW(), h.pDate) < #{priceDiff.time_len}), " +
             "PriceDiff AS(" +
-            "SELECT gp.goodsId, MAX(gp.price) AS maxPrice, MIN(gp.price) AS minPrice, MAX(gp.price)-MIN(gp.price) AS priceDiffNum" +
+            "SELECT gp.goodsId, MAX(gp.price) AS maxPrice, MIN(gp.price) AS minPrice, MAX(gp.price)-MIN(gp.price) AS priceDiffNum " +
             "FROM GoodsPrice gp GROUP BY gp.goodsID) " +
-            "SELECT gi.id AS id, gi.tag, gi.goodsName, gi.platformName, gi.sellerName, pd.maxPrice, pd.minPrice, pd.priceDiffNum" +
+            "SELECT gi.id AS id, gi.tag, gi.goodsName, gi.platformName, gi.sellerName, pd.maxPrice, pd.minPrice, pd.priceDiffNum " +
             "FROM GoodsInfo AS gi LEFT JOIN PriceDiff pd ON gi.id = pd.goodsId;"
     )
     List<PriceDiffRE> getPriceDiffAll(@Param("priceDiff")PriceDiffVO priceDiff);
@@ -119,9 +119,9 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "FROM History h " +
             "WHERE h.goodsId in (SELECT id FROM GoodsInfo) and DATEDIFF(NOW(), h.pDate) < #{priceDiff.time_len}), " +
             "PriceDiff AS(" +
-            "SELECT gp.goodsId, MAX(gp.price) AS maxPrice, MIN(gp.price) AS minPrice, MAX(gp.price)-MIN(gp.price) AS priceDiffNum" +
+            "SELECT gp.goodsId, MAX(gp.price) AS maxPrice, MIN(gp.price) AS minPrice, MAX(gp.price)-MIN(gp.price) AS priceDiffNum " +
             "FROM GoodsPrice gp GROUP BY gp.goodsID) " +
-            "SELECT gi.id AS id, gi.tag, gi.goodsName, gi.platformName, gi.sellerName, pd.maxPrice, pd.minPrice, pd.priceDiffNum" +
+            "SELECT gi.id AS id, gi.tag, gi.goodsName, gi.platformName, gi.sellerName, pd.maxPrice, pd.minPrice, pd.priceDiffNum " +
             "FROM GoodsInfo AS gi LEFT JOIN PriceDiff pd ON gi.id = pd.goodsId;"
     )
     List<PriceDiffRE> getPriceDiff(@Param("priceDiff")PriceDiffVO priceDiff);
