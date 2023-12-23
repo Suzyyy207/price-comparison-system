@@ -24,6 +24,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service("GoodsService")
 public class GoodsService {
@@ -149,6 +150,8 @@ public class GoodsService {
     @Transactional
     public List<ProductRE> searchGoods(SearchGoodsVO searchGoodsVO){
         try {
+            List<Map<String, Object>> executionPlan = goodsMapper.explainFindGoods(searchGoodsVO);
+            System.out.println("Query Execution Plan: " + executionPlan.get(0));
             List<ProductRE> goods = goodsMapper.findGoodsByTypeAndKeyword(searchGoodsVO);
             return goods;
         }

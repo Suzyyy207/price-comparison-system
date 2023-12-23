@@ -13,6 +13,7 @@ import org.example.model.entity.Seller;
 import org.example.model.entity.User;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface GoodsMapper extends BaseMapper<Goods> {
@@ -53,6 +54,18 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "OR " +
             "#{searchGoodsVO.type} = 3 AND g.category LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%')")
     List<ProductRE> findGoodsByTypeAndKeyword(@Param("searchGoodsVO") SearchGoodsVO searchGoodsVO);
+    @Select("EXPLAIN SELECT g.id, g.name, g.location, g.price, g.minPrice, g.category, " +
+            "s.name AS sellerName, p.name AS platformName, g.productionDate,g.tag " +
+            "FROM goods g " +
+            "LEFT JOIN seller s ON g.sellerId = s.id " +
+            "LEFT JOIN platform p ON g.platformId = p.id " +
+            "WHERE " +
+            "#{searchGoodsVO.type} = 1 AND g.name LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%') " +
+            "OR " +
+            "#{searchGoodsVO.type} = 2 AND g.tag LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%') " +
+            "OR " +
+            "#{searchGoodsVO.type} = 3 AND g.category LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%')")
+    List<Map<String, Object>> explainFindGoods(@Param("searchGoodsVO") SearchGoodsVO searchGoodsVO);
 
     @Select("WITH GoodsCollected AS (" +
             "SELECT g.id AS goodsId, g.tag, g.name, c.userId " +

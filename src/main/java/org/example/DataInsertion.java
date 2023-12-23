@@ -115,6 +115,9 @@ public class DataInsertion {
 
             System.out.println(createGoodsTableSQL);
             executeSQL(connection, createGoodsTableSQL);
+
+            String createIndexSQL = "CREATE INDEX idx_tag ON goods(tag)";
+            executeSQL(connection, createIndexSQL);
             //goods表的插入
             String insertGoodsDataSQL = SQLCreator.generateInsertDataSQL("goods", goodsColumns, goodsData);
             System.out.println(insertGoodsDataSQL);
