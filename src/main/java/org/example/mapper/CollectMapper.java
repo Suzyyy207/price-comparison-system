@@ -38,22 +38,24 @@ public interface CollectMapper extends BaseMapper<Collect> {
     })
     List<ProductRE> findByUserId(@Param("userId")int userId);
 
-    @Select("select AVG(expectPrice) as AvgExpectPrice" +
-            "from collect" +
+    @Select("select AVG(expectPrice) as AvgExpectPrice " +
+            "from collect " +
             "where goodsId =#{goodsId}  and expectPrice is not null;")
     Double findAverageExpectPriceByGoodsId(Integer goodsId);
     
-    @Select("select tag, COUNT(*) as count from collect where userId = #{userId} group by tag;")
+    @Select("select distinct g.tag as tag, COUNT(*) as count from collect "+
+            "JOIN goods g ON collect.goodsId = g.id "+
+            "where userId = #{userId} group by g.tag;")
     List<CollectTagRE> findCollectTagByUserId(@Param("userId")Integer userId);
 
-    @Select("SELECT c.goodsId, g.name, g.category, s.name as sellerName, p.name as platformName, COUNT(m.messageId) / COUNT(h.price) as probability" +
-            "FROM collect c" +
-            "LEFT JOIN history h ON c.goodsId = h.goodsId" +
-            "LEFT JOIN message m ON c.goodsId = m.goodsId"+
+    @Select("SELECT c.goodsId, g.name, g.category, s.name as sellerName, p.name as platformName, COUNT(m.id) / COUNT(h.price) as probability " +
+            "FROM collect c " +
+            "LEFT JOIN history h ON c.goodsId = h.goodsId " +
+            "LEFT JOIN message m ON c.goodsId = m.goodsId "+
             "LEFT JOIN goods g ON c.goodsId = g.id " +
             "LEFT JOIN seller s ON g.sellerId = s.id " +
             "LEFT JOIN platform p ON g.platformId = p.id " +
-            "WHERE c.userId = #{userId}" +
+            "WHERE c.userId = #{userId} " +
             "GROUP BY c.goodsId;")
     List<ProbabilityRE> findCollectProbability(@Param("userId")Integer userId);
     @Insert("insert into collect (userId,goodsId,expectPrice,state,collect_date) values (#{collectVO.userId},#{collectVO.goodsId},#{collectVO.expectPrice},1,NOW())")
