@@ -7,12 +7,12 @@
         <div v-for="message in message_list" :key="message.id" class="message-item">
           <div class="message-content">
             <p>{{ message.name }} 已经低于您设定的最低价！</p>
-            <p>降价后价格：{{ message.current_price }}</p>
-            <p>你设定价格：{{ message.target_price }}</p>
+            <p>降价后价格：{{ message.currentPrice }}</p>
+            <p>你设定价格：{{ message.targetPrice }}</p>
           </div>
           <div class="message-details">
             <p>日期：{{ message.date }}</p>
-            <p v-if="message.is_read">状态：已读</p>
+            <p v-if="message.isRead">状态：已读</p>
             <p v-else>状态：未读</p>
           </div>
         </div>
