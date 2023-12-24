@@ -119,4 +119,16 @@ public class UserService {
             return null;
         }
     }
+    @Transactional
+    public Double getAllCollectProbability(Integer userId){
+        try {
+            Double allCollectProbability = collectMapper.findAllCollectProbability(userId);
+            return allCollectProbability;
+        }
+        catch (Exception e) {
+            // 处理异常情况，比如打印异常信息或者进行其他处理
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

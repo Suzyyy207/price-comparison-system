@@ -158,10 +158,10 @@ public class UserController {
         }
     }
     @PostMapping("get_collect_probability")
-    public Response<List<ProbabilityRE>> getCollectProbability(@RequestBody IdVO idVO){
-        List<ProbabilityRE> probabilityREs = userService.getCollectProbability(idVO.getUser_id());
-        if(probabilityREs!=null){
-            return new Response<>(Response.SUCCESS,"查找用户收藏的价格下限实现率成功",probabilityREs);
+    public Response<Double> getCollectProbability(@RequestBody IdVO idVO){
+        Double allCollectProbability= userService.getAllCollectProbability(idVO.getUser_id());
+        if(allCollectProbability!=null){
+            return new Response<>(Response.SUCCESS,"查找用户收藏的价格下限实现率成功",allCollectProbability);
         }
         else{
             return new Response<>(Response.FAIL,"查找用户收藏的价格下限实现率失败",null);
