@@ -68,7 +68,7 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     @Select("WITH GoodsCollected AS (" +
             "SELECT g.id AS goodsId, g.tag, g.name, c.userId " +
             "FROM goods g LEFT JOIN collect c ON g.id = c.goodsId " +
-            "WHERE YEAR(c.collect_date) = YEAR(CURRENT_DATE())), " +
+            "WHERE YEAR(c.collect_date) = YEAR(CURRENT_DATE()) and c.state=1), " +
             "CollectCounts AS (" +
             "SELECT gc.tag, gc.goodsId, gc.name, COUNT(gc.userId) AS collectCount " +
             "FROM GoodsCollected gc GROUP BY gc.tag, gc.goodsId), " +
@@ -81,8 +81,8 @@ public interface GoodsMapper extends BaseMapper<Goods> {
 
     @Select("WITH GoodsCollect AS (" +
             "SELECT g.id AS goodsId, g.tag, c.userId " +
-            "FROM goods g INNER JOIN collect c ON g.id = c.goodsId WHERE c.state = 1 " +
-            "WHERE YEAR(c.collect_date) = YEAR(CURRENT_DATE())), " +
+            "FROM goods g INNER JOIN collect c ON g.id = c.goodsId " +
+            "WHERE c.state = 1 and YEAR(c.collect_date) = YEAR(CURRENT_DATE())), " +
             "CollectWithSex AS (" +
             "SELECT COUNT(gc.goodsId) AS goodsCCount, gc.tag, gc.userId, u.sex " +
             "FROM GoodsCollect gc LEFT JOIN user u ON gc.userId = u.id GROUP BY gc.tag, gc.userId), "+

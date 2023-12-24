@@ -2,6 +2,7 @@ package org.example.controller;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+import org.example.model.RE.AnalysisRE;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.*;
 import org.example.model.entity.Seller;
@@ -56,12 +57,12 @@ public class SellerController {
         return new Response<>(Response.FAIL,"插入商品失败",false);
     }
     @PostMapping("get_avg_targetprice")
-    public Response<Double> getAvgExpectPrice(@RequestBody IdVO idVO){
-        Double avg= sellerService.getAvgExpectPrice(idVO.getUser_id());
-        if(avg!=-1){
+    public Response<List<AnalysisRE>> getAvgExpectPrice(@RequestBody IdVO idVO){
+        List<AnalysisRE> avg= sellerService.getAvgExpectPrice(idVO.getUser_id());
+        if(avg!=null){
             return new Response<>(Response.SUCCESS,"收藏该商品的平均期望价格返回成功",avg);
         }
-        return new Response<>(Response.FAIL,"收藏该商品的平均期望价格返回失败",-1.0);
+        return new Response<>(Response.FAIL,"收藏该商品的平均期望价格返回失败",null);
     }
     @PostMapping("insert_goods_file")
     public Response<Boolean> insertGoodsFile(@RequestBody FilePathVO filePathVO){
