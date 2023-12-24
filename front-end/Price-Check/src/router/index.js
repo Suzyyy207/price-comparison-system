@@ -18,6 +18,7 @@ import all_platforms from '../views/manager_web/manager_platform.vue'
 import compare from '../views/user_web/compare_price.vue'
 import compare_detail from '../views/user_web/compare_detail.vue'
 import yearly_report from '../views/user_web/yearly_report.vue'
+import product_analysis from '../views/seller_web/product_analysis.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -117,6 +118,10 @@ const router = createRouter({
       path: '/yearly_report',
       name: 'yearly_report',
       component: yearly_report
+    },{
+      path: '/product_analysis',
+      name: 'product_analysis',
+      component: product_analysis
     }
 
     /*{
