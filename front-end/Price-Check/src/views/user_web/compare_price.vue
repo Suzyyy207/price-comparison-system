@@ -11,17 +11,12 @@ import top_nav from '../../components/trivial/top_nav.vue'
 
     <!-- 搜索框 -->
     <div class="search-bar">
-      <select v-model="search_type">
-            <option value="1">商品名</option>
-            <option value="2">种类</option>
-            <option value="3">商家名</option>
-      </select>
-      <input v-model="search_keyword" placeholder="搜索商品">
+      <input v-model="searchQuery" placeholder="搜索商品">
       <button @click="search">搜索</button>
     </div>
 
     <!-- 商品列表 -->
-    <product-list ref="productList"></product-list>
+    <product-list></product-list>
   </div>
 </template>
 
@@ -35,24 +30,15 @@ export default {
   },
   data() {
     return {
-      search_keyword: '',
-      search_type: "1",
-      search_result:[]
-
+      searchQuery: ''
     };
   },
   methods: {
     search() {
-      this.$axios.post('http://localhost:8000/search_goods',{
-            keyword: this.search_keyword,
-            type: this.search_type
-      })
-      .then(res => {
-          console.log(res.data.data);
-          this.search_result = [];
-          this.search_result = this.search_result.concat(res.data.data);  
-          this.$refs.productList.change(this.search_result);
-      })
+      // 在这里执行搜索逻辑，可以根据 searchQuery 向后端请求匹配的商品数据
+      console.log('执行搜索:', this.searchQuery);
+      // 清空搜索框
+      this.searchQuery = '';
     }
   }
 };

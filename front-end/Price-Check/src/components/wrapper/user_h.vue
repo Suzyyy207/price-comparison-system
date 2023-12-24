@@ -49,6 +49,10 @@
           var localStorage = window.localStorage;
           localStorage.setItem("goods_id",product.id);
           this.$router.push({name:'product_detail'});
+        },
+        change(new_product_list){
+          this.products_list = [];
+          this.products_list = new_product_list;
         }
     }
   };
