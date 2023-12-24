@@ -8,6 +8,7 @@ import org.example.model.RE.CollectTagRE;
 import org.example.model.RE.ProbabilityRE;
 import org.example.model.RE.ProductRE;
 import org.example.model.VO.*;
+import org.example.model.entity.Goods;
 import org.example.model.entity.Message;
 import org.example.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,11 @@ public class UserService {
     public Boolean updateCollectPrice(CollectVO collectVO){
         boolean succeed = collectMapper.update(collectVO)==1;
         //检查设定价格之后商品是否符合新的目标价格，有的话在message中插入
-        messageMapper.insert(goodsMapper.findById(collectVO.getGoodsId()));
+        Goods good = goodsMapper.findById(collectVO.getGoodsId());
+        if(good.getPrice() < collectVO.getExpectPrice()){
+            messageMapper.insertGoods(good,collectVO);
+        }
+
         return succeed;
     }
 

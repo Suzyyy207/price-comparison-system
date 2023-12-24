@@ -2,6 +2,7 @@ package org.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
+import org.example.model.VO.CollectVO;
 import org.example.model.VO.SearchMessageVO;
 import org.example.model.entity.Goods;
 import org.example.model.entity.Message;
@@ -28,6 +29,9 @@ public interface MessageMapper extends BaseMapper<Message> {
             "JOIN goods g ON c.goodsId = g.id " +
             "WHERE g.price <= c.expectPrice and g.id=#{oneGoods.id}")
     Integer insert(@Param("oneGoods")Goods oneGoods);
+    @Insert("INSERT INTO message (goodsId, userId, name, currentPrice, targetPrice, date, isRead) " +
+            "VALUES (#{goods.id}, #{collectVO.userId}, #{goods.name}, #{goods.price}, #{collectVO.expectPrice}, NOW(), 0)")
+    Integer insertGoods(@Param("goods")Goods goods,@Param("collectVO")CollectVO collectVO);
     @Insert("insert into message (goodsId,userId,name,type) values(1,#{userId},#{name},0)")
     Integer insertDeleteMessage(@Param("name")String name, @Param("userId")int userId);
     @Delete("delete from message where userId = #{userId}")
