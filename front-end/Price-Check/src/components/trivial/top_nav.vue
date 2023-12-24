@@ -6,6 +6,7 @@
         <router-link to="/messages">消息列表</router-link>
         <router-link to="/profile">个人中心</router-link>
         <router-link to="/compare">商品比价</router-link>
+        <router-link to="/yearly_report">年度报告</router-link>
     </div>
 </template>
 
