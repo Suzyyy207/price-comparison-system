@@ -15,6 +15,8 @@ import all_users from '../views/manager_web/manager_user.vue'
 import all_products from '../views/manager_web/manager_products.vue'
 import all_sellers from '../views/manager_web/manager_seller.vue'
 import all_platforms from '../views/manager_web/manager_platform.vue'
+import compare from '../views/user_web/compare_price.vue'
+import compare_detail from '../views/user_web/compare_detail.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -99,6 +101,16 @@ const router = createRouter({
       path: '/all_platforms',
       name: 'all_platforms',
       component: all_platforms
+    },
+    {
+      path: '/compare',
+      name: 'compare',
+      component: compare
+    },
+    {
+      path: '/compare_detail',
+      name: 'compare_detail',
+      component: compare_detail
     }
 
     /*{

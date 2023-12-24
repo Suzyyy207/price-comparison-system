@@ -9,36 +9,46 @@ import top_nav from '../../components/trivial/top_nav.vue'
         <top_nav></top_nav>
     </div>
 
+    <div class="search-bar">
+      <h2>比价平台</h2>
+    </div>
     <!-- 搜索框 -->
     <div class="search-bar">
-      <input v-model="searchQuery" placeholder="搜索商品">
+      <input v-model="search_keyword" placeholder="搜索种类">
       <button @click="search">搜索</button>
     </div>
 
     <!-- 商品列表 -->
-    <product-list></product-list>
+    <tag-list ref="tagList"></tag-list>
   </div>
 </template>
 
 
 <script>
-import ProductList from '../../components/wrapper/user_h.vue';
+import TagList from '../../components/wrapper/compare_tag.vue';
 
 export default {
   components: {
-    ProductList
+    TagList
   },
   data() {
     return {
-      searchQuery: ''
+      search_keyword: '',
+      search_result:[]
     };
   },
   methods: {
     search() {
-      // 在这里执行搜索逻辑，可以根据 searchQuery 向后端请求匹配的商品数据
-      console.log('执行搜索:', this.searchQuery);
-      // 清空搜索框
-      this.searchQuery = '';
+      this.$axios.post('http://localhost:8000/search_for_tag',{
+            keyword: this.search_keyword,
+            userId: window.localStorage.getItem("user_id")
+      })
+      .then(res => {
+          console.log(res.data.data);
+          this.search_result = [];
+          this.search_result = this.search_result.concat(res.data.data);  
+          this.$refs.tagList.change(this.search_result);
+      })
     }
   }
 };

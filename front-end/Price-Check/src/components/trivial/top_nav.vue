@@ -5,6 +5,7 @@
         <router-link to="/favorites">收藏夹</router-link>
         <router-link to="/messages">消息列表</router-link>
         <router-link to="/profile">个人中心</router-link>
+        <router-link to="/compare">商品比价</router-link>
     </div>
 </template>
 
