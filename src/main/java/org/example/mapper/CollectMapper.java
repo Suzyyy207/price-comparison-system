@@ -47,7 +47,8 @@ public interface CollectMapper extends BaseMapper<Collect> {
     
     @Select("select distinct g.tag as tag, COUNT(*) as count from collect "+
             "JOIN goods g ON collect.goodsId = g.id "+
-            "where userId = #{userId} group by g.tag;")
+            "where userId = #{userId} group by g.tag " +
+            "order by count desc;")
     List<CollectTagRE> findCollectTagByUserId(@Param("userId")Integer userId);
 
     @Select("SELECT c.goodsId, g.name, g.category, s.name as sellerName, p.name as platformName, COUNT(m.id) / COUNT(h.price) as probability " +
