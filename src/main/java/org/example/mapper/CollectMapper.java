@@ -3,6 +3,7 @@ package org.example.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import javafx.util.Pair;
 import org.apache.ibatis.annotations.*;
+import org.example.model.RE.AnalysisRE;
 import org.example.model.RE.CollectTagRE;
 import org.example.model.RE.ProbabilityRE;
 import org.example.model.RE.ProductRE;
@@ -38,10 +39,11 @@ public interface CollectMapper extends BaseMapper<Collect> {
     })
     List<ProductRE> findByUserId(@Param("userId")int userId);
 
-    @Select("select AVG(expectPrice) as AvgExpectPrice " +
-            "from collect " +
-            "where goodsId =#{goodsId}  and expectPrice is not null;")
-    Double findAverageExpectPriceByGoodsId(Integer goodsId);
+    @Select("select AVG(c.expectPrice) as avgPrice, COUNT(c.expectPrice) as count, g.name as goodsName " +
+            "from collect c left join goods g on c.goodsId = g.id " +
+            "where g.sellerId =#{sellerId} and c.expectPrice is not null " +
+            "group by c.goodsId;")
+    List<AnalysisRE> findAverageExpectPriceByGoodsId(@Param("sellerId")Integer sellerId);
     
     @Select("select distinct g.tag as tag, COUNT(*) as count from collect "+
             "JOIN goods g ON collect.goodsId = g.id "+

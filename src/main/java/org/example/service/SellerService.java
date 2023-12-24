@@ -3,11 +3,14 @@ package org.example.service;
 import org.apache.ibatis.annotations.Update;
 import org.example.mapper.CollectMapper;
 import org.example.mapper.SellerMapper;
+import org.example.model.RE.AnalysisRE;
 import org.example.model.VO.InsertVO;
 import org.example.model.VO.UpdateVO;
 import org.example.model.entity.Seller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("SellerService")
 public class SellerService {
@@ -27,14 +30,14 @@ public class SellerService {
     public Boolean updateSeller(UpdateVO updateVO){
         return sellerMapper.update(updateVO)==1;
     }
-    public Double getAvgExpectPrice(Integer goodsId){
+    public List<AnalysisRE> getAvgExpectPrice(Integer sellerId){
         try{
-            return collectMapper.findAverageExpectPriceByGoodsId(goodsId);
+            return collectMapper.findAverageExpectPriceByGoodsId(sellerId);
         }
         catch (Exception e) {
             // 处理异常情况，比如打印异常信息或者进行其他处理
             e.printStackTrace();
-            return -1.0;
+            return null;
         }
     }
 }
