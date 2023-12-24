@@ -59,6 +59,7 @@ import top_nav from '../../components/trivial/top_nav.vue'
               <tr>
                 <th>种类名字</th>
                 <th>排名</th>
+                <th>收藏这类商品数</th>
               </tr>
             </thead>
             <tbody>
@@ -81,13 +82,14 @@ export default {
     return {
       top_list:[],
       sex_list:[],
-      top_id:0,
+      collect_list:[],
+      rnk:1,
     };
   },
   created(){
     this.get_top4year();
     this.get_top4sex();
-    //this.get_year_colllect()
+    this.get_year_colllect()
   },
   methods: {
     get_top4year() {
@@ -124,7 +126,11 @@ export default {
       })
       .then(res => {
           console.log(res.data.data);
-          this.collect_list = this.collect_list.concat(res.data.data);          
+          this.collect_list = this.collect_list.concat(res.data.data);
+          for (let index = 0; index < this.collect_list.length; index++) {
+            this.collect_list[index].rnk = this.rnk++;
+            
+          }      
       })
     }
   }
