@@ -4,7 +4,7 @@
     <div class="product-list">
       <div v-if="loading">Loading...</div>
       <div v-else>
-        <div v-for="product in products_list" :key="product.id" class="product-item" @click = "to_product(product)">
+        <div v-for="product in products_list" :key="product.id" class="product-item">
           <!--img :src="product.image" alt="Product Image" class="product-image"-->
           <div class="product-details">
             <h3>{{ product.name }}</h3>
@@ -19,8 +19,8 @@
           <div class="product-details">
             <p>我设定的期望价格 {{ product.target }}</p>
             <div>
-              <input v-model="new_target_price" placeholder="输入两位小数">
-              <button @click="update_target_price">设定期望价格</button>
+              <input v-model="new_price" placeholder="输入两位小数">
+              <button @click="update_target_price(product.id)">设定期望价格</button>
             </div>
           </div>
         </div>
@@ -33,6 +33,7 @@
     data() {
       return {
         products_list: [],
+        new_price:12,
       };
     },
     created (){
@@ -47,6 +48,7 @@
             })
             .then(res => {
               console.log(res.data.data);
+                this.products_list = [];
                 this.products_list = this.products_list.concat(res.data.data);
             })
         },
@@ -54,22 +56,23 @@
           var localStorage = window.localStorage;
           localStorage.setItem("p_id",product.id);
           this.$router.push({name:'product_detail'});
+        },
+        update_target_price(goods_id){
+          this.$axios.post('http://localhost:8000/set_target_price',{
+              expectPrice: this.new_price,
+              goodsId: goods_id,
+              userId: window.localStorage.getItem("user_id")
+            })
+            .then(res => {
+              if(res.data.data == true){
+                console.log(res.data.data);
+                this.get_collects();
+              }
+            }
+            )
         }
     },
-    /*mounted() {
-      // 模拟异步请求后端数据
-      setTimeout(() => {
-        // 假设这是后端返回的商品数据
-        const backendData = [
-          { id:1, name: 'PanPan', min_price: 10, price: 19.99, goods:'Bread', seller:'P',platform:'TB'},
-          { id: 2, name: 'DingDing', min_price: 12.7, price: 29.99, goods:'Bread', seller:'X',platform:'JD'},
-          // ... 更多商品数据
-        ];
-  
-        this.products = backendData;
-        this.loading = false;
-      }, 1000); // 模拟1秒后获取到数据
-    }*/
+    
   };
   </script>
   
