@@ -104,7 +104,7 @@ public class GoodsService {
                     // 创建 java.sql.Date 对象，只保留日期部分
                     Date currentDate = new Date(currentInstant.toEpochMilli());
                     List<History> histories=historyMapper.findByGoodsIdAndDate(updateGoodsVO.getGoodsId(),currentDate,updateGoodsVO.getUserType());
-                    if(histories.size()!=0){
+                    if(histories.size()!=0&&goods.getPrice()!=updateGoodsVO.getPrice()){
                         return false;
                     }
                 }
