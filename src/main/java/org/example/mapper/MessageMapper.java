@@ -23,8 +23,8 @@ public interface MessageMapper extends BaseMapper<Message> {
     @Select("SELECT * FROM message WHERE userId = #{searchMessageVO.userId} AND name LIKE CONCAT('%', #{searchMessageVO.keyword}, '%')")
     List<Message> findMessagesBySearchMessageVO(@Param("searchMessageVO")SearchMessageVO searchMessageVO);
 
-    @Update("update message set isRead=0 where id = #{id}")
-    Integer updateIsRead(@Param("id") int id);
+    @Update("update message set isRead=0 where userId = #{userId}")
+    Integer updateIsRead(@Param("userId") int userId);
     @Insert("INSERT INTO message (goodsId, userId, name, currentPrice, targetPrice, date, isRead) " +
             "SELECT c.goodsId, c.userId, g.name, #{oneGoods.price} AS currentPrice, c.expectPrice AS targetPrice, NOW(), 0 " +
             "FROM collect c " +

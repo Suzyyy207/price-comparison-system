@@ -60,9 +60,8 @@ public class UserService {
                 return Integer.compare(message2.getId(), message1.getId());
             }
         });
-
+        messageMapper.updateIsRead(userId);
         return messages;
-
     }
 
     @Transactional
