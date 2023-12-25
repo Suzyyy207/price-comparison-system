@@ -13,6 +13,21 @@ public class ProductRE {
 
     protected double price;
     protected double minPrice;
+
+    public ProductRE(Integer id, String name, String location, double price, double minPrice, String category, String sellerName, String platformName, Date productionDate, String tag, Double expectPrice) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.price = price;
+        this.minPrice = minPrice;
+        this.category = category;
+        this.sellerName = sellerName;
+        this.platformName = platformName;
+        this.productionDate = productionDate;
+        this.tag = tag;
+        this.expectPrice = expectPrice;
+    }
+
     protected String category;//商品种类
 
     protected String sellerName;
@@ -126,16 +141,17 @@ public class ProductRE {
         setTag(goods.getTag());
         setExpectPrice(-1.0);
     }
-//    public ProductRE(Integer id, String name, String location, double price, double minPrice, String category, String sellerName, String platformName, Date productionDate,String tag) {
-//        this.id = id;
-//        this.name = name;
-//        this.location = location;
-//        this.price = price;
-//        this.minPrice = minPrice;
-//        this.category = category;
-//        this.sellerName = sellerName;
-//        this.platformName = platformName;
-//        this.productionDate = productionDate;
-//        this.tag = tag;
-//    }
+    public ProductRE(Integer id, String name, String location, double price, double minPrice, String category, String sellerName, String platformName, Date productionDate,String tag) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.price = price;
+        this.minPrice = minPrice;
+        this.category = category;
+        this.sellerName = sellerName;
+        this.platformName = platformName;
+        this.productionDate = productionDate;
+        this.tag = tag;
+        this.expectPrice=-1.0;
+    }
 }
