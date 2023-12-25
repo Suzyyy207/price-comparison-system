@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service("UserService")
@@ -48,8 +50,19 @@ public class UserService {
     public List<ProductRE> getGoodsByUserId(Integer userId){
         return collectMapper.findByUserId(userId);
     }
+    @Transactional
     public List<Message> getAllMessages(Integer userId){
-        return messageMapper.findByUserId(userId);
+        List<Message> messages=messageMapper.findByUserId(userId);
+        Collections.sort(messages, new Comparator<Message>() {
+            @Override
+            public int compare(Message message1, Message message2) {
+                // 降序排序
+                return Integer.compare(message2.getId(), message1.getId());
+            }
+        });
+
+        return messages;
+
     }
 
     @Transactional
