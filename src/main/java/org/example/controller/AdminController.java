@@ -89,12 +89,6 @@ public class AdminController {
     }
     @PostMapping("update_user")
     public Response<Boolean> updateUser(@RequestBody UpdateVO updateVO){
-        Integer id=updateVO.getId();
-        User user = userService.getUserById(id);
-        if(updateVO.getAge()==0){updateVO.setAge(user.getAge());}
-        if(updateVO.getName()==""){updateVO.setName(user.getName());}
-        if(updateVO.getSex()==0){updateVO.setSex(user.getSex());}
-        if(updateVO.getPhone()==""){updateVO.setPhone(user.getPhone());}
         Boolean succeed=userService.updateUser(updateVO);
         if(succeed==true){
             return new Response<>(Response.SUCCESS,"修改该用户信息成功",true);

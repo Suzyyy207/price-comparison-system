@@ -36,7 +36,14 @@ public class UserService {
     public Boolean insertUser(InsertVO insertVO){
         return userMapper.insert(insertVO)==1;
     }
+    @Transactional
     public Boolean updateUser(UpdateVO updateVO){
+        Integer id=updateVO.getId();
+        User user = getUserById(id);
+        if(updateVO.getAge()==0){updateVO.setAge(user.getAge());}
+        if(updateVO.getName()==""){updateVO.setName(user.getName());}
+        updateVO.setSex(user.getSex());
+        if(updateVO.getPhone()==""){updateVO.setPhone(user.getPhone());}
         return userMapper.update(updateVO)==1;
     }
     public List<ProductRE> getGoodsByUserId(Integer userId){
