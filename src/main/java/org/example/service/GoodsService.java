@@ -158,42 +158,31 @@ public class GoodsService {
 
     @Transactional
     public Boolean deleteGoodsById(Integer goodsId){
-        //在消息列表中插入删除消息，删除收藏夹里的商品相关消息，历史价格表删除，删除商品
-        // 涉及修改1：获取收藏列表的时候，对于失效商品，要去message中查名字
-        // 涉及修改2: 获取消息列表的时候，注意显示信息
-        boolean finalSucceed = true;
-        Goods goods = goodsMapper.findById(goodsId);
-        List<Message> messages = messageMapper.findByGoodsId(goodsId);
-        boolean succeedMessageD = messageMapper.deleteByGoodsId(goodsId)==1;
-        finalSucceed = (finalSucceed && succeedMessageD);
-        boolean succeedInsertD = true;
+        try{
+            Goods goods = goodsMapper.findById(goodsId);
+            List<Message> messages = messageMapper.findByGoodsId(goodsId);
+            boolean succeedMessageD = messageMapper.deleteByGoodsId(goodsId)==1;
 
-        for (Message message: messages){
-            boolean succeed = messageMapper.insertDeleteMessage(goods.getName(),message.getUserId())==1;
-            if(succeed==false){
-                succeedInsertD = false;
-                break;
+            for (Message message: messages){
+                boolean succeed = messageMapper.insertDeleteMessage(goods.getName(),message.getUserId())==1;
             }
+            boolean setUnvalid = collectMapper.setUnvalid(goodsId,goods.getName())==1;
+            boolean deleteHistory = historyMapper.deleteByGoodsId(goodsId)==1;
+            boolean deleteGoods = goodsMapper.deleteByGoodsId(goodsId)==1;
+            return true;
         }
-        finalSucceed = (finalSucceed && succeedInsertD);
-        boolean setUnvalid = collectMapper.setUnvalid(goodsId,goods.getName())==1;
-        boolean deleteHistory = historyMapper.deleteByGoodsId(goodsId)==1;
-        boolean deleteGoods = goodsMapper.deleteByGoodsId(goodsId)==1;
-        finalSucceed = (finalSucceed && (setUnvalid && deleteHistory));
-        finalSucceed = (finalSucceed && deleteGoods);
-        return finalSucceed;
+        catch (Exception e){
+            return false;
+        }
+
 
     }
 
     @Transactional
     public Boolean deleteSeller(Integer sellerId){
-        //删除商品，删除商家
         List<ProductRE> sellerGoods = goodsMapper.findBySellerId(sellerId);
         for (ProductRE goods: sellerGoods){
             boolean deleteGoods = this.deleteGoodsById(goods.getId());
-            if (deleteGoods == false){
-                return false;
-            }
         }
         boolean deleteSeller = sellerMapper.deleteBySellerId(sellerId)==1;
         return deleteSeller;

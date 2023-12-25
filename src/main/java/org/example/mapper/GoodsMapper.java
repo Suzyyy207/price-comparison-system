@@ -120,11 +120,12 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     @Select("WITH GoodsInfo AS(" +
             "SELECT g.id, g.tag, g.name AS goodsName, p.name AS platformName, s.name AS sellerName " +
             "FROM (goods g LEFT JOIN platform p ON g.platformId = p.id) LEFT JOIN seller s on s.id = g.sellerId " +
-            "WHERE tag LIKE concat('%',#{priceDiff.tag},'%')), " +
+            "WHERE tag LIKE concat('%',#{priceDiff.tag},'%') and g.state=1), " +
             "GoodsPrice AS(" +
-            "SELECT h.goodsId, h.price " +
+            "(SELECT h.goodsId, h.price " +
             "FROM History h " +
-            "WHERE h.goodsId in (SELECT id FROM GoodsInfo) and DATEDIFF(NOW(), h.pDate) < #{priceDiff.time_len}), " +
+            "WHERE h.goodsId in (SELECT id FROM GoodsInfo) and DATEDIFF(NOW(), h.pDate) < #{priceDiff.time_len}) " +
+            "UNION (SELECT g.id AS goodsId, g.price FROM goods g WHERE tag LIKE concat('%',#{priceDiff.tag},'%') and g.state=1) ), " +
             "PriceDiff AS(" +
             "SELECT gp.goodsId, MAX(gp.price) AS maxPrice, MIN(gp.price) AS minPrice, MAX(gp.price)-MIN(gp.price) AS priceDiffNum " +
             "FROM GoodsPrice gp GROUP BY gp.goodsID) " +
@@ -133,10 +134,12 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     )
     List<PriceDiffRE> getPriceDiffAll(@Param("priceDiff")PriceDiffVO priceDiff);
 
+
+
     @Select("WITH GoodsInfo AS(" +
             "SELECT g.id, g.tag, g.name AS goodsName, p.name AS platformName, s.name AS sellerName " +
             "FROM (goods g LEFT JOIN platform p ON g.platformId = p.id) LEFT JOIN seller s on s.id = g.sellerId " +
-            "WHERE tag LIKE concat('%',#{priceDiff.tag},'%') AND g.platformId = #{priceDiff.platform_id}), " +
+            "WHERE tag LIKE concat('%',#{priceDiff.tag},'%') AND g.platformId = #{priceDiff.platform_id}) and g.state=1, " +
             "GoodsPrice AS(" +
             "SELECT h.goodsId, h.price " +
             "FROM History h " +

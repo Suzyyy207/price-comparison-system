@@ -80,7 +80,7 @@ public class UserService {
         boolean succeedMessage = messageMapper.deleteByUserId(userId)==1;
         boolean succeedCollect = collectMapper.deleteByUserId(userId)==1;
         boolean succeedUser = userMapper.deleteByUserId(userId)==1;
-        if ((succeedMessage && succeedCollect) && succeedUser){
+        if (succeedUser){
             return true;
         }
         else{

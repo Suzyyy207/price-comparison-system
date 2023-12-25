@@ -140,7 +140,7 @@ public class AdminController {
     @PostMapping("delete_seller")
     public Response<Boolean> deleteSeller(@RequestBody IdVO idVO){
         Integer sellerId = idVO.getUser_id();
-        boolean succeed =  true;
+        boolean succeed = goodsService.deleteSeller(sellerId);
         if(succeed==true){
             return new Response<>(Response.SUCCESS,"删除该商户成功",true);
         }
