@@ -19,24 +19,13 @@ public interface CollectMapper extends BaseMapper<Collect> {
     @Select("select * from collect where id = #{id}")
     Collect findById(@Param("id")int id);
 
-    @Select("select g.id, g.name, g.location, g.price, g.minPrice, g.category, s.name as sellerName, p.name as platformName, g.productionDate, g.tag " +
+    @Select("select g.id, g.name, g.location, g.price, g.minPrice, g.category, s.name as sellerName, p.name as platformName," +
+            " g.productionDate, g.tag, c.expectPrice " +
             "from collect c " +
             "JOIN goods g ON c.goodsId = g.id " +
             "JOIN seller s ON g.sellerId = s.id " +
             "JOIN platform p ON g.platformId = p.id " +
             "where c.userId = #{userId}")
-    @Results({
-            @Result(property = "id", column = "id"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "location", column = "location"),
-            @Result(property = "price", column = "price"),
-            @Result(property = "minPrice", column = "minPrice"),
-            @Result(property = "category", column = "category"),
-            @Result(property = "sellerName", column = "sellerName"),
-            @Result(property = "platformName", column = "platformName"),
-            @Result(property = "productionDate", column = "productionDate"),
-            @Result(property = "tag", column = "tag")
-    })
     List<ProductRE> findByUserId(@Param("userId")int userId);
 
     @Select("select AVG(c.expectPrice) as avgPrice, COUNT(c.expectPrice) as count, g.name as goodsName " +

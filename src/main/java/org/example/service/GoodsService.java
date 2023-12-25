@@ -43,31 +43,19 @@ public class GoodsService {
     }
     @Transactional
     public List<ProductRE> getAllGoods(){
-        List<Goods> allGoods=goodsMapper.findValidGoods();
-        List<ProductRE> allProducts=new ArrayList<>();
-        for(int i=0;i< allGoods.size();i++){
-            Goods a=allGoods.get(i);
-            ProductRE p=translateGoods(a);
-            allProducts.add(p);
-        }
-        return allProducts;
+        List<ProductRE> allGoods=goodsMapper.findValidGoods();
+        return allGoods;
     }
     @Transactional
     public List<ProductRE> getSellerGoods(Integer sellerId){
-        List<Goods> sellerGoods = goodsMapper.findBySellerId(sellerId);
-        List<ProductRE> sellerProducts=new ArrayList<>();
-        for(int i=0;i<sellerGoods.size();i++){
-            Goods a=sellerGoods.get(i);
-            ProductRE p=translateGoods(a);
-            sellerProducts.add(p);
-        }
-        return sellerProducts;
+        List<ProductRE> sellerGoods = goodsMapper.findBySellerId(sellerId);
+        return sellerGoods;
     }
-    public ProductRE getGoodsById(Integer id){
-        Goods goods=goodsMapper.findById(id);
-        ProductRE p=translateGoods(goods);
-        return p;
-    }
+//    public ProductRE getGoodsById(Integer id){
+//        Goods goods=goodsMapper.findById(id);
+//        ProductRE p=translateGoods(goods);
+//        return p;
+//    }
     @Transactional
     public GetGoodsRE getGoodsByIdAndUserId(Integer id,Integer userId){
         try {
@@ -80,12 +68,12 @@ public class GoodsService {
             return null;
         }
     }
-    public ProductRE translateGoods(Goods goods){
-        String sellerName= sellerMapper.findById(goods.getSellerId()).getName();
-        String platformName= platformMapper.findById(goods.getPlatformId()).getName();
-        ProductRE p=new ProductRE(goods,sellerName,platformName);
-        return p;
-    }
+//    public ProductRE translateGoods(Goods goods){
+//        String sellerName= sellerMapper.findById(goods.getSellerId()).getName();
+//        String platformName= platformMapper.findById(goods.getPlatformId()).getName();
+//        ProductRE p=new ProductRE(goods,sellerName,platformName);
+//        return p;
+//    }
     @Transactional
     public Boolean insertGoods(InsertGoodsVO insertGoodsVO){
         try {
@@ -200,8 +188,8 @@ public class GoodsService {
     @Transactional
     public Boolean deleteSeller(Integer sellerId){
         //删除商品，删除商家
-        List<Goods> sellerGoods = goodsMapper.findBySellerId(sellerId);
-        for (Goods goods: sellerGoods){
+        List<ProductRE> sellerGoods = goodsMapper.findBySellerId(sellerId);
+        for (ProductRE goods: sellerGoods){
             boolean deleteGoods = this.deleteGoodsById(goods.getId());
             if (deleteGoods == false){
                 return false;

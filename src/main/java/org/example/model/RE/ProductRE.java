@@ -20,6 +20,16 @@ public class ProductRE {
     protected Date productionDate;
 
     protected String tag;
+    protected Double expectPrice;
+    public Double getExpectPrice() {
+        return expectPrice;
+    }
+
+    public void setExpectPrice(Double expectPrice) {
+        this.expectPrice = expectPrice;
+    }
+
+
     public String getTag() {
         return tag;
     }
@@ -114,17 +124,18 @@ public class ProductRE {
         setSellerName(sellerName);
         setPlatformName(platformName);
         setTag(goods.getTag());
+        setExpectPrice(-1.0);
     }
-    public ProductRE(Integer id, String name, String location, double price, double minPrice, String category, String sellerName, String platformName, Date productionDate,String tag) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.price = price;
-        this.minPrice = minPrice;
-        this.category = category;
-        this.sellerName = sellerName;
-        this.platformName = platformName;
-        this.productionDate = productionDate;
-        this.tag = tag;
-    }
+//    public ProductRE(Integer id, String name, String location, double price, double minPrice, String category, String sellerName, String platformName, Date productionDate,String tag) {
+//        this.id = id;
+//        this.name = name;
+//        this.location = location;
+//        this.price = price;
+//        this.minPrice = minPrice;
+//        this.category = category;
+//        this.sellerName = sellerName;
+//        this.platformName = platformName;
+//        this.productionDate = productionDate;
+//        this.tag = tag;
+//    }
 }
