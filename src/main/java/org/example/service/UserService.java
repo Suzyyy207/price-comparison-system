@@ -42,7 +42,6 @@ public class UserService {
         User user = getUserById(id);
         if(updateVO.getAge()==0){updateVO.setAge(user.getAge());}
         if(updateVO.getName()==""){updateVO.setName(user.getName());}
-        updateVO.setSex(user.getSex());
         if(updateVO.getPhone()==""){updateVO.setPhone(user.getPhone());}
         return userMapper.update(updateVO)==1;
     }
