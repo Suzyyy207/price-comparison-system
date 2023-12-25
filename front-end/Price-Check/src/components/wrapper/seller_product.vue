@@ -17,7 +17,7 @@
             <p>平台：{{ product.platformName }}</p>
           </div>
           <div class="product-details">
-            <button @click="edit_product">编辑商品信息</button>
+            <button @click="edit_product(product.id)">编辑商品信息</button>
           </div>
         </div>
         
@@ -33,7 +33,8 @@
       };
     },
     created (){
-        this.get_products()
+        this.get_products(),
+        window.localStorage.setItem("new",0)
     },
     methods: {
         get_products() {
@@ -46,7 +47,9 @@
                 this.products_list.push(...res.data.data);
             })
         },
-        edit_product() {
+        edit_product(id) {
+          window.localStorage.setItem("new",1);
+          window.localStorage.setItem("goods_id",id)
           this.$router.push('/edit_product');
       },
       

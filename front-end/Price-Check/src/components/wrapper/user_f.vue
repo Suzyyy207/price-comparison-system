@@ -17,7 +17,7 @@
             <p>平台：{{ product.platformName }}</p>
           </div>
           <div class="product-details">
-            <p>我设定的期望价格 {{ product.target }}</p>
+            <p>我设定的期望价格: ${{ product.expectPrice }}</p>
             <div>
               <input v-model="new_price" placeholder="输入两位小数">
               <button @click="update_target_price(product.id)">设定期望价格</button>

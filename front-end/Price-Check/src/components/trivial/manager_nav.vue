@@ -5,6 +5,8 @@
         <router-link to="/all_sellers">全部商家</router-link>
         <router-link to="/all_users">全部用户</router-link>
         <router-link to="/all_platforms">全部平台</router-link>
+        <router-link to="/new_user">添加新用户</router-link>
+        <router-link to="/new_seller">添加新商家</router-link>
     </div>
 </template>
 

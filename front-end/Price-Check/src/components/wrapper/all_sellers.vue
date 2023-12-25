@@ -5,18 +5,18 @@
       <div v-if="seller_list.length === 0">目前还没有任何用户^^</div>
       <div v-else>
         <div v-for="seller in seller_list" :key="seller.id" class="product-item">
-          <!--img :src="product.image" alt="Product Image" class="product-image"-->
           <div class="product-details">
             <h3>{{ seller.name }}</h3>
-            <!--p>性别：{{ seller.sex }}</p-->
           </div>
           <div class="product-details">
             <h3>Datail</h3>
             <p>地址：{{ seller.address }}</p>
-            <!--p>电话：{{ seller.telephone }}</p-->
           </div>
           <div class="product-details">
-            <button>修改信息</button>
+            <button @click="goto_seller_info(seller.id)">修改信息</button>
+          </div>
+          <div class="product-details">
+            <button @click="delete_seller(seller.id)">删除这个用户</button>
           </div>
         </div>
       </div>
@@ -31,7 +31,10 @@
       };
     },
     created (){
-        this.get_all_sellers()
+        this.get_all_sellers();
+        window.localStorage.setItem("user_id",1);
+        window.localStorage.setItem("user_type",0);
+        window.localStorage.setItem("new",0);
     },
     methods: {
         get_all_sellers() {
@@ -41,9 +44,27 @@
             })
             .then(res => {
               console.log(res.data.data);
+              this.seller_list = [];
                 this.seller_list = this.seller_list.concat(res.data.data);
             })
         },
+        goto_seller_info(id){
+          window.localStorage.setItem("user_id",id);
+          window.localStorage.setItem("new",1);
+          this.$router.push({name:'change_seller'});
+        },
+        delete_seller(id){
+          this.$axios.post('http://localhost:8000/delete_seller',{
+              user_id: id
+            })
+            .then(res => {
+                if (res.data.data == false) {
+                  alert("失败");
+                }
+                this.get_all_sellers();
+            })
+
+        }
     }
     
   };

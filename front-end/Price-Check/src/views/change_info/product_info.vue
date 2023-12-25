@@ -8,27 +8,47 @@ import top_nav from '../../components/trivial/seller_nav.vue'
       <!-- 顶部导航栏 -->
       <div class="top-nav">
         <top_nav></top_nav>
-    </div>
-  
-      <!-- 编辑商品信息内容 -->
+      </div>
+      <!-- 编辑个人信息内容 -->
       <div class="edit-profile-container">
-        <h2>填写商品信息</h2>
+        <h2>编辑商品信息</h2>
         <div v-if="loading">加载中...</div>
         <div v-else>
-          <form @submit.prevent="saveProduct">
+          <form @submit.prevent="saveProfile">
             <div>
-              <label>商品名:</label>
+              <label>商品名字: </label>
               <input v-model="product.name" required />
             </div>
             <div>
-              <label>价格:</label>
-              <input v-model="product.price" required />
+              <label>平台名: </label>
+              <select v-model="product.platformName" required>
+                <option value="淘宝">淘宝</option>
+                <option value="京东">京东</option>
+                <option value="闲鱼">闲鱼</option>
+                <option value="NCITY">NCITY</option>
+              </select>
             </div>
             <div>
-              <label>产地:</label>
+              <label>价格: </label>
+              <input v-model="product.price" type="number" required />
+            </div>
+            <div>
+              <label>具体种类(同一种类将用来比价): </label>
+              <input v-model="product.tag"  required />
+            </div>
+            <div>
+              <label>模糊种类: </label>
+              <input v-model="product.category" required />
+            </div>
+            <div>
+              <label>产地: </label>
               <input v-model="product.location" required />
             </div>
-            <button type="submit">提交</button>
+            <div>
+              <label>生产日期: </label>
+              <input v-model="product.productionDate" type="date" required />
+            </div>
+            <button @click="save()">保存</button>
           </form>
         </div>
       </div>
@@ -40,56 +60,79 @@ import top_nav from '../../components/trivial/seller_nav.vue'
     data() {
     return {
       loading: true,
-      user: {},
-      userInfo: '' // 从 Local Storage 或后端获取用户信息
+      product: {},
     };
   },
-  mounted() {
-    // 模拟异步获取用户信息
-    setTimeout(() => {
-      // 模拟的用户信息数据
-      const userId = localStorage.getItem('userId'); // 从 Local Storage 获取用户 ID
-      const userType = localStorage.getItem('userType'); // 从 Local Storage 获取用户类型
-
-      // 向后端请求用户详细信息（假设后端有接口 /api/user/:id）
-      // 注意：实际情况下，请根据你的后端 API 进行调整
-      // axios.get(`/api/user/${userId}?type=${userType}`)
-      //   .then(response => {
-      //     this.user = response.data;
-      //     this.loading = false;
-      //   })
-      //   .catch(error => {
-      //     console.error('Error fetching user information:', error);
-      //   });
-
-      // 模拟的用户信息
-      this.product = {
-        name: 'PanPan Bread',
-        price: 25,
-        location: 'FDU'
-      };
-
-      this.userInfo = `${this.user.name}（${userType}）`; // 用户信息字符串
-      this.loading = false;
-    }, 1000); // 模拟1秒延迟获取数据
+  created(){
+    this.get_product_profile();
   },
     methods: {
-      saveProduct() {
-        // 在这里可以将用户编辑后的信息提交给后端保存
-        // 假设有一个保存用户信息的接口，例如 /api/user/:id
-        // axios.put(`/api/user/${userId}`, this.user)
-        //   .then(response => {
-        //     console.log('User information saved successfully:', response.data);
-        //     // 这里可以进行一些成功保存后的处理
-        //   })
-        //   .catch(error => {
-        //     console.error('Error saving user information:', error);
-        //     // 这里可以进行一些保存失败后的处理
-        //   });
-  
-        console.log('Simulating saving user information:', this.user);
-        // 模拟保存成功后的处理
-        alert('用户信息保存成功！');
+      get_product_profile() {
+        var localStorage = window.localStorage;
+        if (localStorage.getItem("new") == 1) {
+          //console.log(localStorage.getItem("user_id"));
+          this.$axios.post('http://localhost:8000/get_good', {
+            userId: localStorage.getItem("user_id"),
+            goodsId:localStorage.getItem("goods_id")
+          })
+          .then(res => {
+            console.log(res.data.data)
+              this.product = res.data.data;
+              this.loading =false;
+          })
+        }
+        this.loading =false;
+        
+      },
+      save(){
+        var localStorage = window.localStorage;
+        if (localStorage.getItem("new") != 1){
+          this.$axios.post('http://localhost:8000/insert_goods', {
+          category: this.product.category,
+          location: this.product.location,
+          name: this.product.name,
+          platformName: this.product.platformName,
+          price: this.product.price,
+          productionDate: this.product.productionDate,
+          sellerName:  window.localStorage.getItem("user_name"),
+          tag: this.product.tag
+        })
+        .then(res => {
+          console.log(res.data.data)
+            if (res.data.data == false) {
+              alert("您已在这个平台上发布过同种类商品");
+            }
+            else{
+              this.$router.push({name:'seller_web'});
+            }
+        })
+      }
+      else{
+        console.log("hi")
+        this.$axios.post('http://localhost:8000/update_goods', {
+          category: this.product.category,
+          location: this.product.location,
+          name: this.product.name,
+          platformName: this.product.platformName,
+          price: this.product.price,
+          productionDate: this.product.productionDate,
+          sellerName: window.localStorage.getItem("user_name"),
+          tag: this.product.tag,
+          userId: window.localStorage.getItem("user_id"),
+          userType: window.localStorage.getItem("user_type"),
+          goodsId: window.localStorage.getItem("goods_id")
+        })
+        .then(res => {
+          console.log(res.data.data)
+            if (res.data.data == false) {
+              alert("更新失败");
+            }
+            else{
+              this.$router.push({name:'seller_web'});
+            }
+        })
+      }
+        
       }
     }
   };
@@ -125,7 +168,6 @@ import top_nav from '../../components/trivial/seller_nav.vue'
     text-align: center;
     color: #333333;
     margin-top: 20px;
-    margin-bottom: 20px;
   }
 
   label {

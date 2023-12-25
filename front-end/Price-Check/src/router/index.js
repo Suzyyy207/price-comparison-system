@@ -16,6 +16,10 @@ import all_users from '../views/manager_web/manager_user.vue'
 import all_products from '../views/manager_web/manager_products.vue'
 import all_sellers from '../views/manager_web/manager_seller.vue'
 import all_platforms from '../views/manager_web/manager_platform.vue'
+import change_user from '../views/manager_web/change_user.vue'
+import change_seller from '../views/manager_web/change_seller.vue'
+import new_user from '../views/manager_web/new_user.vue'
+import new_seller from '../views/manager_web/new_seller.vue'
 import compare from '../views/user_web/compare_price.vue'
 import compare_detail from '../views/user_web/compare_detail.vue'
 import yearly_report from '../views/user_web/yearly_report.vue'
@@ -129,7 +133,28 @@ const router = createRouter({
       path: '/edit_seller',
       name: 'edit_seller',
       component: edit_seller_profile
-    }
+    },
+    {
+      path: '/change_user',
+      name: 'change_user',
+      component: change_user
+    },
+    {
+      path: '/change_seller',
+      name: 'change_seller',
+      component: change_seller
+    },
+
+    {
+      path: '/new_user',
+      name: 'new_user',
+      component: new_user
+    },
+    {
+      path: '/new_seller',
+      name: 'new_seller',
+      component: new_seller
+    },
 
     /*{
       path: '/about',
