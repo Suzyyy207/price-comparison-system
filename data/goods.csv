@@ -1,0 +1,4 @@
+id,name,location,price,minPrice,category,sellerId,platformId,productionDate,tag,state
+1,Kong,NULL,0,0,NULL,1,1,0,0,0
+2,PanPan 1,NYC,27,27,FOOD,2,1,2022/2/14,Pan,1
+3,PanPan 2,NYC,25,25,FOOD,3,1,2022/4/5,Pan,1

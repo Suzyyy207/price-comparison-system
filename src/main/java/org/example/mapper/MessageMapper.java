@@ -35,7 +35,7 @@ public interface MessageMapper extends BaseMapper<Message> {
             "VALUES (#{goods.id}, #{collectVO.userId}, #{goods.name}, #{goods.price}, #{collectVO.expectPrice}, NOW(), 0)")
     Integer insertGoods(@Param("goods")Goods goods,@Param("collectVO")CollectVO collectVO);
     //TODO: 这里最后要改为引用1
-    @Insert("insert into message (goodsId,userId,name,type) values(6,#{userId},#{name},0)")
+    @Insert("insert into message (goodsId,userId,name,type) values(1,#{userId},#{name},0)")
     Integer insertDeleteMessage(@Param("name")String name, @Param("userId")int userId);
     @Delete("delete from message where userId = #{userId}")
     Integer deleteByUserId(@Param("userId")int userId);

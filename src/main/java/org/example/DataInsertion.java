@@ -7,9 +7,9 @@ import java.util.List;
 
 public class DataInsertion {
 
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/database";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/test_db_5";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "layluhan520";
 
     public static Connection establishConnection() throws SQLException {
         return DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
@@ -24,25 +24,25 @@ public class DataInsertion {
     public static void main(String[] args) {
         try {
 
-            List<String[]> userData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/user.csv");
+            List<String[]> userData = CSVReaderExample.readCSV("./data/user.csv");
             String[] userColumns = userData.get(0);//这一行是属性
             userData.remove(0);
-            List<String[]> sellerData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/seller.csv");
+            List<String[]> sellerData = CSVReaderExample.readCSV("./data/seller.csv");
             String[] sellerColumns = sellerData.get(0);//这一行是属性
             sellerData.remove(0);
-            List<String[]> adminData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/admin.csv");
+            List<String[]> adminData = CSVReaderExample.readCSV("./data/admin.csv");
             String[] adminColumns = adminData.get(0);//这一行是属性
             adminData.remove(0);
-            List<String[]> platformData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/platform.csv");
+            List<String[]> platformData = CSVReaderExample.readCSV("./data/platform.csv");
             String[] platformColumns = platformData.get(0);//这一行是属性
             platformData.remove(0);
-            List<String[]> goodsData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/goods.csv");
+            List<String[]> goodsData = CSVReaderExample.readCSV("./data/goods.csv");
             String[] goodsColumns = goodsData.get(0);//这一行是属性
             goodsData.remove(0);
-            List<String[]> collectData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/collect.csv");
+            List<String[]> collectData = CSVReaderExample.readCSV("./data/collect.csv");
             String[] collectColumns = collectData.get(0);//这一行是属性
             collectData.remove(0);
-            List<String[]> historyData = CSVReaderExample.readCSV("C:/Users/24223/Desktop/history.csv");
+            List<String[]> historyData = CSVReaderExample.readCSV("./data/history.csv");
             String[] historyColumns = historyData.get(0);//这一行是属性
             historyData.remove(0);
             Connection connection = establishConnection();//建立连接
@@ -66,7 +66,7 @@ public class DataInsertion {
                     "FOREIGN KEY (platformId) REFERENCES platform(id) "+
                     ");\n" +
                     "\n";
-            String createCollectTableSQL = "CREATE TABLE collect (id INT AUTO_INCREMENT,userId INT,goodsId INT,expectPrice DOUBLE,state INT, PRIMARY KEY(id)," +
+            String createCollectTableSQL = "CREATE TABLE collect (id INT AUTO_INCREMENT,userId INT,goodsId INT,expectPrice DOUBLE,state INT,name VARCHAR(255),collect_date TIMESTAMP DEFAULT NOW(), PRIMARY KEY(id)," +
                     "FOREIGN KEY (goodsId) REFERENCES goods(id), " +
                     "FOREIGN KEY (userId) REFERENCES user(id)" +
                     ");\n" +

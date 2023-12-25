@@ -21,7 +21,7 @@ public interface SellerMapper extends BaseMapper<Seller> {
     //   查询用户，根据用户address查询信息   select * from seller where address =
     @Select("select * from seller where address = #{address}")
     Seller findByAddress(@Param("address")String address);
-    @Select("select * from seller")
+    @Select("select * from seller where seller.id>1")
     List<Seller> findAll();
     @Insert("insert into seller (name,address) values (#{insertVO.name}, #{insertVO.address})")
     int insert(@Param("insertVO") InsertVO insertVO);

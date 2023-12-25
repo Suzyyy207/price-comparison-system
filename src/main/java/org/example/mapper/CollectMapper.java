@@ -25,7 +25,7 @@ public interface CollectMapper extends BaseMapper<Collect> {
             "JOIN goods g ON c.goodsId = g.id " +
             "JOIN seller s ON g.sellerId = s.id " +
             "JOIN platform p ON g.platformId = p.id " +
-            "where c.userId = #{userId}")
+            "where c.userId = #{userId} and c.state=1")
     List<ProductRE> findByUserId(@Param("userId")int userId);
 
     @Select("select AVG(c.expectPrice) as avgPrice, COUNT(c.expectPrice) as count, g.name as goodsName " +
@@ -61,7 +61,7 @@ public interface CollectMapper extends BaseMapper<Collect> {
     @Update("update collect set expectPrice=#{collectVO.expectPrice} where goodsId=#{collectVO.goodsId} and userId=#{collectVO.userId}")
     Integer update(@Param("collectVO") CollectVO collectVO);
     //TODO: 这里最后要改为引用1
-    @Update("update collect set state=0, goodsId=6, name=#{name}  where goodsId=#{goodsId}")
+    @Update("update collect set state=0, goodsId=1, name=#{name}  where goodsId=#{goodsId}")
     Integer setUnvalid(@Param("goodsId")int goodsId, @Param("name")String name);
 
     @Delete("delete from collect where userId = #{userId}")

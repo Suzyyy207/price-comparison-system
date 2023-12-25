@@ -233,7 +233,7 @@ public class GoodsService {
         List<String[]> data = new ArrayList<>();//列表
         try (
                 // 以GBK编码读取CSV文件
-                CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(filepath),"GBK"))
+                CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(filepath),"utf-8"))
         ) {
             String[] line;//一行String
             while ((line = reader.readNext()) != null) {
@@ -272,7 +272,7 @@ public class GoodsService {
         List<String[]> data = new ArrayList<>();//列表
         try (
                 // 以GBK编码读取CSV文件
-                CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(filepath),"GBK"))
+                CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(filepath),"utf-8"))
         ) {
             String[] line;//一行String
             while ((line = reader.readNext()) != null) {
