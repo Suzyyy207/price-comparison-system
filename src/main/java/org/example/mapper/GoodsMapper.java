@@ -21,13 +21,13 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     @Select("select * from goods where tag = #{tag}")
     List<Goods> findByTag(@Param("tag")String tag);
     @Select("select g.id, g.name, g.location, g.price, g.minPrice, g.category," +
-            " s.name AS sellerName, p.name AS platformName, g.productionDate,g.tag from goods "+
+            " s.name AS sellerName, p.name AS platformName, g.productionDate,g.tag from goods g "+
             "LEFT JOIN seller s ON g.sellerId = s.id " +
             "LEFT JOIN platform p ON g.platformId = p.id "+
             "where sellerId = #{sellerId} and state=1")
     List<ProductRE> findBySellerId(@Param("sellerId")int sellerId);
     @Select("select g.id, g.name, g.location, g.price, g.minPrice, g.category," +
-            " s.name AS sellerName, p.name AS platformName, g.productionDate,g.tag from goods "+
+            " s.name AS sellerName, p.name AS platformName, g.productionDate,g.tag from goods g "+
             "LEFT JOIN seller s ON g.sellerId = s.id " +
             "LEFT JOIN platform p ON g.platformId = p.id "+
             "where state = 1")
