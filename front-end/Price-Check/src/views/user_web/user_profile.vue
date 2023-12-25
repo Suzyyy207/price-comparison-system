@@ -58,7 +58,10 @@ import top_nav from '../../components/trivial/top_nav.vue'
           console.log(res.data.data)
             const user = res.data.data;
             this.name = user.name;
-            this.sex = user.sex;
+            if(user.sex == 0)
+              this.sex = "女";
+            else
+              this.sex = "男";
             this.age = user.age;
             this.telephone = user.phone;
             this.loading =false;

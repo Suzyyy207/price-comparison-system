@@ -13,8 +13,8 @@ import top_nav from '../../components/trivial/top_nav.vue'
     <div class="search-bar">
       <select v-model="search_type">
             <option value="1">商品名</option>
-            <option value="2">种类</option>
-            <option value="3">商家名</option>
+            <option value="2">具体种类</option>
+            <option value="3">模糊种类</option>
       </select>
       <input v-model="search_keyword" placeholder="搜索商品">
       <button @click="search">搜索</button>

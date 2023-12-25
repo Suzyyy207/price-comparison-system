@@ -71,6 +71,9 @@ import top_nav from '../../components/trivial/top_nav.vue'
             </tbody>
           </table>
     </div>
+    <div class="search-bar">
+      <h2>今年，您收藏的商品中，有{{ this.probability }}%的商品实现了您设定的价格</h2>
+    </div>
   </div>
 </template>
 
@@ -84,14 +87,24 @@ export default {
       sex_list:[],
       collect_list:[],
       rnk:1,
+      probability:0
     };
   },
   created(){
     this.get_top4year();
     this.get_top4sex();
-    this.get_year_colllect()
+    this.get_year_colllect(),
+    this.get_probability()
   },
   methods: {
+    get_probability() {
+      this.$axios.post('http://localhost:8000/get_collect_probability',{
+            user_id: window.localStorage.getItem("user_id"),
+      })
+      .then(res => {
+          this.probability = res.data.data;
+      })
+    },
     get_top4year() {
       this.$axios.post('http://localhost:8000/top_of_the_year',{
             user_id:0,
@@ -166,6 +179,7 @@ export default {
   justify-content: center; 
   align-items: center;
   margin-bottom: 16px;
+  margin-top:20px;
 }
 
 .info{

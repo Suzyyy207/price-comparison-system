@@ -2,7 +2,7 @@
 
 <template>
     <div class="product-list">
-      <div v-if="products_list.length === 0">目前还没有任何商品上架^^</div>
+      <div v-if="products_list.length === 0">没有匹配结果^^</div>
       <div v-else>
         <div v-for="product in products_list" :key="product.id" class="product-item">
           <!--img :src="product.image" alt="Product Image" class="product-image"-->

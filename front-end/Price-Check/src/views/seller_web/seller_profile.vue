@@ -58,7 +58,7 @@ import top_nav from '../../components/trivial/seller_nav.vue'
         })
       },
       edit_profile() {
-        this.$router.push('/edit_profile');
+        this.$router.push('/edit_seller');
       }
     }
     

@@ -1,6 +1,6 @@
 <!-- EditProfile.vue -->
 <script setup>
-import top_nav from '../../components/trivial/top_nav.vue'
+import top_nav from '../../components/trivial/seller_nav.vue'
 </script>
 
 <template>
@@ -17,23 +17,12 @@ import top_nav from '../../components/trivial/top_nav.vue'
         <div v-else>
           <form @submit.prevent="saveProfile">
             <div>
-              <label>姓名:</label>
+              <label>商家名:</label>
               <input v-model="user.name" required />
             </div>
             <div>
-              <label>性别:</label>
-              <select v-model="user.sex" required>
-                <option value="1">男</option>
-                <option value="0">女</option>
-              </select>
-            </div>
-            <div>
-              <label>电话号</label>
-              <input v-model="user.phone" required />
-            </div>
-            <div>
-              <label>年龄:</label>
-              <input v-model="user.age" type="number" required />
+              <label>地址</label>
+              <input v-model="user.address" required />
             </div>
             <button @click="save()">保存</button>
           </form>
@@ -57,7 +46,7 @@ import top_nav from '../../components/trivial/top_nav.vue'
       get_user_profile() {
         var localStorage = window.localStorage;
         //console.log(localStorage.getItem("user_id"));
-        this.$axios.post('http://localhost:8000/get_user_profile', {
+        this.$axios.post('http://localhost:8000/get_seller_profile', {
           user_id: localStorage.getItem("user_id"),
           
         })
@@ -69,21 +58,15 @@ import top_nav from '../../components/trivial/top_nav.vue'
       },
       save(){
         var localStorage = window.localStorage;
-        if (this.user.sex == "0") {
-          this.user.sex = 0
-        }
-        else{
-          this.user.sex = 1
-        }
         console.log(this.user);
         //console.log(localStorage.getItem("user_id"));
-        this.$axios.post('http://localhost:8000/update_user', {
+        this.$axios.post('http://localhost:8000/update_seller', {
           id: localStorage.getItem("user_id"),
-          address: "",
-          age: this.user.age,
+          address: this.user.address,
+          age: 0,
           name: this.user.name,
-          phone: this.user.phone,
-          sex: this.user.sex
+          phone: 0,
+          sex: 0
         })
         .then(res => {
           console.log(res.data.data)
@@ -91,7 +74,7 @@ import top_nav from '../../components/trivial/top_nav.vue'
               alert("修改失败");
             }
             else{
-              this.$router.push({name:'profile'});
+              this.$router.push({name:'seller_profile'});
             }
         })
       }

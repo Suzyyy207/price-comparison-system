@@ -3,7 +3,7 @@
       <!-- 商品信息的展示 -->
       <div class="product-info">
         <div class="collect">
-          <h2>{{ product.name }}</h2>
+          <h2>{{ product.name }} 具体种类：{{ product.tag }}</h2>
           <button @click="collect_change(product)" class="favorite-button">
             {{ product.is_collect ? '取消收藏' : '收藏' }}
          </button>
@@ -14,7 +14,7 @@
           <p>生产日期：{{ product.production_date }}</p>
         </div>
         <div class="info">
-          <p>价格：{{ product.current_price }}</p>
+          <p>价格：{{ product.price }}</p>
           <p>商家：{{ product.seller_name }}</p>
           <p>平台：{{ product.platform_name }}</p>
         </div>
@@ -32,7 +32,7 @@
             <option value="-1">全部</option>
             <option value="7">最近7天</option>
             <option value="30">最近30天</option>
-            <option value="90">最近90天</option>
+            <option value="365">最近365天</option>
           </select>
           <button @click="get_history()">
               查询价格变化
@@ -40,7 +40,12 @@
         </div>
       
         <!-- 显示历史价格对比的图表 -->
-        <div >
+        <div>
+          <div class="price-info">
+            <h3>最低价格: {{ this.min_price }}</h3>
+            <h3>日期: {{ this.min_time }}</h3>
+          </div>
+          
           <table class="chart-container">
             <thead>
               <tr>
@@ -69,14 +74,17 @@
             location: "",
             category: "",
             min_price: 0,
-            current_price: 0,
+            price: 0,
             platform_name: "",
             seller_name: "",
             production_date: "",
             is_collect: false,
+            tag: ""
         },
         time_len: "-1",// 默认选择全部
-        histories: []
+        histories: [],
+        min_price: 0,
+        min_time: ""
       };
     },
     created (){
@@ -85,7 +93,6 @@
     },
     methods: {
       get_good(){
-        console.log("hi");
         const goods_id = window.localStorage.getItem('goods_id');
         const user_id = window.localStorage.getItem('user_id');
         this.$axios.post('http://localhost:8000/get_good',{
@@ -98,11 +105,12 @@
             this.product.name = product_info.name;
             this.product.location = product_info.location;
             this.product.category = product_info.category;
-            this.product.current_price = product_info.currentPrice;
+            this.product.price = product_info.price;
             this.product.min_price = product_info.minPrice;
             this.product.platform_name = product_info.platformName;
             this.product.seller_name = product_info.sellerName;
             this.product.production_date = product_info.productionDate;
+            this.product.tag = product_info.tag;
             if(product_info.isCollect == 0){
               this.product.is_collect = false;
             }
@@ -118,11 +126,29 @@
             time_len: this.time_len
         })
         .then(res => {
-          console.log(res.data.data);
-            this.histories  = []
+            this.histories  = [];
             this.histories = this.histories.concat(res.data.data);
-            
+            this.get_min();
         })
+      },
+      get_min(){
+        if (this.histories.length > 0 ) {
+              this.min_price = this.histories[0].price;
+              this.min_time = this.histories[0].pDate;
+              console.log(this.histories.length);
+              var i = 0;
+              while (i < this.histories.length) {
+                if (this.min_price > this.histories[i].price) {
+                  this.min_price = this.histories[i].price;
+                  this.min_time = this.histories[i].pDate;
+                }
+                i++;
+              }
+            }
+          else{
+            this.min_price = "";
+              this.min_time = "";
+          }
       },
       collect_change(product){
         if (product.is_collect) {
@@ -211,6 +237,7 @@ button {
 
 .price-info{
   display: flex;
+  margin-top: 15px;
 }
 
 .price-info h3{

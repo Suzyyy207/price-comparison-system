@@ -6,6 +6,7 @@ import user_favorites from '../views/user_web/user_favorites.vue'
 import user_profile from '../views/user_web/user_profile.vue'
 import user_messages from '../views/user_web/user_messages.vue'
 import edit_profile from '../views/change_info/person_info.vue'
+import edit_seller_profile from '../views/change_info/seller_info.vue'
 import seller_home from '../views/seller_web/seller_home.vue'
 import seller_profile from '../views/seller_web/seller_profile.vue'
 import edit_product from '../views/change_info/product_info.vue'
@@ -118,10 +119,16 @@ const router = createRouter({
       path: '/yearly_report',
       name: 'yearly_report',
       component: yearly_report
-    },{
+    },
+    {
       path: '/product_analysis',
       name: 'product_analysis',
       component: product_analysis
+    },
+    {
+      path: '/edit_seller',
+      name: 'edit_seller',
+      component: edit_seller_profile
     }
 
     /*{

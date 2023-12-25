@@ -33,7 +33,7 @@
     data() {
       return {
         products_list: [],
-        new_price:12,
+        new_price:0,
       };
     },
     created (){
