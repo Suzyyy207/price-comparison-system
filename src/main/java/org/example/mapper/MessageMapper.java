@@ -17,6 +17,8 @@ public interface MessageMapper extends BaseMapper<Message> {
     List<Message> findByUserId(@Param("userId")int userId);
     @Select("select * from message where goodsId=#{goodsId}")
     List<Message> findByGoodsId(@Param("goodsId")int goodsId);
+    @Select("select distinct(userId) from message where goodsId=#{goodsId}")
+    List<Integer> findByGoodsId2(@Param("goodsId")int goodsId);
 
     @Select("SELECT * FROM message WHERE userId = #{searchMessageVO.userId} AND name LIKE CONCAT('%', #{searchMessageVO.keyword}, '%')")
     List<Message> findMessagesBySearchMessageVO(@Param("searchMessageVO")SearchMessageVO searchMessageVO);
@@ -32,7 +34,8 @@ public interface MessageMapper extends BaseMapper<Message> {
     @Insert("INSERT INTO message (goodsId, userId, name, currentPrice, targetPrice, date, isRead) " +
             "VALUES (#{goods.id}, #{collectVO.userId}, #{goods.name}, #{goods.price}, #{collectVO.expectPrice}, NOW(), 0)")
     Integer insertGoods(@Param("goods")Goods goods,@Param("collectVO")CollectVO collectVO);
-    @Insert("insert into message (goodsId,userId,name,type) values(1,#{userId},#{name},0)")
+    //TODO: 这里最后要改为引用1
+    @Insert("insert into message (goodsId,userId,name,type) values(6,#{userId},#{name},0)")
     Integer insertDeleteMessage(@Param("name")String name, @Param("userId")int userId);
     @Delete("delete from message where userId = #{userId}")
     Integer deleteByUserId(@Param("userId")int userId);

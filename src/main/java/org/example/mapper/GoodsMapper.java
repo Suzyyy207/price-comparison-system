@@ -109,7 +109,7 @@ public interface GoodsMapper extends BaseMapper<Goods> {
 
     @Select("SELECT g.id, g.tag, g.name AS goodsName, p.name AS platformName, s.name AS sellerName, g.price, g.minPrice " +
             "FROM (goods g LEFT JOIN platform p ON g.platformId = p.id) LEFT JOIN seller s on s.id = g.sellerId " +
-            "WHERE tag LIKE concat('%',#{keyword},'%');")
+            "WHERE tag LIKE concat('%',#{keyword},'%') AND g.state=1;")
     List<PriceCompareRE> getTagPriceAll(@Param("keyword") String keyword);
 
     @Select("SELECT g.id, g.tag, g.name AS goodsName, p.name AS platformName, s.name AS sellerName, g.price, g.minPrice " +

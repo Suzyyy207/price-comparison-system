@@ -160,12 +160,12 @@ public class GoodsService {
     public Boolean deleteGoodsById(Integer goodsId){
         try{
             Goods goods = goodsMapper.findById(goodsId);
-            List<Message> messages = messageMapper.findByGoodsId(goodsId);
+            List<Integer> messages = messageMapper.findByGoodsId2(goodsId);
             boolean succeedMessageD = messageMapper.deleteByGoodsId(goodsId)==1;
 
-            for (Message message: messages){
-                boolean succeed = messageMapper.insertDeleteMessage(goods.getName(),message.getUserId())==1;
-            }
+            /*for (Integer message_id: messages){
+                boolean succeed = messageMapper.insertDeleteMessage(goods.getName(),message_id)==1;
+            }*/
             boolean setUnvalid = collectMapper.setUnvalid(goodsId,goods.getName())==1;
             boolean deleteHistory = historyMapper.deleteByGoodsId(goodsId)==1;
             boolean deleteGoods = goodsMapper.deleteByGoodsId(goodsId)==1;

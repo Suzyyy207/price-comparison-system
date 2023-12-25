@@ -36,7 +36,7 @@ public interface CollectMapper extends BaseMapper<Collect> {
     
     @Select("select distinct g.tag as tag, COUNT(*) as count from collect "+
             "JOIN goods g ON collect.goodsId = g.id "+
-            "where userId = #{userId} group by g.tag " +
+            "where collect.state=1 and userId = #{userId} group by g.tag " +
             "order by count desc;")
     List<CollectTagRE> findCollectTagByUserId(@Param("userId")Integer userId);
 
@@ -60,7 +60,8 @@ public interface CollectMapper extends BaseMapper<Collect> {
     int insert(@Param("collectVO") CollectVO collectVO);
     @Update("update collect set expectPrice=#{collectVO.expectPrice} where goodsId=#{collectVO.goodsId} and userId=#{collectVO.userId}")
     Integer update(@Param("collectVO") CollectVO collectVO);
-    @Update("update collect set state=0, goodsId=0, name=#{name}  where goodsId=#{goodsId}")
+    //TODO: 这里最后要改为引用1
+    @Update("update collect set state=0, goodsId=6, name=#{name}  where goodsId=#{goodsId}")
     Integer setUnvalid(@Param("goodsId")int goodsId, @Param("name")String name);
 
     @Delete("delete from collect where userId = #{userId}")
