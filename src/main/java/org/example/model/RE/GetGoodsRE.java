@@ -19,6 +19,16 @@ public class GetGoodsRE {
     protected String platformName;
     protected Date productionDate;
     protected Integer isCollect;
+    protected String tag;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
     public Integer getIsCollect() {
         return isCollect;
     }

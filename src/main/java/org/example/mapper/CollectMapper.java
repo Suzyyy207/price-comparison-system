@@ -66,7 +66,8 @@ public interface CollectMapper extends BaseMapper<Collect> {
             "left join message m ON m.goodsId = c.goodsId " +
             "WHERE c.userId = #{userId};")
     Double findAllCollectProbability(@Param("userId")Integer userId);
-    @Insert("insert into collect (userId,goodsId,expectPrice,state,collect_date) values (#{collectVO.userId},#{collectVO.goodsId},#{collectVO.expectPrice},1,NOW())")
+    @Insert("insert into collect (userId,goodsId,expectPrice,state,collect_date,name) " +
+            "values (#{collectVO.userId},#{collectVO.goodsId},#{collectVO.expectPrice},1,NOW(),(select name from goods where id=#{collectVO.goodsId}))")
     int insert(@Param("collectVO") CollectVO collectVO);
     @Update("update collect set expectPrice=#{collectVO.expectPrice} where goodsId=#{collectVO.goodsId} and userId=#{collectVO.userId}")
     Integer update(@Param("collectVO") CollectVO collectVO);
