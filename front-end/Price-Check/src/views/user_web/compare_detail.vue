@@ -17,10 +17,7 @@ import top_nav from '../../components/trivial/top_nav.vue'
             <button @click="change_type(1)">比较不同商家现在的价格，请选择平台</button>
             <select v-model="search_type_now">
                 <option value="0">全平台</option>
-                <option value="1">淘宝</option>
-                <option value="2">京东</option>
-                <option value="3">闲鱼</option>
-                <option value="4">NCITY</option>
+                <option v-for="platform in platform_list" :key="platform.id" :value="platform.id">{{ platform.name }}</option>
             </select>
         </div>
         <div>
@@ -28,10 +25,7 @@ import top_nav from '../../components/trivial/top_nav.vue'
             <input v-model="time_len" placeholder="时间填写">
             <select v-model="search_type_diff">
                 <option value="0">全平台</option>
-                <option value="1">淘宝</option>
-                <option value="2">京东</option>
-                <option value="3">闲鱼</option>
-                <option value="4">NCITY</option>
+                <option v-for="platform in platform_list" :key="platform.id" :value="platform.id">{{ platform.name }}</option>
             </select>
             
         </div>
@@ -101,10 +95,23 @@ export default {
       choose_type: 0,
       search_type_now: 0,
       search_type_diff:0,
-      time_len: 0
+      time_len: 0,
+      platform_list:[]
     };
   },
+  created(){
+    this.get_all_platforms();
+  },
   methods: {
+    get_all_platforms() {
+            this.$axios.post('http://localhost:8000/get_all_platforms',{
+              id: 1
+            })
+            .then(res => {
+              console.log(res.data.data);
+                this.platform_list = this.platform_list.concat(res.data.data);
+            })
+        },
     get_price_now() {
       this.$axios.post('http://localhost:8000/get_price_for_tag',{
             keyword: this.tag,

@@ -71,9 +71,9 @@ import top_nav from '../../components/trivial/top_nav.vue'
             </tbody>
           </table>
     </div>
-    <div class="search-bar">
-      <h2>今年，您收藏的商品中，有{{ this.probability }}%的商品实现了您设定的价格</h2>
-    </div>
+    <!--div class="search-bar">
+      <h2>今年，您收藏的商品中，有{{ this.probability * 100 }}%的商品实现了您设定的价格</h2>
+    </div-->
   </div>
 </template>
 
@@ -93,8 +93,8 @@ export default {
   created(){
     this.get_top4year();
     this.get_top4sex();
-    this.get_year_colllect(),
-    this.get_probability()
+    this.get_year_colllect();
+    //this.get_probability()
   },
   methods: {
     get_probability() {

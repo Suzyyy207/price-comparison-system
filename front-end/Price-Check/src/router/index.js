@@ -18,6 +18,8 @@ import all_sellers from '../views/manager_web/manager_seller.vue'
 import all_platforms from '../views/manager_web/manager_platform.vue'
 import change_user from '../views/manager_web/change_user.vue'
 import change_seller from '../views/manager_web/change_seller.vue'
+import change_goods from '../views/manager_web/change_goods.vue'
+import change_platform from '../views/manager_web/change_platform.vue'
 import new_user from '../views/manager_web/new_user.vue'
 import new_seller from '../views/manager_web/new_seller.vue'
 import compare from '../views/user_web/compare_price.vue'
@@ -154,6 +156,16 @@ const router = createRouter({
       path: '/new_seller',
       name: 'new_seller',
       component: new_seller
+    },
+    {
+      path: '/change_goods',
+      name: 'change_goods',
+      component: change_goods
+    },
+    {
+      path: '/change_platform',
+      name: 'change_platform',
+      component: change_platform
     },
 
     /*{

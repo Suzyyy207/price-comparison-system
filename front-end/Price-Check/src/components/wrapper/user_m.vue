@@ -5,7 +5,8 @@
       <div v-if="loading">加载中...</div>
       <div v-else>
         <div v-for="message in message_list" :key="message.id" class="message-item">
-          <div class="message-content">
+          <div v-if="message.type === 1">
+            <div class="message-content">
             <p>{{ message.name }} 已经低于您设定的最低价！</p>
             <p>降价后价格：{{ message.currentPrice }}</p>
             <p>你设定价格：{{ message.targetPrice }}</p>
@@ -15,6 +16,9 @@
             <p v-if="message.isRead">状态：已读</p>
             <p v-else>状态：未读</p>
           </div>
+          
+          </div>
+          
         </div>
       </div>
     </div>

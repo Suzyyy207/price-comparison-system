@@ -1,6 +1,6 @@
 <!-- EditProfile.vue -->
 <script setup>
-import top_nav from '../../components/trivial/seller_nav.vue'
+import top_nav from '../../components/trivial/manager_nav.vue'
 </script>
 
 <template>
@@ -68,7 +68,6 @@ import top_nav from '../../components/trivial/seller_nav.vue'
     methods: {
       get_product_profile() {
         var localStorage = window.localStorage;
-        if (localStorage.getItem("new") == 1) {
           //console.log(localStorage.getItem("user_id"));
           this.$axios.post('http://localhost:8000/get_good', {
             userId: localStorage.getItem("user_id"),
@@ -79,8 +78,6 @@ import top_nav from '../../components/trivial/seller_nav.vue'
               this.product = res.data.data;
               this.loading =false;
           })
-        }
-        this.loading =false;
         
       },
       get_all_platforms() {
@@ -93,29 +90,6 @@ import top_nav from '../../components/trivial/seller_nav.vue'
             })
         },
       save(){
-        var localStorage = window.localStorage;
-        if (localStorage.getItem("new") != 1){
-          this.$axios.post('http://localhost:8000/insert_goods', {
-          category: this.product.category,
-          location: this.product.location,
-          name: this.product.name,
-          platformName: this.product.platformName,
-          price: this.product.price,
-          productionDate: this.product.productionDate,
-          sellerName:  window.localStorage.getItem("user_name"),
-          tag: this.product.tag
-        })
-        .then(res => {
-          console.log(res.data.data)
-            if (res.data.data == false) {
-              alert("您已在这个平台上发布过同种类商品");
-            }
-            else{
-              this.$router.push({name:'seller_web'});
-            }
-        })
-      }
-      else{
         console.log("hi")
         this.$axios.post('http://localhost:8000/update_goods', {
           category: this.product.category,
@@ -124,24 +98,24 @@ import top_nav from '../../components/trivial/seller_nav.vue'
           platformName: this.product.platformName,
           price: this.product.price,
           productionDate: this.product.productionDate,
-          sellerName: window.localStorage.getItem("user_name"),
+          sellerName: this.product.sellerName,
           tag: this.product.tag,
-          userId: window.localStorage.getItem("user_id"),
-          userType: window.localStorage.getItem("user_type"),
+          userId: 1,
+          userType: 0,
           goodsId: window.localStorage.getItem("goods_id")
         })
         .then(res => {
           console.log(res.data.data)
             if (res.data.data == false) {
-              alert("更新失败");
+              alert("这个商家在同平台已经发布过这类商品");
             }
             else{
-              this.$router.push({name:'seller_web'});
+              this.$router.push({name:'all_products'});
             }
         })
       }
         
-      }
+      
     }
   };
   </script>

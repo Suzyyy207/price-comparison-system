@@ -17,12 +17,8 @@ import top_nav from '../../components/trivial/manager_nav.vue'
         <div v-else>
           <form @submit.prevent="saveProfile">
             <div>
-              <label>商家名:</label>
+              <label>平台名:</label>
               <input v-model="user.name" required />
-            </div>
-            <div>
-              <label>地址</label>
-              <input v-model="user.address" required />
             </div>
             <button @click="save()">保存</button>
           </form>
@@ -35,37 +31,20 @@ import top_nav from '../../components/trivial/manager_nav.vue'
   export default {
     data() {
     return {
-      loading: true,
+      loading: false,
       user: {},
     };
   },
   created(){
-    this.get_user_profile();
   },
     methods: {
-      get_user_profile() {
-        var localStorage = window.localStorage;
-        this.$axios.post('http://localhost:8000/get_seller_profile', {
-          user_id: localStorage.getItem("user_id"),
-          
-        })
-        .then(res => {
-          console.log(res.data.data)
-            this.user = res.data.data;
-            this.loading =false;
-        })
-      },
       save(){
         var localStorage = window.localStorage;
         console.log(this.user);
         //console.log(localStorage.getItem("user_id"));
-        this.$axios.post('http://localhost:8000/update_seller', {
-          id: localStorage.getItem("user_id"),
-          address: this.user.address,
-          age: 0,
+        this.$axios.post('http://localhost:8000/update_platform', {
+          id: localStorage.getItem("platform_id"),
           name: this.user.name,
-          phone: 0,
-          sex: 0
         })
         .then(res => {
           console.log(res.data.data)
@@ -73,7 +52,7 @@ import top_nav from '../../components/trivial/manager_nav.vue'
               alert("修改失败");
             }
             else{
-              this.$router.push({name:'all_sellers'});
+              this.$router.push({name:'all_platforms'});
             }
         })
       }

@@ -8,15 +8,9 @@
           <!--img :src="product.image" alt="Product Image" class="product-image"-->
           <div class="product-details">
             <h3>{{ platform.name }}</h3>
-            <p>运营时长：{{ platform.age }}</p>
           </div>
           <div class="product-details">
-            <h3>Datail</h3>
-            <p>地址：{{ platform.address }}</p>
-            <p>电话：{{ platform.telephone }}</p>
-          </div>
-          <div class="product-details">
-            <button>修改信息</button>
+            <button @click="goto_platform_info(platform.id)">修改信息</button>
           </div>
         </div>
       </div>
@@ -44,6 +38,10 @@
                 this.platform_list = this.platform_list.concat(res.data.data);
             })
         },
+        goto_platform_info(id){
+          localStorage.setItem("platform_id",id);
+          this.$router.push({name:'change_platform'});
+        }
     }
     
   };
