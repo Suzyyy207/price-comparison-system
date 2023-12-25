@@ -54,9 +54,9 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "LEFT JOIN seller s ON g.sellerId = s.id " +
             "LEFT JOIN platform p ON g.platformId = p.id " +
             "WHERE " +
-            "#{searchGoodsVO.type} = 1 AND g.name LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%') " +
+            "#{searchGoodsVO.type} = 1 AND g.name LIKE #{searchGoodsVO.keyword} " +
             "OR " +
-            "#{searchGoodsVO.type} = 2 AND g.tag LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%') " +
+            "#{searchGoodsVO.type} = 2 AND g.tag LIKE #{searchGoodsVO.keyword} " +
             "OR " +
             "#{searchGoodsVO.type} = 3 AND g.category LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%')")
     List<ProductRE> findGoodsByTypeAndKeyword(@Param("searchGoodsVO") SearchGoodsVO searchGoodsVO);
@@ -66,9 +66,9 @@ public interface GoodsMapper extends BaseMapper<Goods> {
             "LEFT JOIN seller s ON g.sellerId = s.id " +
             "LEFT JOIN platform p ON g.platformId = p.id " +
             "WHERE " +
-            "#{searchGoodsVO.type} = 1 AND g.name LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%') " +
+            "#{searchGoodsVO.type} = 1 AND g.name LIKE #{searchGoodsVO.keyword} " +
             "OR " +
-            "#{searchGoodsVO.type} = 2 AND g.tag LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%') " +
+            "#{searchGoodsVO.type} = 2 AND g.tag LIKE #{searchGoodsVO.keyword} " +
             "OR " +
             "#{searchGoodsVO.type} = 3 AND g.category LIKE CONCAT('%', #{searchGoodsVO.keyword}, '%')")
     List<Map<String, Object>> explainFindGoods(@Param("searchGoodsVO") SearchGoodsVO searchGoodsVO);
